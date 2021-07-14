@@ -88,9 +88,7 @@ class VerticalFlipWidgetState<T> extends State<VerticalFlipWidget<T>>
   }
 
   void _onNewItem(T value) {
-    if (_currentValue == null) {
-      _currentValue = value;
-    } else if (value != _currentValue) {
+    if (value != _currentValue) {
       _nextValue = value;
       _isReversePhase = false;
       _controller.forward(); // will trigger _onRun
@@ -139,18 +137,16 @@ class VerticalFlipWidgetState<T> extends State<VerticalFlipWidget<T>>
               _buildLowerFlipPanel(),
             ],
           )
-        : _currentValue == null
-            ? Container()
-            : Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  _transform1UpperPanel(VerticalDirection.up),
-                  Padding(padding: EdgeInsets.only(top: widget.spacing)),
-                  _transform1LowerPanel(VerticalDirection.down),
-                ],
-              );
+        : Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              _transform1UpperPanel(VerticalDirection.up),
+              Padding(padding: EdgeInsets.only(top: widget.spacing)),
+              _transform1LowerPanel(VerticalDirection.down),
+            ],
+          );
   }
 
   Widget _buildUpperFlipPanel() => Stack(
