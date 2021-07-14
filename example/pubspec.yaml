@@ -8,6 +8,7 @@ environment:
 
 dependencies:
 
+  async: ^2.6.1
   flip_widget:
     path: ../
     
@@ -22,4 +23,8 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets: 
-    - assets/flutter_cover.png
+    - assets/bird.png
+    - assets/butterfly.png
+    - assets/flower.png
+    - assets/flutter.png
+    - assets/sea.png
