@@ -1,0 +1,19 @@
+include: package:lints/recommended.yaml
+
+# For lint rules and documentation, see http://dart-lang.github.io/linter/lints.
+# Uncomment to specify additional rules.
+linter:
+  rules:
+    - directives_ordering
+    - prefer_const_constructors
+    - prefer_const_constructors_in_immutables
+    - prefer_const_declarations
+    - prefer_final_locals
+    - prefer_relative_imports
+    - sort_constructors_first
+    - sort_pub_dependencies
+    - sort_unnamed_constructors_first
+
+analyzer:
+#   exclude:
+#     - path/to/excluded/files/**
