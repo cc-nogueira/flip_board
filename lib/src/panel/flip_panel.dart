@@ -12,6 +12,7 @@ class FlipPanel extends StatelessWidget {
     required this.height,
     required this.columnCount,
     required this.rowCount,
+    this.backgroundColor = Colors.white,
   })  : assert(columnCount > 1),
         assert(rowCount > 0),
         image = Image.asset(
@@ -36,16 +37,13 @@ class FlipPanel extends StatelessWidget {
   final double widthAlignFactor;
   final double heightSizeFactor;
   final double heightAlignFactor;
+  final Color backgroundColor;
   final random = Random();
 
   @override
-  Widget build(BuildContext context) => Container(
-        child: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: _buildRows(),
-          ),
-        ),
+  Widget build(BuildContext context) => Column(
+        mainAxisSize: MainAxisSize.min,
+        children: _buildRows(),
       );
 
   List<Widget> _buildRows() => Iterable<int>.generate(rowCount)
@@ -63,7 +61,7 @@ class FlipPanel extends StatelessWidget {
           itemStream: _createRandomTimeStream(),
           itemBuilder: (_, value) => value == null
               ? Container(
-                  color: Colors.white,
+                  color: backgroundColor,
                   width: widthSizeFactor * width,
                   height: heightSizeFactor * height,
                 )

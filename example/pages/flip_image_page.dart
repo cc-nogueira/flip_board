@@ -10,11 +10,12 @@ class AnimatedImagePage extends StatelessWidget {
     required int columns,
     required int rows,
   })  : _imageFlipPanel = FlipPanel(
-            imageName: imageName,
-            width: width,
-            height: height,
-            columnCount: columns,
-            rowCount: rows),
+          imageName: imageName,
+          width: width,
+          height: height,
+          columnCount: columns,
+          rowCount: rows,
+        ),
         super(key: key);
 
   final FlipPanel _imageFlipPanel;
@@ -26,7 +27,13 @@ class AnimatedImagePage extends StatelessWidget {
           child: Center(
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              children: [_imageFlipPanel],
+              children: [
+                Container(
+                  decoration:
+                      BoxDecoration(border: Border.all(color: Colors.black)),
+                  child: _imageFlipPanel,
+                )
+              ],
             ),
           ),
         ),
