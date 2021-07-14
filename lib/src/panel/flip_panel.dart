@@ -7,7 +7,7 @@ import '../widget/flip_widget.dart';
 class FlipPanel extends StatelessWidget {
   FlipPanel({
     Key? key,
-    required String imageName,
+    required this.child,
     required this.width,
     required this.height,
     required this.columnCount,
@@ -15,24 +15,40 @@ class FlipPanel extends StatelessWidget {
     this.backgroundColor = Colors.white,
   })  : assert(columnCount > 1),
         assert(rowCount > 0),
-        image = Image.asset(
-          imageName,
-          fit: BoxFit.fill,
-          width: width,
-          height: height,
-        ),
         widthSizeFactor = 1.0 / columnCount,
         widthAlignFactor = 2.0 / (columnCount - 1),
         heightSizeFactor = 1.0 / rowCount,
         heightAlignFactor = rowCount == 1 ? 1.0 : 2.0 / (rowCount - 1),
         super(key: key);
 
+  FlipPanel.assetImage({
+    Key? key,
+    required String imageName,
+    required double width,
+    required double height,
+    required int columnCount,
+    required int rowCount,
+    Color backgroundColor = Colors.white,
+  }) : this(
+          child: Image.asset(
+            imageName,
+            fit: BoxFit.fill,
+            width: width,
+            height: height,
+          ),
+          width: width,
+          height: height,
+          columnCount: columnCount,
+          rowCount: rowCount,
+          backgroundColor: backgroundColor,
+        );
+
   final double width;
   final double height;
   final int columnCount;
   final int rowCount;
 
-  final Image image;
+  final Widget child;
   final double widthSizeFactor;
   final double widthAlignFactor;
   final double heightSizeFactor;
@@ -73,7 +89,7 @@ class FlipPanel extends StatelessWidget {
                     ),
                     widthFactor: widthSizeFactor,
                     heightFactor: heightSizeFactor,
-                    child: image,
+                    child: child,
                   ),
                 ),
           spacing: 0.0,

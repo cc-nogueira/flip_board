@@ -1,15 +1,15 @@
 import 'package:flip_widget/flip_panel.dart';
 import 'package:flutter/material.dart';
 
-class AnimatedImagePage extends StatelessWidget {
-  AnimatedImagePage({
+class FlipImagePage extends StatelessWidget {
+  FlipImagePage({
     Key? key,
     required String imageName,
     required double width,
     required double height,
     required int columns,
     required int rows,
-  })  : _imageFlipPanel = FlipPanel(
+  })  : _imageFlipPanel = FlipPanel.assetImage(
           imageName: imageName,
           width: width,
           height: height,
@@ -22,7 +22,7 @@ class AnimatedImagePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(title: const Text('FlipImage')),
+        appBar: AppBar(title: const Text('Flip Image')),
         body: Container(
           child: Center(
             child: Column(
