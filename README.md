@@ -7,7 +7,7 @@ Widgets to build displays that resemble Mechanical Flip Boards.
 The basic component is the stateful VerticalFlipWidget that renders flip transitions for a stream of items and an itemBuilder.
 
 ## --
-## A-Z Flip Example
+## Flip A to FLUTTER Example
 
 
 

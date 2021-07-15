@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'pages/flip_a_to_z_page.dart';
+import 'pages/flip_a_to_flutter_page.dart';
 import 'pages/flip_clock_page.dart';
 import 'pages/flip_countdown_clock_page.dart';
 import 'pages/flip_image_page.dart';
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       routes: {
         'flip_image': _flipImagePage,
         'flip_stream': _flipStreamPage,
-        'flip_atoz': (_) => FlipAToZPage(),
+        'flip_from_a_to_flutter': (_) => FlipFromAToFlutterPage(),
         'flip_clock': (_) => FlipClockPage(),
         'countdown_clock': (_) => CountdownClockPage(),
       },
@@ -80,9 +80,10 @@ class HomePage extends StatelessWidget {
               ),
               ListTile(
                 leading: const Icon(Icons.sort_by_alpha, size: 48.0),
-                title: const Text('Flip A to Z'),
-                subtitle: const Text('The alphabet!'),
-                onTap: () => Navigator.of(context).pushNamed('flip_atoz'),
+                title: const Text('Flip A to FLUTTER'),
+                subtitle: const Text('Flip from A to Flutter!'),
+                onTap: () =>
+                    Navigator.of(context).pushNamed('flip_from_a_to_flutter'),
               ),
               ListTile(
                 leading: const Icon(Icons.watch, size: 48.0),
