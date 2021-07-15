@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:flip_board/flip_widget.dart';
 import 'package:flutter/material.dart';
 
-class FlipFromAToFlutterPage extends StatelessWidget {
+class FlipAToFlutterPage extends StatelessWidget {
   final _aCodeUnit = 'A'.codeUnitAt(0);
   final _width = 40.0;
   final _height = 42.0;
@@ -58,16 +58,11 @@ class FlipFromAToFlutterPage extends StatelessWidget {
         color: color,
         borderRadius: const BorderRadius.all(Radius.circular(4.0)),
       ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            width: _width,
-            height: _height,
-            alignment: Alignment.center,
-            child: child,
-          ),
-        ],
+      child: Container(
+        width: _width,
+        height: _height,
+        alignment: Alignment.center,
+        child: child,
       ),
     );
   }
@@ -78,7 +73,6 @@ class FlipFromAToFlutterPage extends StatelessWidget {
     for (var code = _aCodeUnit; code <= lastCode; ++code) {
       letters.add(String.fromCharCode(code));
     }
-
     return Stream.periodic(
       Duration(milliseconds: delay),
       (idx) => idx < letters.length ? letters[idx] : '',
