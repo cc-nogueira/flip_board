@@ -1,24 +1,24 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 
-import '../widget/flip_widget.dart';
+import 'flip_panel_builder.dart';
 
 class FlipPanel extends StatelessWidget {
   FlipPanel({
     Key? key,
-    required this.child,
-    required this.width,
-    required this.height,
-    required this.columnCount,
-    required this.rowCount,
-    this.backgroundColor = Colors.white,
-  })  : assert(columnCount > 1),
-        assert(rowCount > 0),
-        widthSizeFactor = 1.0 / columnCount,
-        widthAlignFactor = 2.0 / (columnCount - 1),
-        heightSizeFactor = 1.0 / rowCount,
-        heightAlignFactor = rowCount == 1 ? 1.0 : 2.0 / (rowCount - 1),
+    required Widget child,
+    required double width,
+    required double height,
+    required int columnCount,
+    required int rowCount,
+    int animationMillis = 2000,
+    Color backgroundColor = Colors.white,
+  })  : _builder = SingleChildFlipPanelBuilder(
+          child: child,
+          width: width,
+          height: height,
+          columnCount: columnCount,
+          rowCount: rowCount,
+        ),
         super(key: key);
 
   FlipPanel.assetImage({
@@ -29,6 +29,7 @@ class FlipPanel extends StatelessWidget {
     required int columnCount,
     required int rowCount,
     Color backgroundColor = Colors.white,
+    int animationMillis = 2000,
   }) : this(
           child: Image.asset(
             imageName,
@@ -40,67 +41,12 @@ class FlipPanel extends StatelessWidget {
           height: height,
           columnCount: columnCount,
           rowCount: rowCount,
+          animationMillis: animationMillis,
           backgroundColor: backgroundColor,
         );
 
-  final double width;
-  final double height;
-  final int columnCount;
-  final int rowCount;
-
-  final Widget child;
-  final double widthSizeFactor;
-  final double widthAlignFactor;
-  final double heightSizeFactor;
-  final double heightAlignFactor;
-  final Color backgroundColor;
-  final random = Random();
+  final SingleChildFlipPanelBuilder _builder;
 
   @override
-  Widget build(BuildContext context) => Column(
-        mainAxisSize: MainAxisSize.min,
-        children: _buildRows(),
-      );
-
-  List<Widget> _buildRows() => Iterable<int>.generate(rowCount)
-      .map(
-        (row) => Row(
-          mainAxisSize: MainAxisSize.min,
-          children: _buildColumns(row),
-        ),
-      )
-      .toList();
-
-  List<Widget> _buildColumns(int row) => Iterable<int>.generate(columnCount)
-      .map(
-        (col) => VerticalFlipWidget<int>(
-          itemStream: _createRandomTimeStream(),
-          itemBuilder: (_, value) => value == null
-              ? Container(
-                  color: backgroundColor,
-                  width: widthSizeFactor * width,
-                  height: heightSizeFactor * height,
-                )
-              : ClipRect(
-                  child: Align(
-                    alignment: Alignment(
-                      -1.0 + col * widthAlignFactor,
-                      -1.0 + row * heightAlignFactor,
-                    ),
-                    widthFactor: widthSizeFactor,
-                    heightFactor: heightSizeFactor,
-                    child: child,
-                  ),
-                ),
-          spacing: 0.0,
-          direction: _randomDirection(),
-        ),
-      )
-      .toList();
-
-  Stream<int> _createRandomTimeStream() => Stream.fromFuture(
-      Future.delayed(Duration(milliseconds: random.nextInt(3000)), () => 1));
-
-  VerticalDirection _randomDirection() =>
-      random.nextInt(10).isEven ? VerticalDirection.up : VerticalDirection.down;
+  Widget build(BuildContext context) => _builder.build(context);
 }

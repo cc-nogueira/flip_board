@@ -42,10 +42,10 @@ class MyApp extends StatelessWidget {
       imageNames: images,
       width: 375.0,
       height: 200.0,
-      columns: 12,
+      columns: 8,
       rows: 4,
-      animationMillis: 3000,
-      imageChangeSeconds: 5,
+      animationMillis: 4000,
+      imageChangeSeconds: 6,
     );
   }
 }
