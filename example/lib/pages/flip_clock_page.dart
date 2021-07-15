@@ -1,11 +1,11 @@
-import 'package:flip_widget/flip_clock.dart';
+import 'package:flip_board/flip_clock.dart';
 import 'package:flutter/material.dart';
 
 class FlipClockPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('FlipClock')),
+      appBar: AppBar(title: const Text('Flip Clock')),
       body: Center(
         child: Container(
           decoration: const BoxDecoration(

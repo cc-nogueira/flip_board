@@ -1,5 +1,5 @@
 import 'package:async/async.dart';
-import 'package:flip_widget/flip_panel.dart';
+import 'package:flip_board/flip_board.dart';
 import 'package:flutter/material.dart';
 
 class FlipStreamPage extends StatelessWidget {
@@ -35,7 +35,7 @@ class FlipStreamPage extends StatelessWidget {
                 Container(
                   decoration:
                       BoxDecoration(border: Border.all(color: Colors.blue)),
-                  child: FlipStreamPanel<String>(
+                  child: FlipStreamBoard<String>(
                     initialValue: initialImageName,
                     itemStream: _itemStream,
                     itemBuilder: _itemBuilder,

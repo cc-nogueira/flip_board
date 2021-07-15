@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'FlipPanel',
+      title: 'Flip Board',
       routes: {
         'flip_image': _flipImagePage,
         'flip_stream': _flipStreamPage,
@@ -54,7 +54,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('FlipPanel')),
+      appBar: AppBar(title: const Text('Flip Board')),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: ListTileTheme(
@@ -66,13 +66,13 @@ class HomePage extends StatelessWidget {
             children: [
               ListTile(
                 leading: const Icon(Icons.image, size: 48.0),
-                title: const Text('Flip Image Panel'),
+                title: const Text('Flip Image Board'),
                 subtitle: const Text('Animate the display of a single image'),
                 onTap: () => Navigator.of(context).pushNamed('flip_image'),
               ),
               ListTile(
                 leading: const Icon(Icons.imagesearch_roller, size: 48.0),
-                title: const Text('Flip Stream Panel'),
+                title: const Text('Flip Stream Board'),
                 subtitle: const Text('Animate a stream of images'),
                 onTap: () => Navigator.of(context).pushNamed('flip_stream'),
               ),

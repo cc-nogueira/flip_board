@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../widget/flip_widget.dart';
-import 'flip_panel_builder.dart';
+import 'flip_board_builder.dart';
 
-class FlipStreamPanel<T> extends StatefulWidget {
-  const FlipStreamPanel({
+class FlipStreamBoard<T> extends StatefulWidget {
+  const FlipStreamBoard({
     Key? key,
     this.initialValue,
     required this.itemStream,
@@ -31,19 +31,19 @@ class FlipStreamPanel<T> extends StatefulWidget {
   final Color backgroundColor;
 
   @override
-  _FlipStreamPanelState<T> createState() => _FlipStreamPanelState<T>();
+  _FlipStreamBoardState<T> createState() => _FlipStreamBoardState<T>();
 }
 
-class _FlipStreamPanelState<T> extends State<FlipStreamPanel<T>> {
+class _FlipStreamBoardState<T> extends State<FlipStreamBoard<T>> {
   final _controller = StreamController<T>.broadcast();
   late final StreamSubscription<T> _subscription;
-  late final StreamFlipPanelBuilder<T> _builder;
+  late final StreamFlipBoardBuilder<T> _builder;
 
   @override
   void initState() {
     super.initState();
 
-    _builder = StreamFlipPanelBuilder<T>(
+    _builder = StreamFlipBoardBuilder<T>(
       initialValue: widget.initialValue,
       itemStream: _controller.stream,
       itemBuilder: widget.itemBuilder,

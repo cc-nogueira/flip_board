@@ -1,4 +1,4 @@
-name: flip_widget_example
+name: flip_board_example
 description: FlipWidget examples
 publish_to: "none"
 version: 0.0.1
@@ -9,7 +9,7 @@ environment:
 dependencies:
 
   async: ^2.6.1
-  flip_widget:
+  flip_board:
     path: ../
     
   flutter:

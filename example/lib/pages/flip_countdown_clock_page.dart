@@ -1,4 +1,4 @@
-import 'package:flip_widget/flip_clock.dart';
+import 'package:flip_board/flip_clock.dart';
 import 'package:flutter/material.dart';
 
 class CountdownClockPage extends StatelessWidget {

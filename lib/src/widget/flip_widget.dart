@@ -98,7 +98,7 @@ class VerticalFlipWidgetState<T> extends State<VerticalFlipWidget<T>>
   @override
   Widget build(BuildContext context) {
     _buildChildWidgets(context);
-    return _buildPanel();
+    return _buildBoard();
   }
 
   void _initChildWidgets(BuildContext context) {
@@ -125,7 +125,7 @@ class VerticalFlipWidgetState<T> extends State<VerticalFlipWidget<T>>
     }
   }
 
-  Widget _buildPanel() {
+  Widget _buildBoard() {
     return _running
         ? Column(
             mainAxisSize: MainAxisSize.min,

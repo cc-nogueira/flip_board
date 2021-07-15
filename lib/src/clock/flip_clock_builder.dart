@@ -5,8 +5,8 @@ import '../widget/flip_widget.dart';
 /// Helper class with builder methods to compose a flip clock display.
 ///
 /// Used by [FlipClock] and [FlipCountdownClock].
-class ClockDisplayBuilder {
-  const ClockDisplayBuilder({
+class FlipClockBuilder {
+  const FlipClockBuilder({
     required this.digitColor,
     required this.backgroundColor,
     required this.digitSize,

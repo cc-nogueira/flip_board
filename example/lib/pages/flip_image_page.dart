@@ -1,4 +1,4 @@
-import 'package:flip_widget/flip_panel.dart';
+import 'package:flip_board/flip_board.dart';
 import 'package:flutter/material.dart';
 
 class FlipImagePage extends StatelessWidget {
@@ -9,7 +9,7 @@ class FlipImagePage extends StatelessWidget {
     required double height,
     required int columns,
     required int rows,
-  })  : _imageFlipPanel = FlipPanel.assetImage(
+  })  : _imageFlipBoard = FlipBoard.assetImage(
           imageName: imageName,
           width: width,
           height: height,
@@ -18,7 +18,7 @@ class FlipImagePage extends StatelessWidget {
         ),
         super(key: key);
 
-  final FlipPanel _imageFlipPanel;
+  final FlipBoard _imageFlipBoard;
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -31,7 +31,7 @@ class FlipImagePage extends StatelessWidget {
                 Container(
                   decoration:
                       BoxDecoration(border: Border.all(color: Colors.black)),
-                  child: _imageFlipPanel,
+                  child: _imageFlipBoard,
                 )
               ],
             ),

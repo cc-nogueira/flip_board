@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import 'clock_display_builder.dart';
+import 'flip_clock_builder.dart';
 
 /// FlipCountdownClock display a countdown flip clock.
 ///
-/// Dispaly a row of [VerticalFlipPanel] to show the countdown digits,
+/// Dispaly a row of [VerticalFlipWidget] to show the countdown digits,
 /// this digits are refreshed by a stream of time left [Duration] instances,
 class FlipCountdownClock extends StatelessWidget {
   FlipCountdownClock({
@@ -23,7 +23,7 @@ class FlipCountdownClock extends StatelessWidget {
     VerticalDirection flipDirection = VerticalDirection.up,
     this.onDone,
   })  : _showHours = duration.inHours > 0,
-        _displayBuilder = ClockDisplayBuilder(
+        _displayBuilder = FlipClockBuilder(
           digitColor: digitColor,
           backgroundColor: backgroundColor,
           digitSize: digitSize,
@@ -38,7 +38,7 @@ class FlipCountdownClock extends StatelessWidget {
   final Duration duration;
   final VoidCallback? onDone;
 
-  final ClockDisplayBuilder _displayBuilder;
+  final FlipClockBuilder _displayBuilder;
   final bool _showHours;
 
   @override

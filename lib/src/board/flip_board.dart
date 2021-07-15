@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'flip_panel_builder.dart';
+import 'flip_board_builder.dart';
 
-class FlipPanel extends StatelessWidget {
-  FlipPanel({
+class FlipBoard extends StatelessWidget {
+  FlipBoard({
     Key? key,
     required Widget child,
     required double width,
@@ -12,7 +12,7 @@ class FlipPanel extends StatelessWidget {
     required int rowCount,
     int animationMillis = 2000,
     Color backgroundColor = Colors.white,
-  })  : _builder = SingleChildFlipPanelBuilder(
+  })  : _builder = SingleChildFlipBoardBuilder(
           child: child,
           width: width,
           height: height,
@@ -21,7 +21,7 @@ class FlipPanel extends StatelessWidget {
         ),
         super(key: key);
 
-  FlipPanel.assetImage({
+  FlipBoard.assetImage({
     Key? key,
     required String imageName,
     required double width,
@@ -45,7 +45,7 @@ class FlipPanel extends StatelessWidget {
           backgroundColor: backgroundColor,
         );
 
-  final SingleChildFlipPanelBuilder _builder;
+  final SingleChildFlipBoardBuilder _builder;
 
   @override
   Widget build(BuildContext context) => _builder.build(context);

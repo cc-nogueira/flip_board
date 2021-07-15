@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import 'clock_display_builder.dart';
+import 'flip_clock_builder.dart';
 
 /// FlipClock display with current time.
 ///
@@ -20,7 +20,7 @@ class FlipClock extends StatelessWidget {
     EdgeInsets digitSpacing = const EdgeInsets.symmetric(horizontal: 2.0),
     double flipSpacing = 1.5,
     VerticalDirection flipDirection = VerticalDirection.down,
-  })  : _displayBuilder = ClockDisplayBuilder(
+  })  : _displayBuilder = FlipClockBuilder(
           digitColor: digitColor,
           backgroundColor: backgroundColor,
           digitSize: digitSize,
@@ -33,7 +33,7 @@ class FlipClock extends StatelessWidget {
         ),
         super(key: key);
 
-  final ClockDisplayBuilder _displayBuilder;
+  final FlipClockBuilder _displayBuilder;
 
   @override
   Widget build(BuildContext context) {

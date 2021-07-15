@@ -7,8 +7,8 @@ import '../widget/flip_widget.dart';
 
 final _random = Random();
 
-abstract class FlipPanelBuilder<T> {
-  const FlipPanelBuilder({
+abstract class FlipBoardBuilder<T> {
+  const FlipBoardBuilder({
     required this.width,
     required this.height,
     required this.columnCount,
@@ -89,8 +89,8 @@ abstract class FlipPanelBuilder<T> {
       : VerticalDirection.down;
 }
 
-class SingleChildFlipPanelBuilder extends FlipPanelBuilder<Widget> {
-  const SingleChildFlipPanelBuilder({
+class SingleChildFlipBoardBuilder extends FlipBoardBuilder<Widget> {
+  const SingleChildFlipBoardBuilder({
     required this.child,
     required double width,
     required double height,
@@ -120,8 +120,8 @@ class SingleChildFlipPanelBuilder extends FlipPanelBuilder<Widget> {
   Widget buildChild(BuildContext context, Widget value) => child;
 }
 
-class StreamFlipPanelBuilder<T> extends FlipPanelBuilder<T> {
-  const StreamFlipPanelBuilder({
+class StreamFlipBoardBuilder<T> extends FlipBoardBuilder<T> {
+  const StreamFlipBoardBuilder({
     this.initialValue,
     required this.itemStream,
     required this.itemBuilder,
