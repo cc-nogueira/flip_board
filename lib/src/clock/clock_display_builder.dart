@@ -68,13 +68,13 @@ class ClockDisplayBuilder {
       );
 
   Widget _digitBuilder(BuildContext context, int? digit) => Container(
-        alignment: Alignment.center,
-        width: width,
-        height: height,
         decoration: BoxDecoration(
           color: backgroundColor,
           borderRadius: borderRadius,
         ),
+        width: width,
+        height: height,
+        alignment: Alignment.center,
         child: Text(
           digit == null ? ' ' : digit.toString(),
           style: TextStyle(
@@ -102,7 +102,7 @@ class ClockDisplayBuilder {
             padding: const EdgeInsets.only(bottom: 6.0),
             child: Text(
               ':',
-              style: TextStyle(fontSize: digitSize - 6, color: digitColor),
+              style: TextStyle(fontSize: digitSize - 4, color: digitColor),
             ),
           ),
         ),

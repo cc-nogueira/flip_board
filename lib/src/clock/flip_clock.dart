@@ -45,6 +45,7 @@ class FlipClock extends StatelessWidget {
 
     return Row(
       mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         _buildHourDisplay(timeStream, initValue),
         _displayBuilder.buildSeparator(),

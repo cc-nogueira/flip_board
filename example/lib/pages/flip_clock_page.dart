@@ -9,16 +9,19 @@ class FlipClockPage extends StatelessWidget {
       body: Center(
         child: Container(
           decoration: const BoxDecoration(
-              color: Colors.black87,
+              color: Colors.black,
               borderRadius: BorderRadius.all(Radius.circular(4.0))),
-          height: 66.0,
-          child: FlipClock(
-            digitColor: Colors.white,
-            backgroundColor: Colors.black,
-            digitSize: 48.0,
-            width: 40.0,
-            height: 64.0,
-            flipSpacing: 0.0,
+          height: 72.0,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 2.0, vertical: 4.0),
+            child: FlipClock(
+              digitColor: Colors.white,
+              backgroundColor: const Color(0xFF004046),
+              digitSize: 48.0,
+              width: 40.0,
+              height: 64.0,
+              flipSpacing: 0.0,
+            ),
           ),
         ),
       ),
