@@ -1,8 +1,16 @@
-# Flip Widget
+[![pub package](https://img.shields.io/pub/v/flip_board)](https://pub.dartlang.org/packages/flip_board)
 
-[![pub package](https://img.shields.io/pub/v/flip_board.svg)](https://pub.dartlang.org/packages/flip_board) ![](https://github.com/cc-nogueira/flip_board/workflows/unit%20test/badge.svg)
+# Flip Board
 
-A package for flip widgets
+Widgets to build displays that resemble Mechanical Flip Boards.
+
+The basic component is the stateful VerticalFlipWidget that renders flip transitions for a stream of items and an itemBuilder.
+
+## --
+## A-Z Flip Example
+
+
+
 
 <p>
 	<img src="https://github.com/cc-nogueira/flip_board/blob/master/screenshots/flip_board.gif?raw=true" width="250" height="443"  />
