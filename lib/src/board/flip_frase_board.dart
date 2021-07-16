@@ -22,8 +22,8 @@ class FlipFraseBoard extends StatelessWidget {
     double? flipLetterHeight,
     this.letterSpacing = 1.0,
     this.flipSpacing = 0.8,
-    this.maxFlipDelay = 800,
-    this.minFlipDelay = 300,
+    this.maxFlipDelay = 600,
+    this.minFlipDelay = 250,
   })  : assert(startFrase == null || startLetter == null),
         assert(startFrase != null && startFrase.isNotEmpty ||
             startLetter != null && startLetter.length == 1),
