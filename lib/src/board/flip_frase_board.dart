@@ -1,16 +1,27 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../flip_widget.dart';
 
-/// Page with 'FLUTTER!' message shown as an animated board.
+/// Component present message shown as an mechanical flip board.
 ///
-/// Page displays 'A A A A A A A A', flipping each letter upto 'F L U T T E R !',
-/// each in a different random speed.
+/// Displays an anumation flipping each letter from a startFrase upto each letter in endFrase,
+/// each letter animation in a different random speed.
+///
+/// The startFrase may be given or a start letter may be set to build a startFrase with all letters equal.
+/// StartFrase and endFrase must have the same length.
+///
+/// Colors parameters can have any number of letters that will be cycled for each letter.
+///
+/// There are a number of parameters to customize size, colors, spacing and speed.
+///
+/// There is a optional callback parameter for onDone event.
 class FlipFraseBoard extends StatelessWidget {
   FlipFraseBoard({
+    Key? key,
     String? startFrase,
     String? startLetter,
     required String endFrase,
@@ -24,6 +35,8 @@ class FlipFraseBoard extends StatelessWidget {
     this.flipSpacing = 0.8,
     this.maxFlipDelay = 600,
     this.minFlipDelay = 250,
+    this.onDone,
+    ValueNotifier<int>? startNotifier,
   })  : assert(startFrase == null || startLetter == null),
         assert(startFrase != null && startFrase.isNotEmpty ||
             startLetter != null && startLetter.length == 1),
@@ -34,7 +47,11 @@ class FlipFraseBoard extends StatelessWidget {
             (startLetter! * endFrase.length).characters,
         endChars = endFrase.characters,
         flipLetterWidth = flipLetterWidth ?? fontSize + 4,
-        flipLetterHeight = flipLetterHeight ?? fontSize + 6;
+        flipLetterHeight = flipLetterHeight ?? fontSize + 6,
+        startNotifier = startNotifier ?? ValueNotifier(0),
+        super(key: key) {
+    _clearDoneList();
+  }
 
   final Characters startChars, endChars;
   final double fontSize;
@@ -43,20 +60,45 @@ class FlipFraseBoard extends StatelessWidget {
   final double flipLetterWidth, flipLetterHeight;
   final List<Color>? startColors, endColors, digitColors;
   final int minFlipDelay, maxFlipDelay;
+  final void Function()? onDone;
+  final ValueNotifier<int> startNotifier;
 
   final _random = Random();
+  final _doneList = <bool>[];
+
+  _clearDoneList() {
+    _doneList.clear();
+    for (var i = 0; i < startChars.length; ++i) {
+      _doneList.add(false);
+    }
+  }
+
+  void _onStreamDone(int index) {
+    _doneList[index] = true;
+    for (final done in _doneList) {
+      if (!done) return;
+    }
+    _clearDoneList();
+    if (onDone != null) {
+      onDone!();
+    }
+  }
 
   @override
-  Widget build(BuildContext context) {
-    final children = <Widget>[];
-    for (var i = 0; i < startChars.length; ++i) {
-      children.add(_buildLetterFlip(context, index: i, delay: _randomDelay));
-    }
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: children,
-    );
-  }
+  Widget build(BuildContext context) => ValueListenableBuilder(
+        builder: (BuildContext context, int startCount, Widget? __) {
+          final children = <Widget>[];
+          for (var i = 0; i < startChars.length; ++i) {
+            children.add(_buildLetterFlip(context,
+                index: i, delay: _randomDelay, startCount: startCount));
+          }
+          return Row(
+            mainAxisSize: MainAxisSize.min,
+            children: children,
+          );
+        },
+        valueListenable: startNotifier,
+      );
 
   int get _randomDelay =>
       minFlipDelay + _random.nextInt(maxFlipDelay - minFlipDelay);
@@ -68,6 +110,7 @@ class FlipFraseBoard extends StatelessWidget {
     BuildContext context, {
     required int index,
     required int delay,
+    required int startCount,
   }) {
     final startLetter = startChars.elementAt(index);
     final endLetter = endChars.elementAt(index);
@@ -78,7 +121,9 @@ class FlipFraseBoard extends StatelessWidget {
 
     return Container(
       child: VerticalFlipWidget<String>(
+        startCount: startCount,
         itemStream: _letterStream(startLetter, endLetter, delay),
+        // itemStream: _letterStream(startLetter, endLetter, delay),
         itemBuilder: (context, item) => _itemBuilder(
           context,
           item,
@@ -90,6 +135,7 @@ class FlipFraseBoard extends StatelessWidget {
         direction: _letterDirection(startLetter, endLetter),
         duration: Duration(milliseconds: delay ~/ 3),
         spacing: flipSpacing,
+        onDone: () => _onStreamDone(index),
       ),
     );
   }
