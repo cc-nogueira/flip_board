@@ -15,6 +15,8 @@ class VerticalFlipWidget<T> extends StatefulWidget {
     this.duration = const Duration(milliseconds: 300),
     this.spacing = 0.0,
     this.perspectiveEffect = 0.006,
+    this.onDone,
+    this.startCount = 0,
   }) : super(key: key);
 
   final Stream<T> itemStream;
@@ -24,6 +26,8 @@ class VerticalFlipWidget<T> extends StatefulWidget {
   final VerticalDirection direction;
   final double spacing;
   final double perspectiveEffect;
+  final void Function()? onDone;
+  final int startCount;
 
   @override
   VerticalFlipWidgetState<T> createState() => VerticalFlipWidgetState<T>();
@@ -36,7 +40,7 @@ class VerticalFlipWidgetState<T> extends State<VerticalFlipWidget<T>>
   late final AnimationController _controller;
   late final Animation _animation;
   late final Animation _perspectiveAnimation;
-  late final StreamSubscription<T> _subscription;
+  StreamSubscription<T>? _subscription;
 
   late bool _isReversePhase;
   late bool _running;
@@ -71,15 +75,29 @@ class VerticalFlipWidgetState<T> extends State<VerticalFlipWidget<T>>
     _perspectiveAnimation =
         Tween(begin: 0.0, end: widget.perspectiveEffect).animate(_controller);
 
+    _initValues();
+  }
+
+  void _initValues() {
     _currentValue = widget.initialValue;
-    _subscription = widget.itemStream.distinct().listen(_onNewItem);
     _firstRun = true;
+    _subscription?.cancel();
+    _subscription =
+        widget.itemStream.distinct().listen(_onNewItem, onDone: widget.onDone);
+  }
+
+  @override
+  void didUpdateWidget(covariant VerticalFlipWidget<T> oldWidget) {
+    if (oldWidget.startCount != widget.startCount) {
+      _initValues();
+    }
+    super.didUpdateWidget(oldWidget);
   }
 
   @override
   void dispose() {
     _controller.dispose();
-    _subscription.cancel();
+    _subscription?.cancel();
     super.dispose();
   }
 
