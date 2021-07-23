@@ -5,6 +5,10 @@ import 'package:flutter/material.dart';
 
 typedef ItemBuilder<T> = Widget Function(BuildContext buildContext, T? item);
 
+/// VerticalFliWidget animates the display of items through flip animations.
+///
+/// Resembles a single Mechanical Flip Board display, such as a digit or a letter,
+/// but can actualy render any widget you build.
 class VerticalFlipWidget<T> extends StatefulWidget {
   const VerticalFlipWidget({
     Key? key,

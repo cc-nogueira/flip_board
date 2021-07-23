@@ -7,8 +7,8 @@ import '../widget/flip_widget.dart';
 
 final _random = Random();
 
-abstract class FlipBoardBuilder<T> {
-  const FlipBoardBuilder({
+abstract class FlipMatrixBoardBuilder<T> {
+  const FlipMatrixBoardBuilder({
     required this.width,
     required this.height,
     required this.columnCount,
@@ -89,8 +89,8 @@ abstract class FlipBoardBuilder<T> {
       : VerticalDirection.down;
 }
 
-class SingleChildFlipBoardBuilder extends FlipBoardBuilder<Widget> {
-  const SingleChildFlipBoardBuilder({
+class SingleChildFlipMatrixBoardBuilder extends FlipMatrixBoardBuilder<Widget> {
+  const SingleChildFlipMatrixBoardBuilder({
     required this.child,
     required double width,
     required double height,
@@ -120,8 +120,8 @@ class SingleChildFlipBoardBuilder extends FlipBoardBuilder<Widget> {
   Widget buildChild(BuildContext context, Widget value) => child;
 }
 
-class StreamFlipBoardBuilder<T> extends FlipBoardBuilder<T> {
-  const StreamFlipBoardBuilder({
+class StreamFlipMatrixBoardBuilder<T> extends FlipMatrixBoardBuilder<T> {
+  const StreamFlipMatrixBoardBuilder({
     this.initialValue,
     required this.itemStream,
     required this.itemBuilder,

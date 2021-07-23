@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'pages/flip_clock_page.dart';
-import 'pages/flip_countdown_clock_page.dart';
-import 'pages/flip_frase_board_page.dart';
-import 'pages/flip_image_page.dart';
-import 'pages/flip_stream_page.dart';
+import 'pages/board/flip_frase_board_page.dart';
+import 'pages/board/flip_matrix_board_single_child_page.dart';
+import 'pages/board/flip_matrix_board_stream_page.dart';
+import 'pages/clock/flip_clock_page.dart';
+import 'pages/clock/flip_countdown_clock_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  Widget _flipImagePage(BuildContext context) => FlipImagePage(
+  Widget _flipImagePage(BuildContext context) => FlipMatrixBoardSingleChildPage(
         imageName: 'assets/flutter.png',
         width: 375.0,
         height: 200.0,
@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
       'assets/sea.png',
       'assets/bird.png',
     ];
-    return FlipStreamPage(
+    return FlipMatrixBoardStreamPage(
       imageNames: images,
       width: 375.0,
       height: 200.0,

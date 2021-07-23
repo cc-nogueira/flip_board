@@ -1,15 +1,15 @@
 import 'package:flip_board/flip_board.dart';
 import 'package:flutter/material.dart';
 
-class FlipImagePage extends StatelessWidget {
-  FlipImagePage({
+class FlipMatrixBoardSingleChildPage extends StatelessWidget {
+  FlipMatrixBoardSingleChildPage({
     Key? key,
     required String imageName,
     required double width,
     required double height,
     required int columns,
     required int rows,
-  })  : _imageFlipBoard = FlipBoard.assetImage(
+  })  : _imageFlipBoard = FlipMatrixBoardSingleChild.assetImage(
           imageName: imageName,
           width: width,
           height: height,
@@ -18,7 +18,7 @@ class FlipImagePage extends StatelessWidget {
         ),
         super(key: key);
 
-  final FlipBoard _imageFlipBoard;
+  final FlipMatrixBoardSingleChild _imageFlipBoard;
 
   @override
   Widget build(BuildContext context) => Scaffold(
