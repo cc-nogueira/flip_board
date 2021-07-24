@@ -20,7 +20,7 @@ class FlipCountdownClock extends StatelessWidget {
     BorderRadius borderRadius = const BorderRadius.all(Radius.circular(4.0)),
     EdgeInsets digitSpacing = const EdgeInsets.symmetric(horizontal: 2.0),
     double flipSpacing = 1.5,
-    VerticalDirection flipDirection = VerticalDirection.up,
+    AxisDirection flipDirection = AxisDirection.up,
     this.onDone,
   })  : _showHours = duration.inHours > 0,
         _displayBuilder = FlipClockBuilder(

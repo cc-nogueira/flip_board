@@ -5,17 +5,17 @@ import 'package:flutter/material.dart';
 
 typedef ItemBuilder<T> = Widget Function(BuildContext buildContext, T? item);
 
-/// VerticalFliWidget animates the display of items through flip animations.
+/// FliWidget animates the display of items through flip animations.
 ///
-/// Resembles a single Mechanical Flip Board display, such as a digit or a letter,
+/// Resembles a single Mechanical Flip Board display element, such as a digit or a letter,
 /// but can actualy render any widget you build.
-class VerticalFlipWidget<T> extends StatefulWidget {
-  const VerticalFlipWidget({
+class FlipWidget<T> extends StatefulWidget {
+  const FlipWidget({
     Key? key,
     required this.itemStream,
     required this.itemBuilder,
+    required this.direction,
     this.initialValue,
-    this.direction = VerticalDirection.down,
     this.duration = const Duration(milliseconds: 300),
     this.spacing = 0.0,
     this.perspectiveEffect = 0.006,
@@ -27,19 +27,21 @@ class VerticalFlipWidget<T> extends StatefulWidget {
   final ItemBuilder<T> itemBuilder;
   final T? initialValue;
   final Duration duration;
-  final VerticalDirection direction;
+  final AxisDirection direction;
   final double spacing;
   final double perspectiveEffect;
   final void Function()? onDone;
   final int startCount;
 
+  Axis get axis => axisDirectionToAxis(direction);
+
   @override
-  VerticalFlipWidgetState<T> createState() => VerticalFlipWidgetState<T>();
+  FlipWidgetState<T> createState() => FlipWidgetState<T>();
 }
 
-class VerticalFlipWidgetState<T> extends State<VerticalFlipWidget<T>>
+class FlipWidgetState<T> extends State<FlipWidget<T>>
     with SingleTickerProviderStateMixin {
-  final _clipper = WidgetClipper();
+  final _clipper = _WidgetClipper();
 
   late final AnimationController _controller;
   late final Animation _animation;
@@ -52,9 +54,9 @@ class VerticalFlipWidgetState<T> extends State<VerticalFlipWidget<T>>
 
   T? _currentValue, _nextValue;
 
-  late Widget _child2;
-  late Widget _upperChild1, _upperChild2;
-  late Widget _lowerChild1, _lowerChild2;
+  late Widget _nextChild;
+  late Widget _firstPanelChild1, _firstPanelChild2;
+  late Widget _secondPanelChild1, _secondPanelChild2;
 
   @override
   void initState() {
@@ -91,7 +93,7 @@ class VerticalFlipWidgetState<T> extends State<VerticalFlipWidget<T>>
   }
 
   @override
-  void didUpdateWidget(covariant VerticalFlipWidget<T> oldWidget) {
+  void didUpdateWidget(covariant FlipWidget<T> oldWidget) {
     if (oldWidget.startCount != widget.startCount) {
       _initValues();
     }
@@ -120,15 +122,7 @@ class VerticalFlipWidgetState<T> extends State<VerticalFlipWidget<T>>
   @override
   Widget build(BuildContext context) {
     _buildChildWidgets(context);
-    return _buildBoard();
-  }
-
-  void _initChildWidgets(BuildContext context) {
-    _child2 = widget.itemBuilder(context, widget.initialValue);
-    _upperChild2 = _clipper.makeUpperClip(_child2);
-    _lowerChild2 = _clipper.makeLowerClip(_child2);
-    _upperChild1 = _upperChild2;
-    _lowerChild1 = _lowerChild2;
+    return _buildDisplay();
   }
 
   void _buildChildWidgets(BuildContext context) {
@@ -138,108 +132,181 @@ class VerticalFlipWidgetState<T> extends State<VerticalFlipWidget<T>>
     }
 
     if (_running) {
-      _child2 = widget.itemBuilder(context, _nextValue);
-      _upperChild2 = _clipper.makeUpperClip(_child2);
-      _lowerChild2 = _clipper.makeLowerClip(_child2);
+      _nextChild = widget.itemBuilder(context, _nextValue);
+      _firstPanelChild2 = _clipper.makeFirstClip(_nextChild, widget.axis);
+      _secondPanelChild2 = _clipper.makeSecondClip(_nextChild, widget.axis);
     } else {
-      _upperChild1 = _upperChild2;
-      _lowerChild1 = _lowerChild2;
+      _firstPanelChild1 = _firstPanelChild2;
+      _secondPanelChild1 = _secondPanelChild2;
     }
   }
 
-  Widget _buildBoard() {
-    return _running
+  void _initChildWidgets(BuildContext context) {
+    _nextChild = widget.itemBuilder(context, widget.initialValue);
+    _firstPanelChild2 = _clipper.makeFirstClip(_nextChild, widget.axis);
+    _secondPanelChild2 = _clipper.makeSecondClip(_nextChild, widget.axis);
+    _firstPanelChild1 = _firstPanelChild2;
+    _secondPanelChild1 = _secondPanelChild2;
+  }
+
+  Widget _buildDisplay() {
+    final children = _running
+        ? [
+            _buildFirstFlipPanel(),
+            Padding(
+              padding: EdgeInsets.only(
+                top: widget.spacing,
+                left: widget.spacing,
+              ),
+            ),
+            _buildSecondFlipPanel(),
+          ]
+        : [
+            _transform1FirstPanel(AxisDirection.up),
+            Padding(
+              padding: EdgeInsets.only(
+                top: widget.spacing,
+                left: widget.spacing,
+              ),
+            ),
+            _transform1SecondPanel(AxisDirection.down),
+          ];
+
+    return widget.axis == Axis.vertical
         ? Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              _buildUpperFlipPanel(),
-              Padding(padding: EdgeInsets.only(top: widget.spacing)),
-              _buildLowerFlipPanel(),
-            ],
+            children: children,
           )
-        : Column(
+        : Row(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              _transform1UpperPanel(VerticalDirection.up),
-              Padding(padding: EdgeInsets.only(top: widget.spacing)),
-              _transform1LowerPanel(VerticalDirection.down),
-            ],
+            children: children,
           );
   }
 
-  Widget _buildUpperFlipPanel() => Stack(
+  Widget _buildFirstFlipPanel() => Stack(
         children: [
-          _transform1UpperPanel(widget.direction),
-          _transform2UpperPanel(widget.direction),
+          _transform1FirstPanel(widget.direction),
+          _transform2FirstPanel(widget.direction),
         ],
       );
 
-  Widget _buildLowerFlipPanel() => Stack(
+  Widget _buildSecondFlipPanel() => Stack(
         children: [
-          _transform1LowerPanel(widget.direction),
-          _transform2LowerPanel(widget.direction),
+          _transform1SecondPanel(widget.direction),
+          _transform2SecondPanel(widget.direction),
         ],
       );
 
-  Transform _transform1UpperPanel(VerticalDirection direction) => Transform(
-      alignment: Alignment.bottomCenter,
+  Transform _transform1FirstPanel(AxisDirection direction) => Transform(
+      alignment: widget.axis == Axis.vertical
+          ? Alignment.bottomCenter
+          : Alignment.centerRight,
       transform: Matrix4.identity()
         ..setEntry(3, 2, _perspectiveAnimation.value),
-      child: direction == VerticalDirection.up ? _upperChild1 : _upperChild2);
+      child: direction == AxisDirection.up || direction == AxisDirection.left
+          ? _firstPanelChild1
+          : _firstPanelChild2);
 
-  Transform _transform1LowerPanel(VerticalDirection direction) => Transform(
-      alignment: Alignment.topCenter,
+  Transform _transform1SecondPanel(AxisDirection direction) => Transform(
+      alignment: widget.axis == Axis.vertical
+          ? Alignment.topCenter
+          : Alignment.centerLeft,
       transform: Matrix4.identity()
         ..setEntry(3, 2, _perspectiveAnimation.value),
-      child: direction == VerticalDirection.up ? _lowerChild2 : _lowerChild1);
+      child: direction == AxisDirection.up || direction == AxisDirection.left
+          ? _secondPanelChild2
+          : _secondPanelChild1);
 
-  Transform _transform2UpperPanel(VerticalDirection direction) {
-    final isUp = direction == VerticalDirection.up;
-    final rotX = isUp == _isReversePhase ? _animation.value : math.pi / 2;
+  Transform _transform2FirstPanel(AxisDirection direction) {
+    final isAxisVertical = widget.axis == Axis.vertical;
+    final isUpOrLeft =
+        direction == AxisDirection.up || direction == AxisDirection.left;
+    final sign = isAxisVertical ? 1.0 : -1.0;
+    final rotation =
+        (isUpOrLeft == _isReversePhase ? _animation.value : math.pi / 2) * sign;
+
+    final transform = Matrix4.identity()
+      ..setEntry(3, 2, _perspectiveAnimation.value);
+
+    if (isAxisVertical) {
+      transform.rotateX(rotation);
+    } else {
+      transform.rotateY(rotation);
+    }
     return Transform(
-      alignment: Alignment.bottomCenter,
-      transform: Matrix4.identity()
-        ..setEntry(3, 2, _perspectiveAnimation.value)
-        ..rotateX(rotX),
-      child: isUp ? _upperChild2 : _upperChild1,
+      alignment:
+          isAxisVertical ? Alignment.bottomCenter : Alignment.centerRight,
+      transform: transform,
+      child: isUpOrLeft ? _firstPanelChild2 : _firstPanelChild1,
     );
   }
 
-  Transform _transform2LowerPanel(VerticalDirection direction) {
-    final isUp = direction == VerticalDirection.up;
-    final rotX = isUp == _isReversePhase ? math.pi / 2 : -_animation.value;
+  Transform _transform2SecondPanel(AxisDirection direction) {
+    final isAxisVertical = widget.axis == Axis.vertical;
+    final isUpOrLeft =
+        direction == AxisDirection.up || direction == AxisDirection.left;
+    final sign = isAxisVertical ? 1.0 : -1.0;
+    final rotation =
+        (isUpOrLeft == _isReversePhase ? math.pi / 2 : -_animation.value) *
+            sign;
+
+    final transform = Matrix4.identity()
+      ..setEntry(3, 2, _perspectiveAnimation.value);
+
+    if (isAxisVertical) {
+      transform.rotateX(rotation);
+    } else {
+      transform.rotateY(rotation);
+    }
+
     return Transform(
-      alignment: Alignment.topCenter,
-      transform: Matrix4.identity()
-        ..setEntry(3, 2, _perspectiveAnimation.value)
-        ..rotateX(rotX),
-      child: isUp ? _lowerChild1 : _lowerChild2,
+      alignment: isAxisVertical ? Alignment.topCenter : Alignment.centerLeft,
+      transform: transform,
+      child: isUpOrLeft ? _secondPanelChild1 : _secondPanelChild2,
     );
   }
 }
 
-class WidgetClipper {
-  Widget makeUpperClip(Widget widget) {
-    return ClipRect(
-      child: Align(
-        alignment: Alignment.topCenter,
-        heightFactor: 0.5,
-        child: widget,
-      ),
-    );
-  }
+class _WidgetClipper {
+  Widget makeFirstClip(Widget widget, Axis axis) =>
+      axis == Axis.horizontal ? makeLeftClip(widget) : makeUpperClip(widget);
 
-  Widget makeLowerClip(Widget widget) {
-    return ClipRect(
-      child: Align(
-        alignment: Alignment.bottomCenter,
-        heightFactor: 0.5,
-        child: widget,
-      ),
-    );
-  }
+  Widget makeSecondClip(Widget widget, Axis axis) =>
+      axis == Axis.horizontal ? makeRightClip(widget) : makeLowerClip(widget);
+
+  Widget makeUpperClip(Widget widget) => ClipRect(
+        child: Align(
+          alignment: Alignment.topCenter,
+          heightFactor: 0.5,
+          child: widget,
+        ),
+      );
+
+  Widget makeLowerClip(Widget widget) => ClipRect(
+        child: Align(
+          alignment: Alignment.bottomCenter,
+          heightFactor: 0.5,
+          child: widget,
+        ),
+      );
+
+  Widget makeLeftClip(Widget widget) => ClipRect(
+        child: Align(
+          alignment: Alignment.centerLeft,
+          widthFactor: 0.5,
+          child: widget,
+        ),
+      );
+
+  Widget makeRightClip(Widget widget) => ClipRect(
+        child: Align(
+          alignment: Alignment.centerRight,
+          widthFactor: 0.5,
+          child: widget,
+        ),
+      );
 }

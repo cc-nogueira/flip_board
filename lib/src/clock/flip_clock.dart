@@ -19,7 +19,7 @@ class FlipClock extends StatelessWidget {
     BorderRadius borderRadius = const BorderRadius.all(Radius.circular(4.0)),
     EdgeInsets digitSpacing = const EdgeInsets.symmetric(horizontal: 2.0),
     double flipSpacing = 1.5,
-    VerticalDirection flipDirection = VerticalDirection.down,
+    AxisDirection flipDirection = AxisDirection.down,
   })  : _displayBuilder = FlipClockBuilder(
           digitColor: digitColor,
           backgroundColor: backgroundColor,

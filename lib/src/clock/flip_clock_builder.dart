@@ -27,7 +27,7 @@ class FlipClockBuilder {
   final BorderRadius borderRadius;
   final EdgeInsets digitSpacing;
   final double flipSpacing;
-  final VerticalDirection flipDirection;
+  final AxisDirection flipDirection;
 
   /// Builds a Flip display for a time part (hour, minute, second).
   ///
@@ -56,7 +56,7 @@ class FlipClockBuilder {
         children: [
           Padding(
             padding: digitSpacing,
-            child: VerticalFlipWidget<int>(
+            child: FlipWidget<int>(
               itemStream: digitStream,
               itemBuilder: _digitBuilder,
               initialValue: initialValue,

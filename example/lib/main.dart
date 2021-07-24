@@ -5,6 +5,7 @@ import 'pages/board/flip_matrix_board_single_child_page.dart';
 import 'pages/board/flip_matrix_board_stream_page.dart';
 import 'pages/clock/flip_clock_page.dart';
 import 'pages/clock/flip_countdown_clock_page.dart';
+import 'pages/widget/flip_widget_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -15,6 +16,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flip Board',
       routes: {
+        'flip_widget': _flipWidgetPage,
         'flip_image': _flipImagePage,
         'flip_stream': _flipStreamPage,
         'flip_frase_board': (_) => FlipFraseBoardPage(),
@@ -25,12 +27,15 @@ class MyApp extends StatelessWidget {
     );
   }
 
+  Widget _flipWidgetPage(BuildContext context) => FlipWidgetPage();
+
   Widget _flipImagePage(BuildContext context) => FlipMatrixBoardSingleChildPage(
         imageName: 'assets/flutter.png',
+        axis: Axis.vertical,
         width: 375.0,
         height: 200.0,
         columns: 8,
-        rows: 2,
+        rows: 4,
       );
 
   Widget _flipStreamPage(BuildContext context) {
@@ -42,6 +47,7 @@ class MyApp extends StatelessWidget {
     ];
     return FlipMatrixBoardStreamPage(
       imageNames: images,
+      axis: Axis.vertical,
       width: 375.0,
       height: 200.0,
       columns: 8,
@@ -66,6 +72,12 @@ class HomePage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
+              ListTile(
+                leading: const Icon(Icons.image, size: 48.0),
+                title: const Text('Flip Widget'),
+                subtitle: const Text('Simple Flip Widgets'),
+                onTap: () => Navigator.of(context).pushNamed('flip_widget'),
+              ),
               ListTile(
                 leading: const Icon(Icons.image, size: 48.0),
                 title: const Text('Flip Image Board'),

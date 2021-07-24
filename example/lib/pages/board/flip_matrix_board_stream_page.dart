@@ -7,6 +7,7 @@ class FlipMatrixBoardStreamPage extends StatelessWidget {
     Key? key,
     this.initialImageName,
     required this.imageNames,
+    required this.axis,
     required this.width,
     required this.height,
     required this.columns,
@@ -17,6 +18,7 @@ class FlipMatrixBoardStreamPage extends StatelessWidget {
 
   final String? initialImageName;
   final List<String> imageNames;
+  final Axis axis;
   final double width;
   final double height;
   final int columns;
@@ -39,6 +41,7 @@ class FlipMatrixBoardStreamPage extends StatelessWidget {
                     initialValue: initialImageName,
                     itemStream: _itemStream,
                     itemBuilder: _itemBuilder,
+                    axis: axis,
                     width: width,
                     height: height,
                     columnCount: columns,

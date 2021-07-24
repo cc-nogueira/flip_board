@@ -9,6 +9,7 @@ final _random = Random();
 
 abstract class FlipMatrixBoardBuilder<T> {
   const FlipMatrixBoardBuilder({
+    required this.axis,
     required this.width,
     required this.height,
     required this.columnCount,
@@ -22,6 +23,7 @@ abstract class FlipMatrixBoardBuilder<T> {
         heightSizeFactor = 1.0 / rowCount,
         heightAlignFactor = rowCount == 1 ? 1.0 : 2.0 / (rowCount - 1);
 
+  final Axis axis;
   final double width;
   final double height;
   final int columnCount;
@@ -52,7 +54,7 @@ abstract class FlipMatrixBoardBuilder<T> {
   List<Widget> _buildColumns(BuildContext context, int row) =>
       Iterable<int>.generate(columnCount)
           .map(
-            (col) => VerticalFlipWidget<T>(
+            (col) => FlipWidget<T>(
               initialValue: initialValue,
               itemStream: randomDelayedStream(),
               itemBuilder: (_, value) => value == null
@@ -84,14 +86,15 @@ abstract class FlipMatrixBoardBuilder<T> {
 
   Widget buildChild(BuildContext context, T value);
 
-  VerticalDirection _randomDirection() => _random.nextInt(10).isEven
-      ? VerticalDirection.up
-      : VerticalDirection.down;
+  AxisDirection _randomDirection() => _random.nextInt(10).isEven
+      ? (axis == Axis.vertical ? AxisDirection.up : AxisDirection.left)
+      : (axis == Axis.vertical ? AxisDirection.down : AxisDirection.right);
 }
 
 class SingleChildFlipMatrixBoardBuilder extends FlipMatrixBoardBuilder<Widget> {
   const SingleChildFlipMatrixBoardBuilder({
     required this.child,
+    required Axis axis,
     required double width,
     required double height,
     required int columnCount,
@@ -99,6 +102,7 @@ class SingleChildFlipMatrixBoardBuilder extends FlipMatrixBoardBuilder<Widget> {
     int animationMillis = 2000,
     Color backgroundColor = Colors.white,
   }) : super(
+            axis: axis,
             width: width,
             height: height,
             columnCount: columnCount,
@@ -125,6 +129,7 @@ class StreamFlipMatrixBoardBuilder<T> extends FlipMatrixBoardBuilder<T> {
     this.initialValue,
     required this.itemStream,
     required this.itemBuilder,
+    required Axis axis,
     required double width,
     required double height,
     required int columnCount,
@@ -132,6 +137,7 @@ class StreamFlipMatrixBoardBuilder<T> extends FlipMatrixBoardBuilder<T> {
     int animationMillis = 2000,
     Color backgroundColor = Colors.white,
   }) : super(
+            axis: axis,
             width: width,
             height: height,
             columnCount: columnCount,

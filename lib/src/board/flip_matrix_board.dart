@@ -9,6 +9,7 @@ class FlipMatrixBoardSingleChild extends StatelessWidget {
   FlipMatrixBoardSingleChild({
     Key? key,
     required Widget child,
+    required Axis axis,
     required double width,
     required double height,
     required int columnCount,
@@ -17,6 +18,7 @@ class FlipMatrixBoardSingleChild extends StatelessWidget {
     Color backgroundColor = Colors.white,
   })  : _builder = SingleChildFlipMatrixBoardBuilder(
           child: child,
+          axis: axis,
           width: width,
           height: height,
           columnCount: columnCount,
@@ -27,6 +29,7 @@ class FlipMatrixBoardSingleChild extends StatelessWidget {
   FlipMatrixBoardSingleChild.assetImage({
     Key? key,
     required String imageName,
+    required Axis axis,
     required double width,
     required double height,
     required int columnCount,
@@ -40,6 +43,7 @@ class FlipMatrixBoardSingleChild extends StatelessWidget {
             width: width,
             height: height,
           ),
+          axis: axis,
           width: width,
           height: height,
           columnCount: columnCount,
@@ -60,6 +64,7 @@ class FlipMatrixBoardStream<T> extends StatefulWidget {
     this.initialValue,
     required this.itemStream,
     required this.itemBuilder,
+    required this.axis,
     required this.width,
     required this.height,
     required this.columnCount,
@@ -72,6 +77,7 @@ class FlipMatrixBoardStream<T> extends StatefulWidget {
   final Stream<T> itemStream;
   final ItemBuilder<T> itemBuilder;
 
+  final Axis axis;
   final double width;
   final double height;
   final int columnCount;
@@ -97,6 +103,7 @@ class _FlipMatrixBoardStreamState<T> extends State<FlipMatrixBoardStream<T>> {
       initialValue: widget.initialValue,
       itemStream: _controller.stream,
       itemBuilder: widget.itemBuilder,
+      axis: widget.axis,
       width: widget.width,
       height: widget.height,
       columnCount: widget.columnCount,

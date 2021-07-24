@@ -26,6 +26,7 @@ class FlipFraseBoard extends StatelessWidget {
     String? startLetter,
     required String endFrase,
     required this.fontSize,
+    required this.axis,
     this.startColors,
     this.endColors,
     this.digitColors,
@@ -54,6 +55,7 @@ class FlipFraseBoard extends StatelessWidget {
   }
 
   final Characters startChars, endChars;
+  final Axis axis;
   final double fontSize;
   final double letterSpacing;
   final double flipSpacing;
@@ -120,7 +122,7 @@ class FlipFraseBoard extends StatelessWidget {
     final digitColor = _color(digitColors, index) ?? colorScheme.onPrimary;
 
     return Container(
-      child: VerticalFlipWidget<String>(
+      child: FlipWidget<String>(
         startCount: startCount,
         itemStream: _letterStream(startLetter, endLetter, delay),
         // itemStream: _letterStream(startLetter, endLetter, delay),
@@ -190,8 +192,12 @@ class FlipFraseBoard extends StatelessWidget {
     ).takeWhile((item) => item.isNotEmpty);
   }
 
-  VerticalDirection _letterDirection(String startLetter, String endLetter) =>
+  AxisDirection _letterDirection(String startLetter, String endLetter) =>
       startLetter.codeUnitAt(0) < endLetter.codeUnitAt(0)
-          ? VerticalDirection.down
-          : VerticalDirection.up;
+          ? axis == Axis.vertical
+              ? AxisDirection.down
+              : AxisDirection.left
+          : axis == Axis.vertical
+              ? AxisDirection.up
+              : AxisDirection.right;
 }

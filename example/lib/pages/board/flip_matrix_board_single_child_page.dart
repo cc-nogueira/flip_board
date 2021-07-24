@@ -5,12 +5,14 @@ class FlipMatrixBoardSingleChildPage extends StatelessWidget {
   FlipMatrixBoardSingleChildPage({
     Key? key,
     required String imageName,
+    required Axis axis,
     required double width,
     required double height,
     required int columns,
     required int rows,
   })  : _imageFlipBoard = FlipMatrixBoardSingleChild.assetImage(
           imageName: imageName,
+          axis: axis,
           width: width,
           height: height,
           columnCount: columns,

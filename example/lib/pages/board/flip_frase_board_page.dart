@@ -17,11 +17,6 @@ class _FlipFraseBoardPageState extends State<FlipFraseBoardPage> {
   final _startNotifier = ValueNotifier(0);
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('Flip Frase Board')),
         body: Theme(
@@ -35,18 +30,20 @@ class _FlipFraseBoardPageState extends State<FlipFraseBoardPage> {
                 FlipFraseBoard(
                   startLetter: 'A',
                   endFrase: 'FLUTTER',
+                  axis: Axis.horizontal,
                   fontSize: 42.0,
+                  flipSpacing: 0.4,
                   letterSpacing: 3.0,
                   onDone: () => _onDone(0),
-                  flipSpacing: 0.0,
                   startNotifier: _startNotifier,
                 ),
                 const SizedBox(height: 10.0),
                 FlipFraseBoard(
                   startLetter: 'A',
                   endFrase: 'FLIP BOARD',
+                  axis: Axis.vertical,
                   fontSize: 30.0,
-                  flipSpacing: 0.8,
+                  flipSpacing: 0.6,
                   endColors: _endColors,
                   onDone: () => _onDone(1),
                   startNotifier: _startNotifier,
