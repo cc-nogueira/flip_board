@@ -239,24 +239,23 @@ class _FlipWidgetState<T> extends State<FlipWidget<T>>
           : _secondPanelChild1);
 
   Transform _transform2FirstPanel(AxisDirection direction) {
-    final isAxisVertical = widget.axis == Axis.vertical;
+    final isVertical = widget.axis == Axis.vertical;
     final isUpOrLeft =
         direction == AxisDirection.up || direction == AxisDirection.left;
-    final sign = isAxisVertical ? 1.0 : -1.0;
+    final sign = isVertical ? 1.0 : -1.0;
     final rotation =
         (isUpOrLeft == _isReversePhase ? _animation.value : math.pi / 2) * sign;
 
     final transform = Matrix4.identity()
       ..setEntry(3, 2, _perspectiveAnimation.value);
 
-    if (isAxisVertical) {
+    if (isVertical) {
       transform.rotateX(rotation);
     } else {
       transform.rotateY(rotation);
     }
     return Transform(
-      alignment:
-          isAxisVertical ? Alignment.bottomCenter : Alignment.centerRight,
+      alignment: isVertical ? Alignment.bottomCenter : Alignment.centerRight,
       transform: transform,
       child: isUpOrLeft ? _firstPanelChild2 : _firstPanelChild1,
     );
@@ -288,7 +287,7 @@ class _FlipWidgetState<T> extends State<FlipWidget<T>>
   }
 }
 
-/// Helper class to clip each flip panel rectanble
+/// Helper class to clip each flip panel rectangle
 class _WidgetClipper {
   const _WidgetClipper();
 
