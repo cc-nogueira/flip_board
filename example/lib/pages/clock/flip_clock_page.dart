@@ -3,28 +3,30 @@ import 'package:flutter/material.dart';
 
 class FlipClockPage extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Flip Clock')),
-      body: Center(
-        child: Container(
-          decoration: const BoxDecoration(
-              color: Colors.black,
-              borderRadius: BorderRadius.all(Radius.circular(4.0))),
-          height: 71.0,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 2.0, vertical: 4.0),
-            child: FlipClock(
-              digitColor: Colors.white,
-              backgroundColor: const Color(0xFF004046),
-              digitSize: 54.0,
-              width: 46.0,
-              height: 62.0,
-              flipSpacing: 0.8,
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(title: const Text('Flip Clock')),
+        body: Theme(
+          data: ThemeData.from(
+            colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.amber),
+          ),
+          child: Center(
+            child: Container(
+              decoration: const BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.all(Radius.circular(4.0))),
+              height: 71.0,
+              padding: const EdgeInsets.symmetric(
+                horizontal: 2.0,
+                vertical: 4.0,
+              ),
+              child: FlipClock(
+                digitSize: 54.0,
+                width: 46.0,
+                height: 62.0,
+                separatorColor: Colors.grey,
+              ),
             ),
           ),
         ),
-      ),
-    );
-  }
+      );
 }

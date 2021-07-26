@@ -6,26 +6,40 @@ import 'flip_clock_builder.dart';
 
 /// FlipClock display with current time.
 ///
-/// Display a row of [VerticalFlipWidget] to show the current time digits,
-/// this digits are refreshed by a stream of [DateTime].now() instances
+/// Display a row of [FlipWidget] to show the current time digits,
+/// this digits are refreshed by a stream of [DateTime].now() instances.
+/// Since FlipWidget only animate changes, only digits that actually
+/// change between seconds are flipped.
+///
+/// Constructor parameters define clock digits and flip panel appearance.
+/// - backgroundColor defauts to colorScheme.primary.
+/// - digitColor and separatorColor defaults to colorScheme.onPrimary.
+/// - separatorColor defaults to colorScheme.onPrimary.
+/// - separatorBackground defaults to null (no separator background color)
 class FlipClock extends StatelessWidget {
   FlipClock({
     Key? key,
-    required Color digitColor,
-    required Color backgroundColor,
+    Color? digitColor,
+    Color? backgroundColor,
+    Color? separatorColor,
+    Color? separatorBackgroundColor,
     required double digitSize,
     required double height,
     required double width,
+    double? separatorWidth,
     BorderRadius borderRadius = const BorderRadius.all(Radius.circular(4.0)),
     EdgeInsets digitSpacing = const EdgeInsets.symmetric(horizontal: 2.0),
-    double flipSpacing = 1.5,
+    double flipSpacing = 0.8,
     AxisDirection flipDirection = AxisDirection.down,
   })  : _displayBuilder = FlipClockBuilder(
           digitColor: digitColor,
           backgroundColor: backgroundColor,
+          separatorColor: separatorColor,
+          separatorBackgroundColor: separatorBackgroundColor,
           digitSize: digitSize,
           height: height,
           width: width,
+          separatorWidth: separatorWidth ?? width / 3.0,
           borderRadius: borderRadius,
           digitSpacing: digitSpacing,
           flipSpacing: flipSpacing,
@@ -48,9 +62,9 @@ class FlipClock extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         _buildHourDisplay(timeStream, initValue),
-        _displayBuilder.buildSeparator(),
+        _displayBuilder.buildSeparator(context),
         _buildMinuteDisplay(timeStream, initValue),
-        _displayBuilder.buildSeparator(),
+        _displayBuilder.buildSeparator(context),
         _buildSecondDisplay(timeStream, initValue),
       ],
     );
