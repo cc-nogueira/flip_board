@@ -74,8 +74,8 @@ abstract class FlipMatrixBoardBuilder<T> {
                         child: buildChild(context, value),
                       ),
                     ),
-              spacing: 0.0,
-              direction: _randomDirection(),
+              panelSpacing: 0.0,
+              flipDirection: _randomDirection(),
             ),
           )
           .toList();

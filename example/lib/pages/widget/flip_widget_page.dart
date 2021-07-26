@@ -79,10 +79,11 @@ class _FlipWidgetState extends State<FlipWidgetPage> {
           itemStream: _controller.stream,
           itemBuilder: _itemBuilder,
           initialValue: _value,
-          direction: direction,
+          flipDirection: direction,
           perspectiveEffect: 0.008,
-          spacing: axisDirectionToAxis(direction) == Axis.vertical ? 0.8 : 1.1,
-          duration: const Duration(milliseconds: 600),
+          panelSpacing:
+              axisDirectionToAxis(direction) == Axis.vertical ? 0.8 : 1.1,
+          flipDuration: const Duration(milliseconds: 600),
         ),
       );
 

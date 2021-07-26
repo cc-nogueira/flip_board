@@ -134,9 +134,9 @@ class FlipFraseBoard extends StatelessWidget {
           endColor: endColor,
           digitColor: digitColor,
         ),
-        direction: _letterDirection(startLetter, endLetter),
-        duration: Duration(milliseconds: delay ~/ 3),
-        spacing: flipSpacing,
+        flipDirection: _letterDirection(startLetter, endLetter),
+        flipDuration: Duration(milliseconds: delay ~/ 3),
+        panelSpacing: flipSpacing,
         onDone: () => _onStreamDone(index),
       ),
     );

@@ -9,15 +9,31 @@ typedef ItemBuilder<T> = Widget Function(BuildContext buildContext, T? item);
 ///
 /// Resembles a single Mechanical Flip Board display element, such as a digit or a letter,
 /// but can actualy render any widget you build.
+///
+/// Constructor with three required parameters:
+/// FlipWidget<T>(
+///   required Stream<T> itemStream,        // Stream of items to flip as they arrive
+///   required ItemBuilder<T> itemBuilder,  // Builder function to create a Widget of each item
+///   required AxisDirection flipDirection, // Direction of flip
+///
+///   T? initialValue,           // Initial item to build before the first stream item
+///   Duration flipDuration,     // Duration of the flip animation
+///   double panelSpacing,       // Spacing betwewn the pair of widget panels
+///   double perspectiveEffect,  // Perspective effect for the Transform Matrix4
+///   VoidCallback onDone,       // Optional callback for onDone stream event
+///   int startCount,            // Widget state count that allows the widget state to restart stream listening on widget update.
+/// )
+///
+///
 class FlipWidget<T> extends StatefulWidget {
   const FlipWidget({
     Key? key,
     required this.itemStream,
     required this.itemBuilder,
-    required this.direction,
+    required this.flipDirection,
     this.initialValue,
-    this.duration = const Duration(milliseconds: 300),
-    this.spacing = 0.0,
+    this.flipDuration = const Duration(milliseconds: 300),
+    this.panelSpacing = 0.0,
     this.perspectiveEffect = 0.006,
     this.onDone,
     this.startCount = 0,
@@ -25,23 +41,27 @@ class FlipWidget<T> extends StatefulWidget {
 
   final Stream<T> itemStream;
   final ItemBuilder<T> itemBuilder;
+  final AxisDirection flipDirection;
   final T? initialValue;
-  final Duration duration;
-  final AxisDirection direction;
-  final double spacing;
+  final Duration flipDuration;
+  final double panelSpacing;
   final double perspectiveEffect;
-  final void Function()? onDone;
+  final VoidCallback? onDone;
   final int startCount;
 
-  Axis get axis => axisDirectionToAxis(direction);
+  Axis get axis => axisDirectionToAxis(flipDirection);
 
   @override
-  FlipWidgetState<T> createState() => FlipWidgetState<T>();
+  _FlipWidgetState<T> createState() => _FlipWidgetState<T>();
 }
 
-class FlipWidgetState<T> extends State<FlipWidget<T>>
+/// FlipWidget state class
+///
+/// Performs flip animations as widget.itemStream delivers items.
+/// Parameters are documented in [FlipWidget] class constructor.
+class _FlipWidgetState<T> extends State<FlipWidget<T>>
     with SingleTickerProviderStateMixin {
-  final _clipper = _WidgetClipper();
+  final _clipper = const _WidgetClipper();
 
   late final AnimationController _controller;
   late final Animation _animation;
@@ -64,18 +84,19 @@ class FlipWidgetState<T> extends State<FlipWidget<T>>
     _isReversePhase = false;
     _running = false;
 
-    _controller = AnimationController(duration: widget.duration, vsync: this)
-      ..addStatusListener((status) {
-        if (status == AnimationStatus.completed) {
-          _isReversePhase = true;
-          _controller.reverse();
-        }
-        if (status == AnimationStatus.dismissed) {
-          _currentValue = _nextValue ?? _currentValue;
-          _running = false;
-        }
-      })
-      ..addListener(_onRun);
+    _controller =
+        AnimationController(duration: widget.flipDuration, vsync: this)
+          ..addStatusListener((status) {
+            if (status == AnimationStatus.completed) {
+              _isReversePhase = true;
+              _controller.reverse();
+            }
+            if (status == AnimationStatus.dismissed) {
+              _currentValue = _nextValue ?? _currentValue;
+              _running = false;
+            }
+          })
+          ..addListener(() => setState(() => _running = true));
 
     _animation = Tween(begin: 0.0, end: math.pi / 2).animate(_controller);
     _perspectiveAnimation =
@@ -105,10 +126,6 @@ class FlipWidgetState<T> extends State<FlipWidget<T>>
     _controller.dispose();
     _subscription?.cancel();
     super.dispose();
-  }
-
-  void _onRun() {
-    setState(() => _running = true);
   }
 
   void _onNewItem(T value) {
@@ -153,22 +170,12 @@ class FlipWidgetState<T> extends State<FlipWidget<T>>
     final children = _running
         ? [
             _buildFirstFlipPanel(),
-            Padding(
-              padding: EdgeInsets.only(
-                top: widget.spacing,
-                left: widget.spacing,
-              ),
-            ),
+            _padding,
             _buildSecondFlipPanel(),
           ]
         : [
             _transform1FirstPanel(AxisDirection.up),
-            Padding(
-              padding: EdgeInsets.only(
-                top: widget.spacing,
-                left: widget.spacing,
-              ),
-            ),
+            _padding,
             _transform1SecondPanel(AxisDirection.down),
           ];
 
@@ -187,17 +194,24 @@ class FlipWidgetState<T> extends State<FlipWidget<T>>
           );
   }
 
+  Widget get _padding => Padding(
+        padding: EdgeInsets.only(
+          top: widget.panelSpacing,
+          left: widget.panelSpacing,
+        ),
+      );
+
   Widget _buildFirstFlipPanel() => Stack(
         children: [
-          _transform1FirstPanel(widget.direction),
-          _transform2FirstPanel(widget.direction),
+          _transform1FirstPanel(widget.flipDirection),
+          _transform2FirstPanel(widget.flipDirection),
         ],
       );
 
   Widget _buildSecondFlipPanel() => Stack(
         children: [
-          _transform1SecondPanel(widget.direction),
-          _transform2SecondPanel(widget.direction),
+          _transform1SecondPanel(widget.flipDirection),
+          _transform2SecondPanel(widget.flipDirection),
         ],
       );
 
@@ -271,7 +285,10 @@ class FlipWidgetState<T> extends State<FlipWidget<T>>
   }
 }
 
+/// Helper class to clip each flip panel rectanble
 class _WidgetClipper {
+  const _WidgetClipper();
+
   Widget makeFirstClip(Widget widget, Axis axis) =>
       axis == Axis.horizontal ? makeLeftClip(widget) : makeUpperClip(widget);
 
