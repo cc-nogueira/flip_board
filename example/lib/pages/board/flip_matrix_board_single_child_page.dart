@@ -2,25 +2,22 @@ import 'package:flip_board/flip_board.dart';
 import 'package:flutter/material.dart';
 
 class FlipMatrixBoardSingleChildPage extends StatelessWidget {
-  FlipMatrixBoardSingleChildPage({
+  const FlipMatrixBoardSingleChildPage({
     Key? key,
-    required String imageName,
-    required Axis axis,
-    required double width,
-    required double height,
-    required int columns,
-    required int rows,
-  })  : _imageFlipBoard = FlipMatrixBoardSingleChild.assetImage(
-          imageName: imageName,
-          axis: axis,
-          width: width,
-          height: height,
-          columnCount: columns,
-          rowCount: rows,
-        ),
-        super(key: key);
+    required this.imageName,
+    required this.axis,
+    required this.width,
+    required this.height,
+    required this.columns,
+    required this.rows,
+  }) : super(key: key);
 
-  final FlipMatrixBoardSingleChild _imageFlipBoard;
+  final String imageName;
+  final Axis axis;
+  final double width;
+  final double height;
+  final int columns;
+  final int rows;
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -33,7 +30,14 @@ class FlipMatrixBoardSingleChildPage extends StatelessWidget {
                 Container(
                   decoration:
                       BoxDecoration(border: Border.all(color: Colors.black)),
-                  child: _imageFlipBoard,
+                  child: FlipMatrixBoardSingleChild.assetImage(
+                    imageName: imageName,
+                    axis: axis,
+                    width: width,
+                    height: height,
+                    columnCount: columns,
+                    rowCount: rows,
+                  ),
                 )
               ],
             ),

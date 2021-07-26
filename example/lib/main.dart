@@ -29,7 +29,8 @@ class MyApp extends StatelessWidget {
 
   Widget _flipWidgetPage(BuildContext context) => FlipWidgetPage();
 
-  Widget _flipImagePage(BuildContext context) => FlipMatrixBoardSingleChildPage(
+  Widget _flipImagePage(BuildContext context) =>
+      const FlipMatrixBoardSingleChildPage(
         imageName: 'assets/flutter.png',
         axis: Axis.vertical,
         width: 375.0,
@@ -73,19 +74,19 @@ class HomePage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               ListTile(
-                leading: const Icon(Icons.image, size: 48.0),
+                leading: const Icon(Icons.flip, size: 48.0),
                 title: const Text('Flip Widget'),
                 subtitle: const Text('Simple Flip Widgets'),
                 onTap: () => Navigator.of(context).pushNamed('flip_widget'),
               ),
               ListTile(
-                leading: const Icon(Icons.image, size: 48.0),
+                leading: const Icon(Icons.dashboard, size: 48.0),
                 title: const Text('Flip Image Board'),
                 subtitle: const Text('Animate the display of a single image'),
                 onTap: () => Navigator.of(context).pushNamed('flip_image'),
               ),
               ListTile(
-                leading: const Icon(Icons.imagesearch_roller, size: 48.0),
+                leading: const Icon(Icons.blur_on, size: 48.0),
                 title: const Text('Flip Stream Board'),
                 subtitle: const Text('Animate a stream of images'),
                 onTap: () => Navigator.of(context).pushNamed('flip_stream'),

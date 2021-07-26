@@ -54,10 +54,7 @@ class _FlipWidgetState extends State<FlipWidgetPage> {
         height: 100.0,
         child: IconButton(
           onPressed: _next,
-          icon: const Icon(
-            Icons.next_plan,
-            size: 48.0,
-          ),
+          icon: const Icon(Icons.add_circle, size: 48.0),
         ),
       );
 
