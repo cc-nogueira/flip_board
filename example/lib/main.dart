@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
           'flip_stream': (_) => FlipMatrixBoardStreamPage(),
           'flip_frase_board': (_) => FlipFraseBoardPage(),
           'flip_clock': (_) => FlipClockPage(),
-          'countdown_clock': (_) => CountdownClockPage(),
+          'countdown_clock': (_) => FlipCountdownClockPage(),
         },
         home: HomePage(),
       );
