@@ -1,6 +1,12 @@
 import 'package:flip_board/flip_clock.dart';
 import 'package:flutter/material.dart';
 
+/// An example page to show a [FlipCountdownClock]
+///
+/// Displays an 1 minute count down.
+/// Colors are set at the constructor level (in contrast to using ThemeData).
+///
+/// Prints a message to the console when done.
 class CountdownClockPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

@@ -3,12 +3,10 @@ import 'dart:async';
 import 'package:flip_board/flip_widget.dart';
 import 'package:flutter/material.dart';
 
-/// Page with two FlipFraseBoards showing frase board animations.
+/// Page with four FlipWidgets showing all flip direction animations.
 ///
-/// Frase animate theis chars from "AAAAAAA" to "FLUTTER" on one line,
-/// and from "AAAAAAAAAA" to "FLIP BOARD" on the second line
-/// FlipFraseBoard uses Theme colors and optional parameterized colors.
-/// Chars are flipped in different random speeds.
+/// Very simple page with four [FlipWidget] instances for the same broadcast stream.
+/// Each [FlipWidget] is configured to flip with a different AxisDirection.
 class FlipWidgetPage extends StatefulWidget {
   @override
   _FlipWidgetState createState() => _FlipWidgetState();
@@ -16,12 +14,7 @@ class FlipWidgetPage extends StatefulWidget {
 
 class _FlipWidgetState extends State<FlipWidgetPage> {
   final _controller = StreamController<int>.broadcast();
-  int _value = 0;
-
-  @override
-  void initState() {
-    super.initState();
-  }
+  int _nextValue = 0;
 
   @override
   void dispose() {
@@ -78,7 +71,7 @@ class _FlipWidgetState extends State<FlipWidgetPage> {
         child: FlipWidget(
           itemStream: _controller.stream,
           itemBuilder: _itemBuilder,
-          initialValue: _value,
+          initialValue: _nextValue,
           flipDirection: direction,
           perspectiveEffect: 0.008,
           panelSpacing:
@@ -104,5 +97,5 @@ class _FlipWidgetState extends State<FlipWidgetPage> {
         ),
       );
 
-  void _next() => _controller.add(++_value);
+  void _next() => _controller.add(++_nextValue);
 }

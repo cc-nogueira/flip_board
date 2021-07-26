@@ -1,6 +1,9 @@
 import 'package:flip_board/flip_clock.dart';
 import 'package:flutter/material.dart';
 
+/// An example page to show a [FlipClock]
+///
+/// Colors are set at through ThemeData and customized at constructor level.
 class FlipClockPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
