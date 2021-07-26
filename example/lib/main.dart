@@ -40,8 +40,6 @@ class MyApp extends StatelessWidget {
         height: 200.0,
         columns: 8,
         rows: 4,
-        animationMillis: 4000,
-        imageChangeSeconds: 6,
         imageNames: [
           'assets/flower.png',
           'assets/butterfly.png',

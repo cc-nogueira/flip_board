@@ -14,10 +14,13 @@ abstract class FlipMatrixBoardBuilder<T> {
     required this.height,
     required this.columnCount,
     required this.rowCount,
-    this.animationMillis = 2000,
+    required this.minAnimationMillis,
+    required this.maxAnimationMillis,
+    required this.maxDelayMillis,
     this.backgroundColor = Colors.white,
   })  : assert(columnCount > 1),
         assert(rowCount > 0),
+        assert(minAnimationMillis <= maxAnimationMillis),
         widthSizeFactor = 1.0 / columnCount,
         widthAlignFactor = 2.0 / (columnCount - 1),
         heightSizeFactor = 1.0 / rowCount,
@@ -28,7 +31,9 @@ abstract class FlipMatrixBoardBuilder<T> {
   final double height;
   final int columnCount;
   final int rowCount;
-  final int animationMillis;
+  final int minAnimationMillis;
+  final int maxAnimationMillis;
+  final int maxDelayMillis;
   final Color backgroundColor;
 
   final double widthSizeFactor;
@@ -75,7 +80,8 @@ abstract class FlipMatrixBoardBuilder<T> {
                       ),
                     ),
               panelSpacing: 0.0,
-              flipDirection: _randomDirection(),
+              flipDirection: _randomDirection,
+              flipDuration: _randomFlipDuration,
             ),
           )
           .toList();
@@ -84,9 +90,13 @@ abstract class FlipMatrixBoardBuilder<T> {
 
   Stream<T> randomDelayedStream();
 
+  Duration get _randomFlipDuration => Duration(
+      milliseconds: _random.nextInt(maxAnimationMillis - minAnimationMillis) +
+          minAnimationMillis);
+
   Widget buildChild(BuildContext context, T value);
 
-  AxisDirection _randomDirection() => _random.nextInt(10).isEven
+  AxisDirection get _randomDirection => _random.nextInt(10).isEven
       ? (axis == Axis.vertical ? AxisDirection.up : AxisDirection.left)
       : (axis == Axis.vertical ? AxisDirection.down : AxisDirection.right);
 }
@@ -99,7 +109,9 @@ class SingleChildFlipMatrixBoardBuilder extends FlipMatrixBoardBuilder<Widget> {
     required double height,
     required int columnCount,
     required int rowCount,
-    int animationMillis = 2000,
+    required int minAnimationMillis,
+    required int maxAnimationMillis,
+    required int maxDelayMillis,
     Color backgroundColor = Colors.white,
   }) : super(
             axis: axis,
@@ -107,7 +119,9 @@ class SingleChildFlipMatrixBoardBuilder extends FlipMatrixBoardBuilder<Widget> {
             height: height,
             columnCount: columnCount,
             rowCount: rowCount,
-            animationMillis: animationMillis,
+            minAnimationMillis: minAnimationMillis,
+            maxAnimationMillis: maxAnimationMillis,
+            maxDelayMillis: maxDelayMillis,
             backgroundColor: backgroundColor);
 
   final Widget child;
@@ -115,7 +129,7 @@ class SingleChildFlipMatrixBoardBuilder extends FlipMatrixBoardBuilder<Widget> {
   @override
   Stream<Widget> randomDelayedStream() => Stream.fromFuture(
         Future.delayed(
-          Duration(milliseconds: _random.nextInt(3000)),
+          Duration(milliseconds: _random.nextInt(maxDelayMillis)),
           () => child,
         ),
       );
@@ -134,7 +148,9 @@ class StreamFlipMatrixBoardBuilder<T> extends FlipMatrixBoardBuilder<T> {
     required double height,
     required int columnCount,
     required int rowCount,
-    int animationMillis = 2000,
+    required int minAnimationMillis,
+    required int maxAnimationMillis,
+    required int maxDelayMillis,
     Color backgroundColor = Colors.white,
   }) : super(
             axis: axis,
@@ -142,7 +158,9 @@ class StreamFlipMatrixBoardBuilder<T> extends FlipMatrixBoardBuilder<T> {
             height: height,
             columnCount: columnCount,
             rowCount: rowCount,
-            animationMillis: animationMillis,
+            minAnimationMillis: minAnimationMillis,
+            maxAnimationMillis: maxAnimationMillis,
+            maxDelayMillis: maxDelayMillis,
             backgroundColor: backgroundColor);
 
   @override
@@ -162,7 +180,7 @@ class StreamFlipMatrixBoardBuilder<T> extends FlipMatrixBoardBuilder<T> {
       StreamTransformer<T, T>.fromHandlers(
         handleData: (data, sink) async {
           await Future.delayed(
-            Duration(milliseconds: _random.nextInt(animationMillis)),
+            Duration(milliseconds: _random.nextInt(maxDelayMillis)),
             () => sink.add(data),
           );
         },

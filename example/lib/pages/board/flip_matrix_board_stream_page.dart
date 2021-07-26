@@ -17,8 +17,6 @@ import 'package:flutter/material.dart';
 ///   required double height,            // Board (and images) height
 ///   required int columns,              // Number of columns in the matrix
 ///   required int rows,                 // Number of rows in the matrix
-///   int imageChangeSeconds = 5,        // Interval in seconds to change images
-///   int animationMillis = 2000,        // Duration of the flip animation
 /// )
 ///
 /// This page includes a loop button and a pause button to demonstrate the use
@@ -32,8 +30,6 @@ class FlipMatrixBoardStreamPage extends StatefulWidget {
     required this.height,
     required this.columns,
     required this.rows,
-    this.imageChangeSeconds = 5,
-    this.animationMillis = 2000,
   })  : assert(imageNames.isNotEmpty),
         super(key: key);
 
@@ -43,8 +39,6 @@ class FlipMatrixBoardStreamPage extends StatefulWidget {
   final double height;
   final int columns;
   final int rows;
-  final int animationMillis;
-  final int imageChangeSeconds;
 
   @override
   _FlipMatrixBoardStreamPageState createState() =>
@@ -89,7 +83,6 @@ class _FlipMatrixBoardStreamPageState extends State<FlipMatrixBoardStreamPage> {
                     height: widget.height,
                     columnCount: widget.columns,
                     rowCount: widget.rows,
-                    animationMillis: widget.animationMillis,
                   ),
                 ),
                 const SizedBox(height: 20.0),
@@ -159,7 +152,7 @@ class _FlipMatrixBoardStreamPageState extends State<FlipMatrixBoardStreamPage> {
   Stream<String> _periodicItemStream(int startIdx) {
     var index = startIdx - 1;
     return Stream.periodic(
-      Duration(seconds: widget.imageChangeSeconds),
+      const Duration(seconds: 6),
       (count) {
         if (_paused) return '';
         index = (index + 1) % widget.imageNames.length;
