@@ -6,39 +6,19 @@ import 'package:flutter/material.dart';
 
 /// Example page to display a [FlipMatrixBoardStream] of images.
 ///
-/// Presents a FlipMatrix that will display the images from list of imageNames
-/// representing local asset paths.
-///
-/// The page constructor sets all configuration options:
-/// FlipMatricBoardStreamPage(
-///   required List<String> imagenNames, // Image.asset names
-///   required Axis axis,                // Defines horizontal or vertical flips
-///   required double width,             // Board (and image) width
-///   required double height,            // Board (and images) height
-///   required int columns,              // Number of columns in the matrix
-///   required int rows,                 // Number of rows in the matrix
-/// )
+/// Presents a FlipMatrix that will display the images from list asset paths.
 ///
 /// This page includes a loop button and a pause button to demonstrate the use
 /// of an internal stream to controll flip feeding.
 class FlipMatrixBoardStreamPage extends StatefulWidget {
-  FlipMatrixBoardStreamPage({
-    Key? key,
-    required this.imageNames,
-    required this.axis,
-    required this.width,
-    required this.height,
-    required this.columns,
-    required this.rows,
-  })  : assert(imageNames.isNotEmpty),
-        super(key: key);
-
-  final List<String> imageNames;
-  final Axis axis;
-  final double width;
-  final double height;
-  final int columns;
-  final int rows;
+  final width = 375.0;
+  final height = 200.0;
+  final List<String> imageNames = [
+    'assets/flower.png',
+    'assets/butterfly.png',
+    'assets/sea.png',
+    'assets/bird.png',
+  ];
 
   @override
   _FlipMatrixBoardStreamPageState createState() =>
@@ -78,11 +58,11 @@ class _FlipMatrixBoardStreamPageState extends State<FlipMatrixBoardStreamPage> {
                   child: FlipMatrixBoardStream<String>(
                     itemStream: _controller.stream,
                     itemBuilder: _itemBuilder,
-                    axis: widget.axis,
-                    width: widget.width,
-                    height: widget.height,
-                    columnCount: widget.columns,
-                    rowCount: widget.rows,
+                    axis: Axis.vertical,
+                    width: 375.0,
+                    height: 200.0,
+                    columnCount: 8,
+                    rowCount: 4,
                   ),
                 ),
                 const SizedBox(height: 20.0),
@@ -93,10 +73,7 @@ class _FlipMatrixBoardStreamPageState extends State<FlipMatrixBoardStreamPage> {
                   borderRadius: BorderRadius.circular(8.0),
                   children: [
                     const Icon(Icons.loop),
-                    Icon(
-                      Icons.pause,
-                      color: _done ? Colors.grey : null,
-                    ),
+                    Icon(Icons.pause, color: _done ? Colors.grey : null),
                   ],
                 ),
               ],

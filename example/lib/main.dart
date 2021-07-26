@@ -16,36 +16,13 @@ class MyApp extends StatelessWidget {
         title: 'Flip Board',
         routes: {
           'flip_widget': (_) => FlipWidgetPage(),
-          'flip_image': (_) => _flipImagePage(),
-          'flip_stream': (_) => _flipStreamPage(),
+          'flip_image': (_) => FlipMatrixBoardSingleChildPage(),
+          'flip_stream': (_) => FlipMatrixBoardStreamPage(),
           'flip_frase_board': (_) => FlipFraseBoardPage(),
           'flip_clock': (_) => FlipClockPage(),
           'countdown_clock': (_) => CountdownClockPage(),
         },
         home: HomePage(),
-      );
-
-  Widget _flipImagePage() => const FlipMatrixBoardSingleChildPage(
-        imageName: 'assets/flutter.png',
-        axis: Axis.vertical,
-        width: 375.0,
-        height: 200.0,
-        columns: 8,
-        rows: 4,
-      );
-
-  Widget _flipStreamPage() => FlipMatrixBoardStreamPage(
-        axis: Axis.vertical,
-        width: 375.0,
-        height: 200.0,
-        columns: 8,
-        rows: 4,
-        imageNames: [
-          'assets/flower.png',
-          'assets/butterfly.png',
-          'assets/sea.png',
-          'assets/bird.png',
-        ],
       );
 }
 
