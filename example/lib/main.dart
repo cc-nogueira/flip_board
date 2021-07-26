@@ -33,7 +33,8 @@ class HomePage extends StatelessWidget {
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: ListTileTheme(
-            tileColor: Colors.black12,
+            iconColor: Colors.blueGrey[700],
+            tileColor: Colors.grey[300],
             contentPadding: const EdgeInsets.all(8.0),
             shape: Border.all(color: Colors.black38),
             child: ListView(
