@@ -14,7 +14,11 @@ import 'flip_clock_builder.dart';
 /// Most constructor parameters are required to define digits appearance,
 /// some parameters are optional, configuring flip panel appearance.
 ///
-/// There is a onDone optional callback parameter to notify when the countdown finishes.
+/// Constructor parameters define clock digits and flip panel appearance.
+/// - backgroundColor defauts to colorScheme.primary.
+/// - digitColor and separatorColor defaults to colorScheme.onPrimary.
+/// - separatorColor defaults to colorScheme.onPrimary.
+/// - separatorBackground defaults to null (no separator background color)
 class FlipCountdownClock extends StatelessWidget {
   FlipCountdownClock({
     Key? key,
