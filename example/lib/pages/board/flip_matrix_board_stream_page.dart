@@ -1,11 +1,31 @@
+import 'dart:async';
+
 import 'package:async/async.dart';
 import 'package:flip_board/flip_board.dart';
 import 'package:flutter/material.dart';
 
-class FlipMatrixBoardStreamPage extends StatelessWidget {
-  const FlipMatrixBoardStreamPage({
+/// Example page to display a [FlipMatrixBoardStream] of images.
+///
+/// Presents a FlipMatrix that will display the images from list of imageNames
+/// representing local asset paths.
+///
+/// The page constructor sets all configuration options:
+/// FlipMatricBoardStreamPage(
+///   required List<String> imagenNames, // Image.asset names
+///   required Axis axis,                // Defines horizontal or vertical flips
+///   required double width,             // Board (and image) width
+///   required double height,            // Board (and images) height
+///   required int columns,              // Number of columns in the matrix
+///   required int rows,                 // Number of rows in the matrix
+///   int imageChangeSeconds = 5,        // Interval in seconds to change images
+///   int animationMillis = 2000,        // Duration of the flip animation
+/// )
+///
+/// This page includes a loop button and a pause button to demonstrate the use
+/// of an internal stream to controll flip feeding.
+class FlipMatrixBoardStreamPage extends StatefulWidget {
+  FlipMatrixBoardStreamPage({
     Key? key,
-    this.initialImageName,
     required this.imageNames,
     required this.axis,
     required this.width,
@@ -14,9 +34,9 @@ class FlipMatrixBoardStreamPage extends StatelessWidget {
     required this.rows,
     this.imageChangeSeconds = 5,
     this.animationMillis = 2000,
-  }) : super(key: key);
+  })  : assert(imageNames.isNotEmpty),
+        super(key: key);
 
-  final String? initialImageName;
   final List<String> imageNames;
   final Axis axis;
   final double width;
@@ -25,6 +45,30 @@ class FlipMatrixBoardStreamPage extends StatelessWidget {
   final int rows;
   final int animationMillis;
   final int imageChangeSeconds;
+
+  @override
+  _FlipMatrixBoardStreamPageState createState() =>
+      _FlipMatrixBoardStreamPageState();
+}
+
+class _FlipMatrixBoardStreamPageState extends State<FlipMatrixBoardStreamPage> {
+  final _controller = StreamController<String>();
+  bool _firstRun = true;
+  bool _loop = false;
+  bool _done = false;
+  bool _paused = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _feedStream();
+  }
+
+  @override
+  void dispose() {
+    _controller.close();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -38,49 +82,102 @@ class FlipMatrixBoardStreamPage extends StatelessWidget {
                   decoration:
                       BoxDecoration(border: Border.all(color: Colors.blue)),
                   child: FlipMatrixBoardStream<String>(
-                    initialValue: initialImageName,
-                    itemStream: _itemStream,
+                    itemStream: _controller.stream,
                     itemBuilder: _itemBuilder,
-                    axis: axis,
-                    width: width,
-                    height: height,
-                    columnCount: columns,
-                    rowCount: rows,
-                    animationMillis: animationMillis,
+                    axis: widget.axis,
+                    width: widget.width,
+                    height: widget.height,
+                    columnCount: widget.columns,
+                    rowCount: widget.rows,
+                    animationMillis: widget.animationMillis,
                   ),
-                )
+                ),
+                const SizedBox(height: 20.0),
+                ToggleButtons(
+                  color: Colors.black,
+                  isSelected: _isSelected,
+                  onPressed: _onToggle,
+                  borderRadius: BorderRadius.circular(8.0),
+                  children: [
+                    const Icon(Icons.loop),
+                    Icon(
+                      Icons.pause,
+                      color: _done ? Colors.grey : null,
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
         ),
       );
 
-  Stream<String> get _itemStream {
-    if (initialImageName == null && imageNames.isNotEmpty) {
-      final initial = imageNames.removeAt(0);
-      return StreamGroup.mergeBroadcast(
-          [Stream.value(initial), _periodicItemStream]);
-    }
-    return _periodicItemStream;
+  List<bool> get _isSelected => [_loop, _paused];
+
+  void _onToggle(int idx) => setState(() {
+        switch (idx) {
+          case 0:
+            _loop = !_loop;
+            if (_loop && _done) {
+              _firstRun = true;
+              _feedStream();
+            }
+            break;
+          case 1:
+            _paused = !_done && !_paused;
+            break;
+        }
+      });
+
+  void _feedStream() {
+    _done = false;
+    _itemStream.listen(
+      (event) => _controller.add(event),
+      onDone: () {
+        if (_loop) {
+          _feedStream();
+        } else {
+          setState(() => _done = true);
+        }
+      },
+    );
   }
 
-  Stream<String> get _periodicItemStream {
+  Stream<String> get _itemStream {
+    if (_firstRun) {
+      _firstRun = false;
+      return StreamGroup.mergeBroadcast([
+        Stream.value(widget.imageNames.first),
+        _periodicItemStream(1),
+      ]).where((name) => name.isNotEmpty).take(widget.imageNames.length);
+    }
+    return _periodicItemStream(0)
+        .where((name) => name.isNotEmpty)
+        .take(widget.imageNames.length);
+  }
+
+  Stream<String> _periodicItemStream(int startIdx) {
+    var index = startIdx - 1;
     return Stream.periodic(
-      Duration(seconds: imageChangeSeconds),
-      (idx) => idx < imageNames.length ? imageNames[idx] : '',
-    ).take(imageNames.length).asBroadcastStream();
+      Duration(seconds: widget.imageChangeSeconds),
+      (count) {
+        if (_paused) return '';
+        index = (index + 1) % widget.imageNames.length;
+        return widget.imageNames[index];
+      },
+    );
   }
 
   Widget _itemBuilder(BuildContext context, String? item) => item == null
       ? Container(
-          height: height,
-          width: width,
+          height: widget.height,
+          width: widget.width,
           color: Colors.black12,
         )
       : Image.asset(
           item,
           fit: BoxFit.fill,
-          width: width,
-          height: height,
+          width: widget.width,
+          height: widget.height,
         );
 }
