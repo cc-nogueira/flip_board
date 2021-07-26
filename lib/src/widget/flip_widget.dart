@@ -146,6 +146,9 @@ class _FlipWidgetState<T> extends State<FlipWidget<T>>
     if (_firstRun) {
       _initChildWidgets(context);
       _firstRun = false;
+      if (_nextValue == null) {
+        return;
+      }
     }
 
     if (_running) {
