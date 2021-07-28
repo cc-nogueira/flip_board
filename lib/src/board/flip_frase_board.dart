@@ -8,13 +8,13 @@ import '../../flip_widget.dart';
 
 /// Component present message shown as an mechanical flip board.
 ///
-/// Displays an anumation flipping each letter from a startFrase upto each letter in endFrase,
-/// each letter animation in a different random speed.
+/// Displays an animation flipping from each letter of a startFrase upto each letter of an endFrase,
+/// each letter stream flips in a different random speed.
 ///
 /// The startFrase may be given or a start letter may be set to build a startFrase with all letters equal.
 /// StartFrase and endFrase must have the same length.
 ///
-/// Colors parameters can have any number of letters that will be cycled for each letter.
+/// Colors parameters can have any number of colors, that will be cycled for each letter.
 ///
 /// There are a number of parameters to customize size, colors, spacing and speed.
 ///
@@ -34,8 +34,8 @@ class FlipFraseBoard extends StatelessWidget {
     double? flipLetterHeight,
     this.letterSpacing = 1.0,
     this.flipSpacing = 0.8,
-    this.maxFlipDelay = 600,
     this.minFlipDelay = 250,
+    this.maxFlipDelay = 600,
     this.onDone,
     ValueNotifier<int>? startNotifier,
   })  : assert(startFrase == null || startLetter == null),
@@ -62,7 +62,7 @@ class FlipFraseBoard extends StatelessWidget {
   final double flipLetterWidth, flipLetterHeight;
   final List<Color>? startColors, endColors, digitColors;
   final int minFlipDelay, maxFlipDelay;
-  final void Function()? onDone;
+  final VoidCallback? onDone;
   final ValueNotifier<int> startNotifier;
 
   final _random = Random();

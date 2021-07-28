@@ -1,12 +1,13 @@
 import 'package:flip_board/flip_board.dart';
 import 'package:flutter/material.dart';
 
-/// Page with two FlipFraseBoards showing frase board animations.
+/// Page with two [FlipFraseBoard]s showing frase board animations.
 ///
-/// Frase animate theis chars from "AAAAAAA" to "FLUTTER" on one line,
-/// and from "AAAAAAAAAA" to "FLIP BOARD" on the second line
+/// First frase flip chars horizontally, from "AAAAAAA" to "FLUTTER".
+/// Seconde line flip chars verticallu from "AAAAAAAAAA" to "FLIP BOARD".
+///
 /// FlipFraseBoard uses Theme colors and optional parameterized colors.
-/// Chars are flipped in different random speeds.
+/// Chars are configured to flip in different random speeds and end colors.
 class FlipFraseBoardPage extends StatefulWidget {
   @override
   _FlipFraseBoardPageState createState() => _FlipFraseBoardPageState();
