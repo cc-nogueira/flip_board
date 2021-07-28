@@ -64,7 +64,7 @@ class _FlipWidgetState<T> extends State<FlipWidget<T>>
   final _clipper = const _WidgetClipper();
 
   late final AnimationController _controller;
-  late final Animation _animation;
+  late final Animation _flipAnimation;
   late final Animation _perspectiveAnimation;
   StreamSubscription<T>? _subscription;
 
@@ -98,9 +98,14 @@ class _FlipWidgetState<T> extends State<FlipWidget<T>>
           })
           ..addListener(() => setState(() => _running = true));
 
-    _animation = Tween(begin: 0.0, end: math.pi / 2).animate(_controller);
-    _perspectiveAnimation =
-        Tween(begin: 0.0, end: widget.perspectiveEffect).animate(_controller);
+    final curvedAnimation = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.elasticIn,
+    );
+    _flipAnimation =
+        Tween(begin: 0.0, end: math.pi / 2).animate(curvedAnimation);
+    _perspectiveAnimation = Tween(begin: 0.0, end: widget.perspectiveEffect)
+        .animate(curvedAnimation);
 
     _initValues();
   }
@@ -132,7 +137,7 @@ class _FlipWidgetState<T> extends State<FlipWidget<T>>
     if (value != _currentValue) {
       _nextValue = value;
       _isReversePhase = false;
-      _controller.forward(); // will trigger _onRun
+      _controller.forward();
     }
   }
 
@@ -244,7 +249,8 @@ class _FlipWidgetState<T> extends State<FlipWidget<T>>
         direction == AxisDirection.up || direction == AxisDirection.left;
     final sign = isVertical ? 1.0 : -1.0;
     final rotation =
-        (isUpOrLeft == _isReversePhase ? _animation.value : math.pi / 2) * sign;
+        (isUpOrLeft == _isReversePhase ? _flipAnimation.value : math.pi / 2) *
+            sign;
 
     final transform = Matrix4.identity()
       ..setEntry(3, 2, _perspectiveAnimation.value);
@@ -267,7 +273,7 @@ class _FlipWidgetState<T> extends State<FlipWidget<T>>
         direction == AxisDirection.up || direction == AxisDirection.left;
     final sign = isAxisVertical ? 1.0 : -1.0;
     final rotation =
-        (isUpOrLeft == _isReversePhase ? math.pi / 2 : -_animation.value) *
+        (isUpOrLeft == _isReversePhase ? math.pi / 2 : -_flipAnimation.value) *
             sign;
 
     final transform = Matrix4.identity()
