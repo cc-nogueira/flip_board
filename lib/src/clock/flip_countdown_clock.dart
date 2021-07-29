@@ -62,7 +62,7 @@ class FlipCountdownClock extends StatelessWidget {
   Widget build(BuildContext context) {
     const step = Duration(seconds: 1);
     final startTime = DateTime.now();
-    final endTime = startTime.add(duration).add(const Duration(seconds: 1));
+    final endTime = startTime.add(duration).add(step);
 
     var done = false;
     final periodicStream = Stream<Duration>.periodic(step, (_) {

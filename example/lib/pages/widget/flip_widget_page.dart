@@ -70,10 +70,13 @@ class _FlipWidgetState extends State<FlipWidgetPage> {
           itemBuilder: _itemBuilder,
           initialValue: _nextValue,
           flipDirection: direction,
+          flipCurve: direction == AxisDirection.down
+              ? FlipWidget.bounceFlip
+              : FlipWidget.defaultFlip,
+          flipDuration: const Duration(milliseconds: 1000),
           perspectiveEffect: 0.008,
           panelSpacing:
               axisDirectionToAxis(direction) == Axis.vertical ? 0.8 : 1.1,
-          flipDuration: const Duration(milliseconds: 600),
         ),
       );
 

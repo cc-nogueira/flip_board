@@ -19,6 +19,7 @@ class FlipClockBuilder {
     required this.borderRadius,
     required this.digitSpacing,
     required this.flipSpacing,
+    this.flipCurve,
   });
 
   final Color? digitColor;
@@ -33,6 +34,7 @@ class FlipClockBuilder {
   final EdgeInsets digitSpacing;
   final double flipSpacing;
   final AxisDirection flipDirection;
+  final Curve? flipCurve;
 
   /// Builds a Flip display for a time part (hour, minute, second).
   ///
@@ -68,6 +70,7 @@ class FlipClockBuilder {
               initialValue: initialValue,
               panelSpacing: flipSpacing,
               flipDirection: flipDirection,
+              flipCurve: flipCurve ?? FlipWidget.defaultFlip,
             ),
           ),
         ],

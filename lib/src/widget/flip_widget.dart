@@ -32,18 +32,23 @@ class FlipWidget<T> extends StatefulWidget {
     required this.itemBuilder,
     required this.flipDirection,
     this.initialValue,
-    this.flipDuration = const Duration(milliseconds: 300),
+    this.flipDuration = const Duration(milliseconds: 800),
+    this.flipCurve = Curves.easeInOut,
     this.panelSpacing = 0.0,
     this.perspectiveEffect = 0.006,
     this.onDone,
     this.startCount = 0,
   }) : super(key: key);
 
+  static const bounceFlip = _BounceFlipCurve();
+  static const defaultFlip = Curves.easeInOut;
+
   final Stream<T> itemStream;
   final ItemBuilder<T> itemBuilder;
   final AxisDirection flipDirection;
   final T? initialValue;
   final Duration flipDuration;
+  final Curve flipCurve;
   final double panelSpacing;
   final double perspectiveEffect;
   final VoidCallback? onDone;
@@ -73,7 +78,7 @@ class _FlipWidgetState<T> extends State<FlipWidget<T>>
   // late bool _isReversePhase;
   late bool _firstRun;
 
-  T? _currentValue, _nextValue;
+  T? _nextValue;
 
   late Widget _nextChild;
   late Widget _firstPanelChild1, _firstPanelChild2;
@@ -89,9 +94,9 @@ class _FlipWidgetState<T> extends State<FlipWidget<T>>
 
     final curvedAnimation = CurvedAnimation(
       parent: _controller,
-      curve: Curves.easeInOut,
+      curve: widget.flipCurve,
     );
-    _flipAnimation = Tween(begin: 0.0, end: math.pi).animate(_controller);
+    _flipAnimation = Tween(begin: 0.0, end: math.pi).animate(curvedAnimation);
     _perspectiveAnimation = TweenSequence([
       TweenSequenceItem(
           tween: Tween(
@@ -105,17 +110,16 @@ class _FlipWidgetState<T> extends State<FlipWidget<T>>
             end: 0.0,
           ),
           weight: 1.0),
-    ]).animate(_controller);
+    ]).animate(curvedAnimation);
 
     _initValues();
   }
 
   void _initValues() {
-    _currentValue = widget.initialValue;
+    _nextValue = widget.initialValue;
     _firstRun = true;
     _subscription?.cancel();
-    _subscription =
-        widget.itemStream.distinct().listen(_onNewItem, onDone: widget.onDone);
+    _subscription = widget.itemStream.listen(_onNewItem, onDone: widget.onDone);
   }
 
   @override
@@ -134,10 +138,8 @@ class _FlipWidgetState<T> extends State<FlipWidget<T>>
   }
 
   void _onNewItem(T value) {
-    if (value != _currentValue) {
-      _currentValue = _nextValue;
+    if (value != _nextValue) {
       _nextValue = value;
-
       _nextChild = widget.itemBuilder(context, _nextValue);
       _firstPanelChild1 = _firstPanelChild2;
       _secondPanelChild1 = _secondPanelChild2;
@@ -326,4 +328,26 @@ class _WidgetClipper {
           child: widget,
         ),
       );
+}
+
+class _BounceFlipCurve extends Curve {
+  const _BounceFlipCurve();
+
+  static const factor_1 = 121.0 / 64.0;
+  static const factor_2 = 121.0 / 8.0;
+  static const factor_3 = 121.0 / 4.0;
+
+  @override
+  double transformInternal(double t) => _bounce(t);
+
+  double _bounce(double t) {
+    if (t < 2.0 / 2.75) {
+      return factor_1 * t * t;
+    } else if (t < 2.5 / 2.75) {
+      t -= 2.25 / 2.75;
+      return factor_2 * t * t + 0.875;
+    }
+    t -= 2.625 / 2.75;
+    return factor_3 * t * t + 0.9375;
+  }
 }

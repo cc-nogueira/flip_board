@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../../flip_widget.dart';
 import 'flip_clock_builder.dart';
 
 /// FlipClock display with current time.
@@ -44,6 +45,7 @@ class FlipClock extends StatelessWidget {
           digitSpacing: digitSpacing,
           flipSpacing: flipSpacing,
           flipDirection: flipDirection,
+          flipCurve: FlipWidget.bounceFlip,
         ),
         super(key: key);
 
@@ -53,7 +55,7 @@ class FlipClock extends StatelessWidget {
   Widget build(BuildContext context) {
     final initValue = DateTime.now();
     final timeStream = Stream<DateTime>.periodic(
-      const Duration(milliseconds: 1000),
+      const Duration(seconds: 1),
       (_) => DateTime.now(),
     ).asBroadcastStream();
 
