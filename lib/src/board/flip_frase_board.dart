@@ -125,7 +125,6 @@ class FlipFraseBoard extends StatelessWidget {
       child: FlipWidget<String>(
         startCount: startCount,
         itemStream: _letterStream(startLetter, endLetter, delay),
-        // itemStream: _letterStream(startLetter, endLetter, delay),
         itemBuilder: (context, item) => _itemBuilder(
           context,
           item,
@@ -135,7 +134,7 @@ class FlipFraseBoard extends StatelessWidget {
           digitColor: digitColor,
         ),
         flipDirection: _letterDirection(startLetter, endLetter),
-        flipDuration: Duration(milliseconds: delay ~/ 3),
+        flipDuration: Duration(milliseconds: (delay * 2.0 / 3.0).truncate()),
         panelSpacing: flipSpacing,
         onDone: () => _onStreamDone(index),
       ),
@@ -154,6 +153,7 @@ class FlipFraseBoard extends StatelessWidget {
 
     final child = item == null ? null : Text(item, style: textStyle);
     final color = item == endLetter ? endColor : startColor;
+
     return Container(
       margin: EdgeInsets.symmetric(horizontal: letterSpacing),
       decoration: BoxDecoration(

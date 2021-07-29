@@ -14,9 +14,9 @@ class FlipMatrixBoardSingleChild extends StatelessWidget {
     required double height,
     required int columnCount,
     required int rowCount,
-    int minAnimationMillis = 500,
-    int maxAnimationMillis = 1500,
-    int maxDelayMillis = 2500,
+    int minAnimationMillis = 1000,
+    int maxAnimationMillis = 3000,
+    int maxDelayMillis = 4000,
     Color backgroundColor = Colors.white,
   })  : _builder = SingleChildFlipMatrixBoardBuilder(
           child: child,
@@ -79,8 +79,8 @@ class FlipMatrixBoardStream<T> extends StatefulWidget {
     required this.height,
     required this.columnCount,
     required this.rowCount,
-    this.minAnimationMillis = 500,
-    this.maxAnimationMillis = 1500,
+    this.minAnimationMillis = 1000,
+    this.maxAnimationMillis = 3000,
     this.maxDelayMillis = 2500,
     this.backgroundColor = Colors.white,
   }) : super(key: key);
