@@ -40,7 +40,8 @@ class FlipWidget<T> extends StatefulWidget {
     this.startCount = 0,
   }) : super(key: key);
 
-  static const bounceFlip = _BounceFlipCurve();
+  static const bounceFastFlip = _BounceFastFlipCurve();
+  static const bounceSlowFlip = _BounceSlowFlipCurve();
   static const defaultFlip = Curves.easeInOut;
 
   final Stream<T> itemStream;
@@ -330,8 +331,30 @@ class _WidgetClipper {
       );
 }
 
-class _BounceFlipCurve extends Curve {
-  const _BounceFlipCurve();
+class _BounceFastFlipCurve extends Curve {
+  const _BounceFastFlipCurve();
+
+  static const factor_1 = 121.0 / 49.0;
+  static const factor_2 = 121.0 / 16.0;
+  static const factor_3 = 121.0 / 4.0;
+
+  @override
+  double transformInternal(double t) => _bounce(t);
+
+  double _bounce(double t) {
+    if (t < 1.75 / 2.75) {
+      return factor_1 * t * t;
+    } else if (t < 2.5 / 2.75) {
+      t -= 2.125 / 2.75;
+      return factor_2 * t * t + 0.859375;
+    }
+    t -= 2.625 / 2.75;
+    return factor_3 * t * t + 0.9375;
+  }
+}
+
+class _BounceSlowFlipCurve extends Curve {
+  const _BounceSlowFlipCurve();
 
   static const factor_1 = 121.0 / 64.0;
   static const factor_2 = 121.0 / 8.0;

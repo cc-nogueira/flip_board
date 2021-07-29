@@ -74,7 +74,7 @@ class _FlipWidgetState extends State<FlipWidgetPage> {
           initialValue: _nextValue,
           flipDirection: direction,
           flipCurve: direction == AxisDirection.down
-              ? FlipWidget.bounceFlip
+              ? FlipWidget.bounceFastFlip
               : FlipWidget.defaultFlip,
           flipDuration: const Duration(milliseconds: 1000),
           perspectiveEffect: 0.008,

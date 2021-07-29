@@ -51,7 +51,7 @@ class FlipClock extends StatelessWidget {
           digitSpacing: digitSpacing,
           flipSpacing: flipSpacing,
           flipDirection: flipDirection,
-          flipCurve: FlipWidget.bounceFlip,
+          flipCurve: FlipWidget.bounceFastFlip,
         ),
         super(key: key);
 
