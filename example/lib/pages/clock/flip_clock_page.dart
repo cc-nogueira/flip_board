@@ -27,6 +27,7 @@ class FlipClockPage extends StatelessWidget {
                 width: 46.0,
                 height: 62.0,
                 separatorColor: Colors.grey,
+                showBorder: true,
               ),
             ),
           ),

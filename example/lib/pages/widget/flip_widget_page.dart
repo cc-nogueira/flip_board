@@ -59,7 +59,7 @@ class _FlipWidgetState extends State<FlipWidgetPage> {
       );
 
   Widget _flipWidget(AxisDirection direction) => Container(
-        width: 60.0,
+        width: 84.0,
         alignment: Alignment.center,
         padding: const EdgeInsets.all(4.0),
         decoration: BoxDecoration(
@@ -81,8 +81,8 @@ class _FlipWidgetState extends State<FlipWidgetPage> {
       );
 
   Widget _itemBuilder(BuildContext context, int? value) => Container(
-        width: 48.0,
-        height: 48.0,
+        width: 72.0,
+        height: 72.0,
         alignment: Alignment.center,
         decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.primaryVariant,
@@ -92,7 +92,7 @@ class _FlipWidgetState extends State<FlipWidgetPage> {
           ((value ?? 0) % 10).toString(),
           style: TextStyle(
             color: Theme.of(context).colorScheme.onPrimary,
-            fontSize: 40.0,
+            fontSize: 60.0,
           ),
         ),
       );

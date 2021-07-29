@@ -11,6 +11,9 @@ class FlipClockBuilder {
     this.backgroundColor,
     this.separatorColor,
     this.separatorBackgroundColor,
+    this.borderColor,
+    this.borderWidth,
+    this.showBorder,
     required this.digitSize,
     required this.height,
     required this.width,
@@ -26,6 +29,9 @@ class FlipClockBuilder {
   final Color? backgroundColor;
   final Color? separatorColor;
   final Color? separatorBackgroundColor;
+  final Color? borderColor;
+  final double? borderWidth;
+  final bool? showBorder;
   final double digitSize;
   final double height;
   final double width;
@@ -80,6 +86,12 @@ class FlipClockBuilder {
         decoration: BoxDecoration(
           color: backgroundColor ?? Theme.of(context).colorScheme.primary,
           borderRadius: borderRadius,
+          border: (showBorder ?? (borderColor != null || borderWidth != null))
+              ? Border.all(
+                  color: borderColor ?? Theme.of(context).colorScheme.onPrimary,
+                  width: borderWidth ?? 1.0,
+                )
+              : null,
         ),
         width: width,
         height: height,
