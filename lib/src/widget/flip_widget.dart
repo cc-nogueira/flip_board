@@ -204,19 +204,21 @@ class _FlipWidgetState<T> extends State<FlipWidget<T>>
         ),
       );
 
-  Widget _buildFirstFlipPanel() => Stack(
-        children: [
-          _firstFlatPanel(widget.flipDirection),
-          _transform2FirstPanel(widget.flipDirection),
-        ],
-      );
+  Widget _buildFirstFlipPanel() {
+    final flatPanel = _firstFlatPanel(widget.flipDirection);
+    final movingPanel = _transform2FirstPanel(widget.flipDirection);
+    return movingPanel == null
+        ? flatPanel
+        : Stack(children: [flatPanel, movingPanel]);
+  }
 
-  Widget _buildSecondFlipPanel() => Stack(
-        children: [
-          _secondFlatPanel(widget.flipDirection),
-          _transform2SecondPanel(widget.flipDirection),
-        ],
-      );
+  Widget _buildSecondFlipPanel() {
+    final flatPanel = _secondFlatPanel(widget.flipDirection);
+    final movingPanel = _transform2SecondPanel(widget.flipDirection);
+    return movingPanel == null
+        ? flatPanel
+        : Stack(children: [flatPanel, movingPanel]);
+  }
 
   Widget _firstFlatPanel(AxisDirection direction) =>
       direction == AxisDirection.up || direction == AxisDirection.left
@@ -228,19 +230,16 @@ class _FlipWidgetState<T> extends State<FlipWidget<T>>
           ? _secondPanelChild2
           : _secondPanelChild1;
 
-  Transform _transform2FirstPanel(AxisDirection direction) {
+  Transform? _transform2FirstPanel(AxisDirection direction) {
     final isPastMiddle = _flipAnimation.value > _piBy2;
-    final isVertical = widget.axis == Axis.vertical;
     final isUpOrLeft =
         direction == AxisDirection.up || direction == AxisDirection.left;
+    if (isUpOrLeft != isPastMiddle) return null;
+
+    final isVertical = widget.axis == Axis.vertical;
     final sign = isVertical ? 1.0 : -1.0;
-    late final double rotation;
-    if (isUpOrLeft) {
-      rotation =
-          (isPastMiddle ? math.pi - _flipAnimation.value : _piBy2) * sign;
-    } else {
-      rotation = (!isPastMiddle ? _flipAnimation.value : _piBy2) * sign;
-    }
+    final rotation = sign *
+        (isUpOrLeft ? math.pi - _flipAnimation.value : _flipAnimation.value);
 
     final transform = Matrix4.identity()
       ..setEntry(3, 2, _perspectiveAnimation.value);
@@ -257,19 +256,16 @@ class _FlipWidgetState<T> extends State<FlipWidget<T>>
     );
   }
 
-  Transform _transform2SecondPanel(AxisDirection direction) {
+  Transform? _transform2SecondPanel(AxisDirection direction) {
     final isPastMiddle = _flipAnimation.value > _piBy2;
-    final isAxisVertical = widget.axis == Axis.vertical;
     final isUpOrLeft =
         direction == AxisDirection.up || direction == AxisDirection.left;
+    if (isUpOrLeft == isPastMiddle) return null;
+
+    final isAxisVertical = widget.axis == Axis.vertical;
     final sign = isAxisVertical ? 1.0 : -1.0;
-    late final double rotation;
-    if (isUpOrLeft) {
-      rotation = (isPastMiddle ? _piBy2 : _flipAnimation.value) * sign;
-    } else {
-      rotation =
-          (isPastMiddle ? math.pi - _flipAnimation.value : _piBy2) * sign;
-    }
+    final rotation = sign *
+        (isUpOrLeft ? _flipAnimation.value : math.pi - _flipAnimation.value);
 
     final transform = Matrix4.identity()
       ..setEntry(3, 2, -_perspectiveAnimation.value);
