@@ -33,7 +33,10 @@ class _FlipWidgetState extends State<FlipWidgetPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                _flipWidget(AxisDirection.up),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [_flipWidget(AxisDirection.up)],
+                ),
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -42,7 +45,10 @@ class _FlipWidgetState extends State<FlipWidgetPage> {
                     _flipWidget(AxisDirection.right),
                   ],
                 ),
-                _flipWidget(AxisDirection.down),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [_flipWidget(AxisDirection.down)],
+                ),
               ],
             ),
           ),
@@ -59,9 +65,6 @@ class _FlipWidgetState extends State<FlipWidgetPage> {
       );
 
   Widget _flipWidget(AxisDirection direction) => Container(
-        width: 84.0,
-        alignment: Alignment.center,
-        padding: const EdgeInsets.all(4.0),
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.background,
         ),
@@ -85,9 +88,10 @@ class _FlipWidgetState extends State<FlipWidgetPage> {
         height: 72.0,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.primaryVariant,
-            borderRadius: const BorderRadius.all(Radius.circular(4.0)),
-            border: Border.all(color: Colors.black)),
+          color: Theme.of(context).colorScheme.primaryVariant,
+          borderRadius: const BorderRadius.all(Radius.circular(4.0)),
+          border: Border.all(color: Theme.of(context).colorScheme.background),
+        ),
         child: Text(
           ((value ?? 0) % 10).toString(),
           style: TextStyle(
