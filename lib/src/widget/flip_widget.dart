@@ -61,6 +61,8 @@ class FlipWidget<T> extends StatefulWidget {
 /// Parameters are documented in [FlipWidget] class constructor.
 class _FlipWidgetState<T> extends State<FlipWidget<T>>
     with SingleTickerProviderStateMixin {
+  static const _piBy2 = math.pi / 2;
+
   final _clipper = const _WidgetClipper();
 
   late final AnimationController _controller;
@@ -68,8 +70,7 @@ class _FlipWidgetState<T> extends State<FlipWidget<T>>
   late final Animation _perspectiveAnimation;
   StreamSubscription<T>? _subscription;
 
-  late bool _isReversePhase;
-  late bool _running;
+  // late bool _isReversePhase;
   late bool _firstRun;
 
   T? _currentValue, _nextValue;
@@ -81,31 +82,30 @@ class _FlipWidgetState<T> extends State<FlipWidget<T>>
   @override
   void initState() {
     super.initState();
-    _isReversePhase = false;
-    _running = false;
-
-    _controller =
-        AnimationController(duration: widget.flipDuration, vsync: this)
-          ..addStatusListener((status) {
-            if (status == AnimationStatus.completed) {
-              _isReversePhase = true;
-              _controller.reverse();
-            }
-            if (status == AnimationStatus.dismissed) {
-              _currentValue = _nextValue ?? _currentValue;
-              _running = false;
-            }
-          })
-          ..addListener(() => setState(() => _running = true));
+    _controller = AnimationController(
+      duration: widget.flipDuration,
+      vsync: this,
+    );
 
     final curvedAnimation = CurvedAnimation(
       parent: _controller,
-      curve: Curves.elasticIn,
+      curve: Curves.easeInOut,
     );
-    _flipAnimation =
-        Tween(begin: 0.0, end: math.pi / 2).animate(curvedAnimation);
-    _perspectiveAnimation = Tween(begin: 0.0, end: widget.perspectiveEffect)
-        .animate(curvedAnimation);
+    _flipAnimation = Tween(begin: 0.0, end: math.pi).animate(_controller);
+    _perspectiveAnimation = TweenSequence([
+      TweenSequenceItem(
+          tween: Tween(
+            begin: 0.0,
+            end: widget.perspectiveEffect,
+          ),
+          weight: 1.0),
+      TweenSequenceItem(
+          tween: Tween(
+            begin: widget.perspectiveEffect,
+            end: 0.0,
+          ),
+          weight: 1.0),
+    ]).animate(_controller);
 
     _initValues();
   }
@@ -135,57 +135,41 @@ class _FlipWidgetState<T> extends State<FlipWidget<T>>
 
   void _onNewItem(T value) {
     if (value != _currentValue) {
+      _currentValue = _nextValue;
       _nextValue = value;
-      _isReversePhase = false;
+
+      _nextChild = widget.itemBuilder(context, _nextValue);
+      _firstPanelChild1 = _firstPanelChild2;
+      _secondPanelChild1 = _secondPanelChild2;
+      _firstPanelChild2 = _clipper.makeFirstClip(_nextChild, widget.axis);
+      _secondPanelChild2 = _clipper.makeSecondClip(_nextChild, widget.axis);
+
+      _controller.reset();
       _controller.forward();
     }
   }
 
   @override
-  Widget build(BuildContext context) {
-    _buildChildWidgets(context);
-    return _buildDisplay();
-  }
+  Widget build(BuildContext context) =>
+      AnimatedBuilder(animation: _flipAnimation, builder: _buildDisplay);
 
-  void _buildChildWidgets(BuildContext context) {
+  Widget _buildDisplay(BuildContext context, Widget? _) {
+    late final List<Widget> children;
     if (_firstRun) {
-      _initChildWidgets(context);
       _firstRun = false;
-      if (_nextValue == null) {
-        return;
-      }
-    }
-
-    if (_running) {
-      _nextChild = widget.itemBuilder(context, _nextValue);
-      _firstPanelChild2 = _clipper.makeFirstClip(_nextChild, widget.axis);
-      _secondPanelChild2 = _clipper.makeSecondClip(_nextChild, widget.axis);
+      _initChildWidgets(context);
+      children = [
+        _firstFlatPanel(AxisDirection.up),
+        _padding,
+        _secondFlatPanel(AxisDirection.down),
+      ];
     } else {
-      _firstPanelChild1 = _firstPanelChild2;
-      _secondPanelChild1 = _secondPanelChild2;
+      children = [
+        _buildFirstFlipPanel(),
+        _padding,
+        _buildSecondFlipPanel(),
+      ];
     }
-  }
-
-  void _initChildWidgets(BuildContext context) {
-    _nextChild = widget.itemBuilder(context, widget.initialValue);
-    _firstPanelChild2 = _clipper.makeFirstClip(_nextChild, widget.axis);
-    _secondPanelChild2 = _clipper.makeSecondClip(_nextChild, widget.axis);
-    _firstPanelChild1 = _firstPanelChild2;
-    _secondPanelChild1 = _secondPanelChild2;
-  }
-
-  Widget _buildDisplay() {
-    final children = _running
-        ? [
-            _buildFirstFlipPanel(),
-            _padding,
-            _buildSecondFlipPanel(),
-          ]
-        : [
-            _transform1FirstPanel(AxisDirection.up),
-            _padding,
-            _transform1SecondPanel(AxisDirection.down),
-          ];
 
     return widget.axis == Axis.vertical
         ? Column(
@@ -202,6 +186,14 @@ class _FlipWidgetState<T> extends State<FlipWidget<T>>
           );
   }
 
+  void _initChildWidgets(BuildContext context) {
+    _nextChild = widget.itemBuilder(context, widget.initialValue);
+    _firstPanelChild2 = _clipper.makeFirstClip(_nextChild, widget.axis);
+    _secondPanelChild2 = _clipper.makeSecondClip(_nextChild, widget.axis);
+    _firstPanelChild1 = _firstPanelChild2;
+    _secondPanelChild1 = _secondPanelChild2;
+  }
+
   Widget get _padding => Padding(
         padding: EdgeInsets.only(
           top: widget.panelSpacing,
@@ -211,46 +203,41 @@ class _FlipWidgetState<T> extends State<FlipWidget<T>>
 
   Widget _buildFirstFlipPanel() => Stack(
         children: [
-          _transform1FirstPanel(widget.flipDirection),
+          _firstFlatPanel(widget.flipDirection),
           _transform2FirstPanel(widget.flipDirection),
         ],
       );
 
   Widget _buildSecondFlipPanel() => Stack(
         children: [
-          _transform1SecondPanel(widget.flipDirection),
+          _secondFlatPanel(widget.flipDirection),
           _transform2SecondPanel(widget.flipDirection),
         ],
       );
 
-  Transform _transform1FirstPanel(AxisDirection direction) => Transform(
-      alignment: widget.axis == Axis.vertical
-          ? Alignment.bottomCenter
-          : Alignment.centerRight,
-      transform: Matrix4.identity()
-        ..setEntry(3, 2, _perspectiveAnimation.value),
-      child: direction == AxisDirection.up || direction == AxisDirection.left
+  Widget _firstFlatPanel(AxisDirection direction) =>
+      direction == AxisDirection.up || direction == AxisDirection.left
           ? _firstPanelChild1
-          : _firstPanelChild2);
+          : _firstPanelChild2;
 
-  Transform _transform1SecondPanel(AxisDirection direction) => Transform(
-      alignment: widget.axis == Axis.vertical
-          ? Alignment.topCenter
-          : Alignment.centerLeft,
-      transform: Matrix4.identity()
-        ..setEntry(3, 2, _perspectiveAnimation.value),
-      child: direction == AxisDirection.up || direction == AxisDirection.left
+  Widget _secondFlatPanel(AxisDirection direction) =>
+      direction == AxisDirection.up || direction == AxisDirection.left
           ? _secondPanelChild2
-          : _secondPanelChild1);
+          : _secondPanelChild1;
 
   Transform _transform2FirstPanel(AxisDirection direction) {
+    final isPastMiddle = _flipAnimation.value > _piBy2;
     final isVertical = widget.axis == Axis.vertical;
     final isUpOrLeft =
         direction == AxisDirection.up || direction == AxisDirection.left;
     final sign = isVertical ? 1.0 : -1.0;
-    final rotation =
-        (isUpOrLeft == _isReversePhase ? _flipAnimation.value : math.pi / 2) *
-            sign;
+    late final double rotation;
+    if (isUpOrLeft) {
+      rotation =
+          (isPastMiddle ? math.pi - _flipAnimation.value : _piBy2) * sign;
+    } else {
+      rotation = (!isPastMiddle ? _flipAnimation.value : _piBy2) * sign;
+    }
 
     final transform = Matrix4.identity()
       ..setEntry(3, 2, _perspectiveAnimation.value);
@@ -268,16 +255,21 @@ class _FlipWidgetState<T> extends State<FlipWidget<T>>
   }
 
   Transform _transform2SecondPanel(AxisDirection direction) {
+    final isPastMiddle = _flipAnimation.value > _piBy2;
     final isAxisVertical = widget.axis == Axis.vertical;
     final isUpOrLeft =
         direction == AxisDirection.up || direction == AxisDirection.left;
     final sign = isAxisVertical ? 1.0 : -1.0;
-    final rotation =
-        (isUpOrLeft == _isReversePhase ? math.pi / 2 : -_flipAnimation.value) *
-            sign;
+    late final double rotation;
+    if (isUpOrLeft) {
+      rotation = (isPastMiddle ? _piBy2 : _flipAnimation.value) * sign;
+    } else {
+      rotation =
+          (isPastMiddle ? math.pi - _flipAnimation.value : _piBy2) * sign;
+    }
 
     final transform = Matrix4.identity()
-      ..setEntry(3, 2, _perspectiveAnimation.value);
+      ..setEntry(3, 2, -_perspectiveAnimation.value);
 
     if (isAxisVertical) {
       transform.rotateX(rotation);
