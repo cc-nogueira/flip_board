@@ -27,6 +27,7 @@ class FlipMatrixBoardStreamPage extends StatefulWidget {
 
 class _FlipMatrixBoardStreamPageState extends State<FlipMatrixBoardStreamPage> {
   final _controller = StreamController<String>();
+  StreamSubscription<String>? _feedSubscription;
   bool _firstRun = true;
   bool _loop = false;
   bool _done = false;
@@ -40,6 +41,7 @@ class _FlipMatrixBoardStreamPageState extends State<FlipMatrixBoardStreamPage> {
 
   @override
   void dispose() {
+    _feedSubscription?.cancel();
     _controller.close();
     super.dispose();
   }
@@ -101,10 +103,11 @@ class _FlipMatrixBoardStreamPageState extends State<FlipMatrixBoardStreamPage> {
 
   void _feedStream() {
     _done = false;
-    _itemStream.listen(
+    _feedSubscription?.cancel();
+    _feedSubscription = _itemStream.listen(
       (event) => _controller.add(event),
       onDone: () {
-        if (_loop) {
+        if (_loop && !_controller.isClosed) {
           _feedStream();
         } else {
           setState(() => _done = true);
