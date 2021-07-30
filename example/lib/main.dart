@@ -5,7 +5,7 @@ import 'pages/board/flip_matrix_board_single_child_page.dart';
 import 'pages/board/flip_matrix_board_stream_page.dart';
 import 'pages/clock/flip_clock_page.dart';
 import 'pages/clock/flip_countdown_clock_page.dart';
-import 'pages/widget/flip_widget_page.dart';
+import 'pages/widget/flip_widgets_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Flip Board',
         routes: {
-          'flip_widget': (_) => FlipWidgetPage(),
+          'flip_widgets': (_) => FlipWidgetsPage(),
           'flip_image': (_) => FlipMatrixBoardSingleChildPage(),
           'flip_stream': (_) => FlipMatrixBoardStreamPage(),
           'flip_frase_board': (_) => FlipFraseBoardPage(),
@@ -42,9 +42,9 @@ class HomePage extends StatelessWidget {
                 _tile(
                   context,
                   Icons.flip,
-                  'Flip Widget',
-                  'Simple Flip Widgets',
-                  'flip_widget',
+                  'Flip & Spin',
+                  'Simple Flip and Spin Widgets',
+                  'flip_widgets',
                 ),
                 _tile(
                   context,
