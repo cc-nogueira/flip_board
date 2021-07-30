@@ -5,28 +5,29 @@ import 'package:flutter/material.dart';
 ///
 /// Colors are set at through ThemeData and customized at constructor level.
 class FlipClockPage extends StatelessWidget {
+  final colorScheme = ColorScheme.fromSwatch(primarySwatch: Colors.amber);
+
   @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(title: const Text('Flip Clock')),
-        body: Theme(
-          data: ThemeData.from(
-            colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.amber),
+  Widget build(BuildContext context) => Theme(
+        data: ThemeData.from(colorScheme: colorScheme),
+        child: Scaffold(
+          backgroundColor: const Color(0xFF111111),
+          appBar: AppBar(
+            title: const Text('Flip Clock'),
+            backgroundColor: colorScheme.background,
           ),
-          child: Center(
+          body: Center(
             child: Container(
               decoration: const BoxDecoration(
-                  color: Colors.black,
-                  borderRadius: BorderRadius.all(Radius.circular(4.0))),
-              height: 71.0,
-              padding: const EdgeInsets.symmetric(
-                horizontal: 2.0,
-                vertical: 4.0,
+                color: Colors.black,
+                borderRadius: BorderRadius.all(Radius.circular(8.0)),
               ),
+              padding: const EdgeInsets.all(16.0),
               child: FlipClock(
                 digitSize: 54.0,
                 width: 46.0,
                 height: 62.0,
-                separatorColor: Colors.grey,
+                separatorColor: colorScheme.primary,
                 showBorder: true,
               ),
             ),
