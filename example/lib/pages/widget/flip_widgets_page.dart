@@ -138,7 +138,8 @@ class _FlipWidgetState extends State<FlipWidgetsPage> {
       );
 
   Widget _spinWidget(AxisDirection direction) => Container(
-        child: SpinFlipWidget(
+        child: FlipWidget(
+          flipType: FlipType.spinFlip,
           itemStream: _spinController.stream,
           itemBuilder: _itemBuilder,
           initialValue: _nextFlipValue,
