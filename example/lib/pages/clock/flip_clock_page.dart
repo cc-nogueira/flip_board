@@ -11,7 +11,7 @@ class FlipClockPage extends StatelessWidget {
   Widget build(BuildContext context) => Theme(
         data: ThemeData.from(colorScheme: colorScheme),
         child: Scaffold(
-          backgroundColor: const Color(0xFF111111),
+          backgroundColor: Colors.grey[900],
           appBar: AppBar(
             title: const Text('Flip Clock'),
             backgroundColor: colorScheme.background,
