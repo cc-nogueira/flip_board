@@ -41,10 +41,15 @@ class FlipWidget<T> extends StatefulWidget {
     this.flipDuration = const Duration(milliseconds: 800),
     this.flipCurve = Curves.easeInOut,
     this.hingeWidth = 0.0,
+    this.hingeLength = 0.0,
+    this.hingeColor,
     this.perspectiveEffect = 0.006,
     this.onDone,
     this.startCount = 0,
-  }) : super(key: key);
+  })  : assert(hingeWidth == 0.0 && hingeLength == 0.0 ||
+            hingeWidth != 0.0 && hingeLength != 0.0),
+        assert(hingeColor == null || hingeWidth != 0.0),
+        super(key: key);
 
   static const bounceFastFlip = _BounceFastFlipCurve();
   static const bounceSlowFlip = _BounceSlowFlipCurve();
@@ -58,6 +63,8 @@ class FlipWidget<T> extends StatefulWidget {
   final Duration flipDuration;
   final Curve flipCurve;
   final double hingeWidth;
+  final double hingeLength;
+  final Color? hingeColor;
   final double perspectiveEffect;
   final VoidCallback? onDone;
   final int startCount;
@@ -176,13 +183,13 @@ abstract class _FlipWidgetState<T> extends State<FlipWidget<T>>
       initChildWidgets(context);
       children = [
         firstFlatPanel(AxisDirection.up),
-        _padding,
+        _hinge,
         secondFlatPanel(AxisDirection.down),
       ];
     } else {
       children = [
         buildFirstFlipPanel(),
-        _padding,
+        _hinge,
         buildSecondFlipPanel(),
       ];
     }
@@ -202,12 +209,19 @@ abstract class _FlipWidgetState<T> extends State<FlipWidget<T>>
           );
   }
 
-  Widget get _padding => Padding(
-        padding: EdgeInsets.only(
-          top: widget.hingeWidth,
-          left: widget.hingeWidth,
-        ),
-      );
+  Widget get _hinge {
+    return widget.axis == Axis.vertical
+        ? Container(
+            height: widget.hingeWidth,
+            width: widget.hingeLength,
+            color: widget.hingeColor,
+          )
+        : Container(
+            height: widget.hingeLength,
+            width: widget.hingeWidth,
+            color: widget.hingeColor,
+          );
+  }
 
   Widget buildFirstFlipPanel();
 

@@ -10,26 +10,31 @@ import 'package:flutter/material.dart';
 class FlipCountdownClockPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Countdown')),
-      body: Center(
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.grey[300],
-            borderRadius: BorderRadius.circular(8.0),
-          ),
-          padding: const EdgeInsets.all(24.0),
-          child: FlipCountdownClock(
-            duration: const Duration(minutes: 1),
-            digitColor: Colors.white,
-            backgroundColor: Colors.black,
-            separatorColor: Colors.black,
-            borderColor: Colors.grey,
-            digitSize: 54.0,
-            width: 46.0,
-            height: 62.0,
-            borderRadius: const BorderRadius.all(Radius.circular(8.0)),
-            onDone: () => print('Buzzzz!'),
+    final colors = ColorScheme.fromSwatch(primarySwatch: Colors.grey);
+    return Theme(
+      data: ThemeData.from(colorScheme: colors),
+      child: Scaffold(
+        appBar: AppBar(title: const Text('Countdown')),
+        body: Center(
+          child: Container(
+            decoration: BoxDecoration(
+              color: colors.secondary,
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+            padding: const EdgeInsets.all(24.0),
+            child: FlipCountdownClock(
+              duration: const Duration(minutes: 1),
+              digitSize: 54.0,
+              width: 46.0,
+              height: 62.0,
+              digitColor: colors.surface,
+              backgroundColor: colors.onSurface,
+              separatorColor: colors.onSurface,
+              borderColor: colors.primary,
+              hingeColor: colors.surface,
+              borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+              onDone: () => print('Buzzzz!'),
+            ),
           ),
         ),
       ),

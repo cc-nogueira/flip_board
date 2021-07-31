@@ -27,13 +27,19 @@ class FlipFraseBoard extends StatelessWidget {
     required String endFrase,
     required this.fontSize,
     required this.axis,
+    this.flipType = FlipType.middleFlip,
     this.startColors,
     this.endColors,
     this.digitColors,
     double? flipLetterWidth,
     double? flipLetterHeight,
     this.letterSpacing = 1.0,
-    this.flipSpacing = 0.8,
+    this.borderColor,
+    this.borderWidth,
+    this.showBorder,
+    this.hingeWidth = 0.0,
+    double? hingeLength,
+    this.hingeColor,
     this.minFlipDelay = 250,
     this.maxFlipDelay = 600,
     this.onDone,
@@ -44,11 +50,20 @@ class FlipFraseBoard extends StatelessWidget {
         assert(endFrase.isNotEmpty),
         assert(startFrase == null || startFrase.length == endFrase.length),
         assert(endColors == null || endColors.isNotEmpty),
+        assert(hingeLength == null ||
+            hingeLength == 0.0 && hingeWidth == 0.0 ||
+            hingeLength != 0.0 && hingeWidth != 0.0),
+        assert(hingeColor == null || hingeWidth != 0.0),
+        assert(minFlipDelay <= maxFlipDelay),
         startChars = startFrase?.characters ??
             (startLetter! * endFrase.length).characters,
         endChars = endFrase.characters,
         flipLetterWidth = flipLetterWidth ?? fontSize + 4,
         flipLetterHeight = flipLetterHeight ?? fontSize + 6,
+        hingeLength = hingeLength ??
+            (hingeWidth == 0.0
+                ? 0.0
+                : (axis == Axis.vertical ? fontSize + 4 : fontSize + 6)),
         startNotifier = startNotifier ?? ValueNotifier(0),
         super(key: key) {
     _clearDoneList();
@@ -56,9 +71,15 @@ class FlipFraseBoard extends StatelessWidget {
 
   final Characters startChars, endChars;
   final Axis axis;
+  final FlipType flipType;
   final double fontSize;
   final double letterSpacing;
-  final double flipSpacing;
+  final Color? borderColor;
+  final double? borderWidth;
+  final bool? showBorder;
+  final double hingeWidth;
+  final double hingeLength;
+  final Color? hingeColor;
   final double flipLetterWidth, flipLetterHeight;
   final List<Color>? startColors, endColors, digitColors;
   final int minFlipDelay, maxFlipDelay;
@@ -133,9 +154,12 @@ class FlipFraseBoard extends StatelessWidget {
           endColor: endColor,
           digitColor: digitColor,
         ),
+        flipType: flipType,
         flipDirection: _letterDirection(startLetter, endLetter),
         flipDuration: Duration(milliseconds: (delay * 2.0 / 3.0).truncate()),
-        hingeWidth: flipSpacing,
+        hingeWidth: hingeWidth,
+        hingeLength: hingeLength,
+        hingeColor: hingeColor,
         onDone: () => _onStreamDone(index),
       ),
     );
@@ -159,6 +183,12 @@ class FlipFraseBoard extends StatelessWidget {
       decoration: BoxDecoration(
         color: color,
         borderRadius: const BorderRadius.all(Radius.circular(4.0)),
+        border: (showBorder ?? (borderColor != null || borderWidth != null))
+            ? Border.all(
+                color: borderColor ?? Theme.of(context).colorScheme.onPrimary,
+                width: borderWidth ?? 1.0,
+              )
+            : null,
       ),
       child: Container(
         width: flipLetterWidth,

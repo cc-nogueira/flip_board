@@ -33,9 +33,14 @@ class FlipClock extends StatelessWidget {
     double? separatorWidth,
     BorderRadius borderRadius = const BorderRadius.all(Radius.circular(4.0)),
     EdgeInsets digitSpacing = const EdgeInsets.symmetric(horizontal: 2.0),
-    double flipSpacing = 0.8,
+    double hingeWidth = 0.8,
+    double? hingeLength,
+    Color? hingeColor,
     AxisDirection flipDirection = AxisDirection.down,
-  })  : _displayBuilder = FlipClockBuilder(
+  })  : assert(hingeLength == null ||
+            hingeWidth == 0.0 && hingeLength == 0.0 ||
+            hingeWidth > 0.0 && hingeLength > 0.0),
+        _displayBuilder = FlipClockBuilder(
           digitColor: digitColor,
           backgroundColor: backgroundColor,
           separatorColor: separatorColor,
@@ -49,9 +54,17 @@ class FlipClock extends StatelessWidget {
           separatorWidth: separatorWidth ?? width / 3.0,
           borderRadius: borderRadius,
           digitSpacing: digitSpacing,
-          flipSpacing: flipSpacing,
           flipDirection: flipDirection,
           flipCurve: FlipWidget.bounceFastFlip,
+          hingeColor: hingeColor,
+          hingeWidth: hingeWidth,
+          hingeLength: hingeWidth == 0.0
+              ? 0.0
+              : hingeLength ??
+                  (flipDirection == AxisDirection.down ||
+                          flipDirection == AxisDirection.up
+                      ? width
+                      : height),
         ),
         super(key: key);
 

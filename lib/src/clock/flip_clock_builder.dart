@@ -21,7 +21,9 @@ class FlipClockBuilder {
     required this.flipDirection,
     required this.borderRadius,
     required this.digitSpacing,
-    required this.flipSpacing,
+    required this.hingeWidth,
+    required this.hingeLength,
+    this.hingeColor,
     this.flipCurve,
   });
 
@@ -38,7 +40,9 @@ class FlipClockBuilder {
   final double separatorWidth;
   final BorderRadius borderRadius;
   final EdgeInsets digitSpacing;
-  final double flipSpacing;
+  final double hingeWidth;
+  final double hingeLength;
+  final Color? hingeColor;
   final AxisDirection flipDirection;
   final Curve? flipCurve;
 
@@ -74,7 +78,9 @@ class FlipClockBuilder {
               itemStream: digitStream,
               itemBuilder: _digitBuilder,
               initialValue: initialValue,
-              hingeWidth: flipSpacing,
+              hingeWidth: hingeWidth,
+              hingeLength: hingeLength,
+              hingeColor: hingeColor,
               flipDirection: flipDirection,
               flipCurve: flipCurve ?? FlipWidget.defaultFlip,
             ),
