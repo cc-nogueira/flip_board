@@ -133,7 +133,7 @@ class _FlipWidgetState extends State<FlipWidgetsPage> {
               : FlipWidget.defaultFlip,
           flipDuration: const Duration(milliseconds: 1000),
           perspectiveEffect: 0.008,
-          panelSpacing: 0.8,
+          hingeWidth: 0.8,
         ),
       );
 
@@ -146,7 +146,7 @@ class _FlipWidgetState extends State<FlipWidgetsPage> {
           flipDirection: direction,
           flipDuration: const Duration(milliseconds: 1000),
           perspectiveEffect: 0.008,
-          panelSpacing: 0.8,
+          hingeWidth: 0.8,
         ),
       );
 

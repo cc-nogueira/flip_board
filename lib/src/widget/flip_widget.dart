@@ -40,7 +40,7 @@ class FlipWidget<T> extends StatefulWidget {
     this.initialValue,
     this.flipDuration = const Duration(milliseconds: 800),
     this.flipCurve = Curves.easeInOut,
-    this.panelSpacing = 0.0,
+    this.hingeWidth = 0.0,
     this.perspectiveEffect = 0.006,
     this.onDone,
     this.startCount = 0,
@@ -57,7 +57,7 @@ class FlipWidget<T> extends StatefulWidget {
   final T? initialValue;
   final Duration flipDuration;
   final Curve flipCurve;
-  final double panelSpacing;
+  final double hingeWidth;
   final double perspectiveEffect;
   final VoidCallback? onDone;
   final int startCount;
@@ -204,8 +204,8 @@ abstract class _FlipWidgetState<T> extends State<FlipWidget<T>>
 
   Widget get _padding => Padding(
         padding: EdgeInsets.only(
-          top: widget.panelSpacing,
-          left: widget.panelSpacing,
+          top: widget.hingeWidth,
+          left: widget.hingeWidth,
         ),
       );
 
@@ -269,10 +269,10 @@ class _MiddleFlipWidgetState<T> extends _FlipWidgetState<T> {
     late final Offset originOffset;
     if (isVertical) {
       transform.rotateX(rotation);
-      originOffset = Offset(0.0, widget.panelSpacing / 2);
+      originOffset = Offset(0.0, widget.hingeWidth / 2);
     } else {
       transform.rotateY(rotation);
-      originOffset = Offset(widget.panelSpacing / 2, 0.0);
+      originOffset = Offset(widget.hingeWidth / 2, 0.0);
     }
     return Transform(
       alignment: isVertical ? Alignment.bottomCenter : Alignment.centerRight,
@@ -300,10 +300,10 @@ class _MiddleFlipWidgetState<T> extends _FlipWidgetState<T> {
     late final Offset originOffset;
     if (isAxisVertical) {
       transform.rotateX(rotation);
-      originOffset = Offset(0.0, -widget.panelSpacing);
+      originOffset = Offset(0.0, -widget.hingeWidth);
     } else {
       transform.rotateY(rotation);
-      originOffset = Offset(-widget.panelSpacing, 0.0);
+      originOffset = Offset(-widget.hingeWidth, 0.0);
     }
 
     return Transform(
@@ -346,10 +346,10 @@ class _SpinFlipWidgetState<T> extends _FlipWidgetState<T> {
     late final Offset originOffset;
     if (isVertical) {
       transform.rotateX(rotation);
-      originOffset = Offset(0.0, widget.panelSpacing / 2);
+      originOffset = Offset(0.0, widget.hingeWidth / 2);
     } else {
       transform.rotateY(rotation);
-      originOffset = Offset(widget.panelSpacing / 2, 0.0);
+      originOffset = Offset(widget.hingeWidth / 2, 0.0);
     }
 
     return Transform(
@@ -378,10 +378,10 @@ class _SpinFlipWidgetState<T> extends _FlipWidgetState<T> {
     late final Offset originOffset;
     if (isVertical) {
       transform.rotateX(rotation);
-      originOffset = Offset(0.0, -widget.panelSpacing / 2);
+      originOffset = Offset(0.0, -widget.hingeWidth / 2);
     } else {
       transform.rotateY(rotation);
-      originOffset = Offset(-widget.panelSpacing / 2, 0.0);
+      originOffset = Offset(-widget.hingeWidth / 2, 0.0);
     }
 
     return Transform(

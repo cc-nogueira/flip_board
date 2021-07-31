@@ -74,7 +74,7 @@ class FlipClockBuilder {
               itemStream: digitStream,
               itemBuilder: _digitBuilder,
               initialValue: initialValue,
-              panelSpacing: flipSpacing,
+              hingeWidth: flipSpacing,
               flipDirection: flipDirection,
               flipCurve: flipCurve ?? FlipWidget.defaultFlip,
             ),

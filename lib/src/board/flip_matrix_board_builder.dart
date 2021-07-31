@@ -79,7 +79,7 @@ abstract class FlipMatrixBoardBuilder<T> {
                         child: buildChild(context, value),
                       ),
                     ),
-              panelSpacing: 0.0,
+              hingeWidth: 0.0,
               flipDirection: _randomDirection,
               flipDuration: _randomFlipDuration,
             ),
