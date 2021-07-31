@@ -266,13 +266,17 @@ class _MiddleFlipWidgetState<T> extends _FlipWidgetState<T> {
     final transform = Matrix4.identity()
       ..setEntry(3, 2, _perspectiveAnimation.value);
 
+    late final Offset originOffset;
     if (isVertical) {
       transform.rotateX(rotation);
+      originOffset = Offset(0.0, widget.panelSpacing / 2);
     } else {
       transform.rotateY(rotation);
+      originOffset = Offset(widget.panelSpacing / 2, 0.0);
     }
     return Transform(
       alignment: isVertical ? Alignment.bottomCenter : Alignment.centerRight,
+      origin: originOffset,
       transform: transform,
       child: isUpOrLeft ? _firstPanelChild2 : _firstPanelChild1,
     );
@@ -293,14 +297,18 @@ class _MiddleFlipWidgetState<T> extends _FlipWidgetState<T> {
     final transform = Matrix4.identity()
       ..setEntry(3, 2, -_perspectiveAnimation.value);
 
+    late final Offset originOffset;
     if (isAxisVertical) {
       transform.rotateX(rotation);
+      originOffset = Offset(0.0, -widget.panelSpacing);
     } else {
       transform.rotateY(rotation);
+      originOffset = Offset(-widget.panelSpacing, 0.0);
     }
 
     return Transform(
       alignment: isAxisVertical ? Alignment.topCenter : Alignment.centerLeft,
+      origin: originOffset,
       transform: transform,
       child: isUpOrLeft ? _secondPanelChild1 : _secondPanelChild2,
     );
@@ -329,24 +337,24 @@ class _SpinFlipWidgetState<T> extends _FlipWidgetState<T> {
 
     final sign = isVertical ? 1.0 : -1.0;
     final rotation =
-        sign * (isUpOrLeft ? -_flipAnimation.value : _flipAnimation.value);
+        sign * (isUpOrLeft ? -_flipAnimation.value : _flipAnimation.value) +
+            (isPastMiddle ? math.pi : 0.0);
 
     final transform = Matrix4.identity()
       ..setEntry(3, 2, _perspectiveAnimation.value);
 
+    late final Offset originOffset;
     if (isVertical) {
-      if (isPastMiddle) {
-        transform.rotateX(math.pi);
-      }
       transform.rotateX(rotation);
+      originOffset = Offset(0.0, widget.panelSpacing / 2);
     } else {
-      if (isPastMiddle) {
-        transform.rotateY(math.pi);
-      }
       transform.rotateY(rotation);
+      originOffset = Offset(widget.panelSpacing / 2, 0.0);
     }
+
     return Transform(
       alignment: isVertical ? Alignment.bottomCenter : Alignment.centerRight,
+      origin: originOffset,
       transform: transform,
       child: isPastMiddle ? _firstPanelChild2 : _firstPanelChild1,
     );
@@ -361,25 +369,24 @@ class _SpinFlipWidgetState<T> extends _FlipWidgetState<T> {
 
     final sign = isVertical ? 1.0 : -1.0;
     final rotation =
-        sign * (isUpOrLeft ? _flipAnimation.value : -_flipAnimation.value);
+        sign * (isUpOrLeft ? _flipAnimation.value : -_flipAnimation.value) +
+            (isPastMiddle ? math.pi : 0.0);
 
     final transform = Matrix4.identity()
       ..setEntry(3, 2, -_perspectiveAnimation.value);
 
+    late final Offset originOffset;
     if (isVertical) {
-      if (isPastMiddle) {
-        transform.rotateX(math.pi);
-      }
       transform.rotateX(rotation);
+      originOffset = Offset(0.0, -widget.panelSpacing / 2);
     } else {
-      if (isPastMiddle) {
-        transform.rotateY(math.pi);
-      }
       transform.rotateY(rotation);
+      originOffset = Offset(-widget.panelSpacing / 2, 0.0);
     }
 
     return Transform(
       alignment: isVertical ? Alignment.topCenter : Alignment.centerLeft,
+      origin: originOffset,
       transform: transform,
       child: isPastMiddle ? _secondPanelChild2 : _secondPanelChild1,
     );
