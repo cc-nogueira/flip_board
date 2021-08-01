@@ -36,7 +36,6 @@ class _FlipWidgetState extends State<FlipWidgetsPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             _flipWheel(greyColors),
-            const SizedBox(height: 20.0),
             _spinWheel(amberColors),
           ],
         ),
@@ -58,27 +57,35 @@ class _FlipWidgetState extends State<FlipWidgetsPage> {
   ) =>
       Theme(
         data: ThemeData(colorScheme: colors),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _wheelTitle(title, colors),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [_widget(AxisDirection.up)],
+        child: Expanded(
+          child: Container(
+            color: colors.background,
+            child: Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  _wheelTitle(title, colors),
+                  const SizedBox(height: 12.0),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [_widget(AxisDirection.up)],
+                  ),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      _widget(AxisDirection.left),
+                      _button,
+                      _widget(AxisDirection.right),
+                    ],
+                  ),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [_widget(AxisDirection.down)],
+                  ),
+                ],
+              ),
             ),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                _widget(AxisDirection.left),
-                _button,
-                _widget(AxisDirection.right),
-              ],
-            ),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [_widget(AxisDirection.down)],
-            ),
-          ],
+          ),
         ),
       );
 
@@ -134,7 +141,7 @@ class _FlipWidgetState extends State<FlipWidgetsPage> {
           flipDuration: const Duration(milliseconds: 1000),
           perspectiveEffect: 0.008,
           hingeWidth: 1.0,
-          hingeLength: 60.0,
+          hingeLength: 56.0,
           hingeColor: Colors.black,
         ),
       );
@@ -152,8 +159,8 @@ class _FlipWidgetState extends State<FlipWidgetsPage> {
       );
 
   Widget _itemBuilder(BuildContext context, int? value) => Container(
-        width: 72.0,
-        height: 72.0,
+        width: 64.0,
+        height: 64.0,
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.primaryVariant,
@@ -164,7 +171,7 @@ class _FlipWidgetState extends State<FlipWidgetsPage> {
           ((value ?? 0) % 10).toString(),
           style: TextStyle(
             color: Theme.of(context).colorScheme.onPrimary,
-            fontSize: 60.0,
+            fontSize: 54.0,
           ),
         ),
       );
