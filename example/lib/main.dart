@@ -5,7 +5,7 @@ import 'pages/board/flip_matrix_board_single_child_page.dart';
 import 'pages/board/flip_matrix_board_stream_page.dart';
 import 'pages/clock/flip_clock_page.dart';
 import 'pages/clock/flip_countdown_clock_page.dart';
-import 'pages/game/uhaa_flip_game_page.dart';
+import 'pages/game/uhaaa_flip_game_page.dart';
 import 'pages/widget/flip_widgets_page.dart';
 
 void main() => runApp(MyApp());
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
           'flip_frase_board': (_) => const FlipFraseBoardPage(),
           'flip_clock': (_) => const FlipClockPage(),
           'countdown_clock': (_) => const FlipCountdownClockPage(),
-          'uhaaa_game': (_) => const UhaaFlipGamePage(),
+          'uhaaa_game': (_) => UhaaaFlipGamePage(),
         },
         home: HomePage(),
       );
