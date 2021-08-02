@@ -31,10 +31,10 @@ class _UhaaFlipGamePageState extends State<UhaaFlipGamePage>
   void initState() {
     super.initState();
     _cards = [
-      Image.asset('assets/sea.png', width: 130.0),
-      Image.asset('assets/bird.png', width: 130.0),
-      Image.asset('assets/butterfly.png', width: 130.0),
-      Image.asset('assets/flower.png', width: 130.0),
+      Image.asset('assets/sea.png', width: 125.0),
+      Image.asset('assets/bird.png', width: 125.0),
+      Image.asset('assets/butterfly.png', width: 125.0),
+      Image.asset('assets/flower.png', width: 125.0),
     ];
     _cardControllers = [
       StreamController<Widget>(),
