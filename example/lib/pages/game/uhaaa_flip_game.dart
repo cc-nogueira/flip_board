@@ -30,10 +30,11 @@ class _UhaaaFlipGameState extends State<UhaaaFlipGame> {
     super.initState();
 
     _cards = [
-      Image.asset('assets/sea.png', width: 125.0),
-      Image.asset('assets/bird.png', width: 125.0),
-      Image.asset('assets/butterfly.png', width: 125.0),
-      Image.asset('assets/flower.png', width: 125.0),
+      Image.asset('assets/vertical/van-Gogh_The-Bedroom.jpg', width: 80.0),
+      Image.asset('assets/vertical/van-Gogh_Self-Portrait-1.jpg', width: 80.0),
+      Image.asset('assets/vertical/van-Gogh_Starry-Night.jpg', width: 80.0),
+      Image.asset('assets/vertical/van-Gogh_The-Factory.jpg', width: 80.0),
+      Image.asset('assets/vertical/van-Gogh_Irises.jpg', width: 80.0),
     ];
 
     _cardControllers = [
@@ -56,25 +57,33 @@ class _UhaaaFlipGameState extends State<UhaaaFlipGame> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            Container(
+              height: 120.0,
+              alignment: Alignment.center,
+              child: UhaaaInstruction(uhaaa: _uhaaa, uhaaaCount: _uhaaaCount),
+            ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _card(0, 2 * math.pi / 5),
+                _card(0, -math.pi / 11),
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    _card(1, math.pi / 2),
-                    const SizedBox(height: 40),
+                    _card(1, 0),
+                    const SizedBox(height: 35),
                   ],
                 ),
-                _card(2, 3 * math.pi / 5),
+                _card(2, math.pi / 11),
               ],
             ),
             Container(
-              height: 90.0,
-              alignment: Alignment.center,
-              child: UhaaaMessage(uhaaa: _uhaaa, uhaaaCount: _uhaaaCount),
+              height: 140.0,
+              child: UhaaaMessage(
+                uhaaa: _uhaaa,
+                uhaaaCount: _uhaaaCount,
+                onTapRestart: _restart,
+              ),
             ),
           ],
         ),
@@ -83,14 +92,13 @@ class _UhaaaFlipGameState extends State<UhaaaFlipGame> {
   Widget _card(int index, double angle) => FlipCard(
         angle: angle,
         onTap: () => _onTap(index),
-        flipDirection: AxisDirection.down,
+        flipDirection: AxisDirection.right,
         cardStream: _cardControllers[index].stream,
         initialCard: _cards[_cardsIdx[index]],
       );
 
   void _onTap(int index) {
     if (_uhaaa) {
-      _resetState();
       return;
     }
     if (_lastTapIndex == index) {
@@ -115,7 +123,7 @@ class _UhaaaFlipGameState extends State<UhaaaFlipGame> {
     });
   }
 
-  void _resetState() {
+  void _restart() {
     _flip(0, resetIndex: 0);
     _flip(1, resetIndex: 1);
     _flip(2, resetIndex: 2);

@@ -23,8 +23,15 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets: 
-    - assets/bird.png
-    - assets/butterfly.png
-    - assets/flower.png
-    - assets/flutter.png
-    - assets/sea.png
+    - assets/horizontal/bird.png
+    - assets/horizontal/butterfly.png
+    - assets/horizontal/flower.png
+    - assets/horizontal/flutter.png
+    - assets/horizontal/sea.png
+    - assets/vertical/van-Gogh_Cafe-Terrace-at-Night.jpg
+    - assets/vertical/van-Gogh_Irises.jpg
+    - assets/vertical/van-Gogh_Self-Portrait-1.jpg
+    - assets/vertical/van-Gogh_Self-Portrait-2.jpg
+    - assets/vertical/van-Gogh_Starry-Night.jpg
+    - assets/vertical/van-Gogh_The-Bedroom.jpg
+    - assets/vertical/van-Gogh_The-Factory.jpg

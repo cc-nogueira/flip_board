@@ -16,10 +16,10 @@ class FlipMatrixBoardStreamPage extends StatefulWidget {
   final width = 375.0;
   final height = 200.0;
   final List<String> imageNames = const [
-    'assets/flower.png',
-    'assets/butterfly.png',
-    'assets/sea.png',
-    'assets/bird.png',
+    'assets/horizontal/flower.png',
+    'assets/horizontal/butterfly.png',
+    'assets/horizontal/sea.png',
+    'assets/horizontal/bird.png',
   ];
 
   @override

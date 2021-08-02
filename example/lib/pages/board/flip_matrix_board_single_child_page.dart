@@ -19,7 +19,7 @@ class FlipMatrixBoardSingleChildPage extends StatelessWidget {
                   decoration:
                       BoxDecoration(border: Border.all(color: Colors.black)),
                   child: FlipMatrixBoardSingleChild.assetImage(
-                    imageName: 'assets/flutter.png',
+                    imageName: 'assets/horizontal/flutter.png',
                     axis: Axis.vertical,
                     width: 375.0,
                     height: 200.0,

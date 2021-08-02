@@ -5,10 +5,12 @@ class UhaaaMessage extends StatefulWidget {
     Key? key,
     required this.uhaaa,
     required this.uhaaaCount,
+    required this.onTapRestart,
   }) : super(key: key);
 
   final bool uhaaa;
   final int uhaaaCount;
+  final VoidCallback onTapRestart;
 
   @override
   _UhaaaMessageState createState() => _UhaaaMessageState();
@@ -17,8 +19,9 @@ class UhaaaMessage extends StatefulWidget {
 class _UhaaaMessageState extends State<UhaaaMessage>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
-  late final Animation _sizeAnimation;
-  late final Animation _opacityAnimation;
+  late final Animation _countAnimation;
+  late final Animation _uhaaaAnimation;
+  late final Animation _buttonAnimation;
 
   @override
   void initState() {
@@ -26,15 +29,29 @@ class _UhaaaMessageState extends State<UhaaaMessage>
 
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1500),
+      duration: const Duration(milliseconds: 3000),
     );
 
-    final animation = CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeIn,
+    _countAnimation = Tween(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(0.0, 0.6, curve: Curves.easeIn),
+      ),
     );
-    _sizeAnimation = animation.drive(Tween(begin: 10.0, end: 30.0));
-    _opacityAnimation = animation;
+
+    _uhaaaAnimation = Tween(begin: 10.0, end: 30.0).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(0.0, 0.6, curve: Curves.easeIn),
+      ),
+    );
+
+    _buttonAnimation = Tween(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(0.5, 1.0, curve: Curves.easeIn),
+      ),
+    );
 
     _animate();
   }
@@ -60,20 +77,42 @@ class _UhaaaMessageState extends State<UhaaaMessage>
   Widget _builder(BuildContext context, Widget? _) =>
       widget.uhaaa ? _uhaaaMessage : _uhaaaCount;
 
-  Widget get _uhaaaMessage => Row(
-        mainAxisSize: MainAxisSize.min,
+  Widget get _uhaaaMessage => Column(
         children: [
-          Text(
-            'Uhaaa! ',
-            style: TextStyle(
-              color: Colors.red,
-              fontSize: _sizeAnimation.value,
-              fontWeight: FontWeight.bold,
-            ),
+          const SizedBox(height: 16.0),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'Uhaaa! ',
+                style: TextStyle(
+                  color: Colors.red,
+                  fontSize: _uhaaaAnimation.value,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                'in ${widget.uhaaaCount}',
+                style: TextStyle(fontSize: _uhaaaAnimation.value),
+              ),
+            ],
           ),
-          Text(
-            'in ${widget.uhaaaCount}',
-            style: TextStyle(fontSize: _sizeAnimation.value),
+          const SizedBox(height: 16.0),
+          Opacity(
+            opacity: _buttonAnimation.value,
+            child: TextButton(
+              style: TextButton.styleFrom(
+                primary: Colors.white,
+                backgroundColor: Colors.red,
+                onSurface: Colors.green,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24.0,
+                  vertical: 8.0,
+                ),
+              ),
+              onPressed: widget.onTapRestart,
+              child: const Text('Play Again', style: TextStyle(fontSize: 20.0)),
+            ),
           ),
         ],
       );
@@ -83,7 +122,7 @@ class _UhaaaMessageState extends State<UhaaaMessage>
         widget.uhaaaCount == 0 ? 'Ready!' : widget.uhaaaCount.toString();
     final color = widget.uhaaaCount == 0 ? Colors.blue[800]! : Colors.black;
     return Opacity(
-      opacity: _opacityAnimation.value,
+      opacity: _countAnimation.value,
       child: Text(message,
           style: TextStyle(
             color: color,
@@ -92,4 +131,102 @@ class _UhaaaMessageState extends State<UhaaaMessage>
           )),
     );
   }
+}
+
+class UhaaaInstruction extends StatefulWidget {
+  const UhaaaInstruction({
+    Key? key,
+    required this.uhaaa,
+    required this.uhaaaCount,
+  }) : super(key: key);
+
+  final bool uhaaa;
+  final int uhaaaCount;
+
+  @override
+  _UhaaaInstructionState createState() => _UhaaaInstructionState();
+}
+
+class _UhaaaInstructionState extends State<UhaaaInstruction>
+    with TickerProviderStateMixin {
+  late final AnimationController _firstController;
+  late final AnimationController _secondController;
+  late final Animation _firstAnimation;
+  late final Animation _secondAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _firstController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1500),
+    );
+    _secondController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1500),
+    );
+
+    _firstAnimation = CurvedAnimation(
+      parent: _firstController,
+      curve: Curves.easeIn,
+    );
+    _secondAnimation = CurvedAnimation(
+      parent: _secondController,
+      curve: Curves.easeIn,
+    );
+
+    _animate();
+  }
+
+  @override
+  void didUpdateWidget(covariant UhaaaInstruction oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _animate();
+  }
+
+  void _animate() {
+    if (widget.uhaaaCount == 0) {
+      _firstController.forward(from: 0.0);
+    } else {
+      _firstController.reverse();
+    }
+    if (widget.uhaaa) {
+      _secondController.reverse(from: 1.0);
+    } else {
+      _secondController.forward();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) => Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          AnimatedBuilder(animation: _firstController, builder: _firstBuilder),
+          AnimatedBuilder(
+              animation: _secondController, builder: _secondBuilder),
+        ],
+      );
+
+  Widget _firstBuilder(BuildContext context, Widget? _) => Opacity(
+        opacity: _firstAnimation.value,
+        child: Text(
+          'Flip Cards To',
+          style: TextStyle(
+              fontSize: 26.0,
+              fontWeight: FontWeight.bold,
+              color: Colors.grey[800]),
+        ),
+      );
+
+  Widget _secondBuilder(BuildContext context, Widget? _) => Opacity(
+        opacity: _secondAnimation.value,
+        child: Text(
+          'Match All Three',
+          style: TextStyle(
+              fontSize: 26.0,
+              fontWeight: FontWeight.bold,
+              color: Colors.grey[800]),
+        ),
+      );
 }
