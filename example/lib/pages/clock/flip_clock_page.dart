@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 ///
 /// Colors are set at through ThemeData and customized at constructor level.
 class FlipClockPage extends StatelessWidget {
+  const FlipClockPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final colors = ColorScheme.fromSwatch(primarySwatch: Colors.amber);

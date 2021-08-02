@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 ///
 /// Presents a FlipMatrix that will animmate the display of a single asset image.
 class FlipMatrixBoardSingleChildPage extends StatelessWidget {
+  const FlipMatrixBoardSingleChildPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('Flip Image')),

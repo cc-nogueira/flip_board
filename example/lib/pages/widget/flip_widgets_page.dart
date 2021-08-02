@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 /// Very simple page with four [FlipWidget] instances for the same broadcast stream.
 /// Each [FlipWidget] is configured to flip with a different AxisDirection.
 class FlipWidgetsPage extends StatefulWidget {
+  const FlipWidgetsPage({Key? key}) : super(key: key);
+
   @override
   _FlipWidgetState createState() => _FlipWidgetState();
 }

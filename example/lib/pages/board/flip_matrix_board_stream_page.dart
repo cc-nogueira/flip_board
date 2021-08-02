@@ -11,9 +11,11 @@ import 'package:flutter/material.dart';
 /// This page includes a loop button and a pause button to demonstrate the use
 /// of an internal stream to controll flip feeding.
 class FlipMatrixBoardStreamPage extends StatefulWidget {
+  const FlipMatrixBoardStreamPage({Key? key}) : super(key: key);
+
   final width = 375.0;
   final height = 200.0;
-  final List<String> imageNames = [
+  final List<String> imageNames = const [
     'assets/flower.png',
     'assets/butterfly.png',
     'assets/sea.png',

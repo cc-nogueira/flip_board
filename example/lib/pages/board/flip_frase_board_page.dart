@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 /// FlipFraseBoard uses Theme colors and optional parameterized colors.
 /// Chars are configured to flip in different random speeds and end colors.
 class FlipFraseBoardPage extends StatefulWidget {
+  const FlipFraseBoardPage({Key? key}) : super(key: key);
+
   @override
   _FlipFraseBoardPageState createState() => _FlipFraseBoardPageState();
 }

@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 ///
 /// Prints a message to the console when done.
 class FlipCountdownClockPage extends StatelessWidget {
+  const FlipCountdownClockPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final colors = ColorScheme.fromSwatch(primarySwatch: Colors.grey);

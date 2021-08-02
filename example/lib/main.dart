@@ -5,6 +5,7 @@ import 'pages/board/flip_matrix_board_single_child_page.dart';
 import 'pages/board/flip_matrix_board_stream_page.dart';
 import 'pages/clock/flip_clock_page.dart';
 import 'pages/clock/flip_countdown_clock_page.dart';
+import 'pages/game/uhaa_flip_game_page.dart';
 import 'pages/widget/flip_widgets_page.dart';
 
 void main() => runApp(MyApp());
@@ -15,12 +16,13 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Flip Board',
         routes: {
-          'flip_widgets': (_) => FlipWidgetsPage(),
-          'flip_image': (_) => FlipMatrixBoardSingleChildPage(),
-          'flip_stream': (_) => FlipMatrixBoardStreamPage(),
-          'flip_frase_board': (_) => FlipFraseBoardPage(),
-          'flip_clock': (_) => FlipClockPage(),
-          'countdown_clock': (_) => FlipCountdownClockPage(),
+          'flip_widgets': (_) => const FlipWidgetsPage(),
+          'flip_image': (_) => const FlipMatrixBoardSingleChildPage(),
+          'flip_stream': (_) => const FlipMatrixBoardStreamPage(),
+          'flip_frase_board': (_) => const FlipFraseBoardPage(),
+          'flip_clock': (_) => const FlipClockPage(),
+          'countdown_clock': (_) => const FlipCountdownClockPage(),
+          'uhaaa_game': (_) => const UhaaFlipGamePage(),
         },
         home: HomePage(),
       );
@@ -80,6 +82,13 @@ class HomePage extends StatelessWidget {
                   'Flip Countdown Clock',
                   'A nice looking countdown clock',
                   'countdown_clock',
+                ),
+                _tile(
+                  context,
+                  Icons.casino,
+                  'Uhaaa! Game',
+                  'Uhaaa! Flip Game',
+                  'uhaaa_game',
                 ),
               ],
             ),
