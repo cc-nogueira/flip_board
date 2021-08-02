@@ -46,8 +46,11 @@ class _UhaaaMessageState extends State<UhaaaMessage>
   }
 
   void _animate() {
-    _controller.reset();
-    _controller.forward();
+    if (widget.uhaaaCount == 0) {
+      _controller.reverse(from: 1.0);
+    } else {
+      _controller.forward(from: 0.0);
+    }
   }
 
   @override
@@ -75,11 +78,18 @@ class _UhaaaMessageState extends State<UhaaaMessage>
         ],
       );
 
-  Widget get _uhaaaCount => Opacity(
-        opacity: _opacityAnimation.value,
-        child: Text(
-          widget.uhaaaCount.toString(),
-          style: const TextStyle(fontSize: 30.0),
-        ),
-      );
+  Widget get _uhaaaCount {
+    final message =
+        widget.uhaaaCount == 0 ? 'Ready!' : widget.uhaaaCount.toString();
+    final color = widget.uhaaaCount == 0 ? Colors.blue[800]! : Colors.black;
+    return Opacity(
+      opacity: _opacityAnimation.value,
+      child: Text(message,
+          style: TextStyle(
+            color: color,
+            fontSize: 30.0,
+            fontWeight: FontWeight.bold,
+          )),
+    );
+  }
 }
