@@ -74,45 +74,29 @@ class _UhaaaMessageState extends State<UhaaaMessage>
   Widget build(BuildContext context) =>
       AnimatedBuilder(animation: _controller, builder: _builder);
 
-  Widget _builder(BuildContext context, Widget? _) =>
-      widget.uhaaa ? _uhaaaMessage : _uhaaaCount;
-
-  Widget get _uhaaaMessage => Column(
+  Widget _builder(BuildContext context, Widget? _) => Column(
         children: [
           const SizedBox(height: 16.0),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                'Uhaaa! ',
-                style: TextStyle(
-                  color: Colors.red,
-                  fontSize: _uhaaaAnimation.value,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Text(
-                'in ${widget.uhaaaCount}',
-                style: TextStyle(fontSize: _uhaaaAnimation.value),
-              ),
-            ],
-          ),
+          widget.uhaaa ? _uhaaaMessage : _uhaaaCount,
           const SizedBox(height: 16.0),
-          Opacity(
-            opacity: _buttonAnimation.value,
-            child: TextButton(
-              style: TextButton.styleFrom(
-                primary: Colors.white,
-                backgroundColor: Colors.red,
-                onSurface: Colors.green,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 24.0,
-                  vertical: 8.0,
-                ),
-              ),
-              onPressed: widget.onTapRestart,
-              child: const Text('Play Again', style: TextStyle(fontSize: 20.0)),
+          _restartButton,
+        ],
+      );
+
+  Widget get _uhaaaMessage => Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            'Uhaaa! ',
+            style: TextStyle(
+              color: Colors.red,
+              fontSize: _uhaaaAnimation.value,
+              fontWeight: FontWeight.bold,
             ),
+          ),
+          Text(
+            'in ${widget.uhaaaCount}',
+            style: TextStyle(fontSize: _uhaaaAnimation.value),
           ),
         ],
       );
@@ -131,6 +115,23 @@ class _UhaaaMessageState extends State<UhaaaMessage>
           )),
     );
   }
+
+  Widget get _restartButton => Opacity(
+        opacity: _buttonAnimation.value,
+        child: TextButton(
+          style: TextButton.styleFrom(
+            primary: Colors.white,
+            backgroundColor: Colors.red,
+            onSurface: Colors.green,
+            padding: const EdgeInsets.symmetric(
+              horizontal: 24.0,
+              vertical: 8.0,
+            ),
+          ),
+          onPressed: widget.onTapRestart,
+          child: const Text('Play Again', style: TextStyle(fontSize: 20.0)),
+        ),
+      );
 }
 
 class UhaaaInstruction extends StatefulWidget {
