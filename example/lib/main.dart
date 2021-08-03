@@ -36,9 +36,12 @@ class HomePage extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: ListTileTheme(
             iconColor: Colors.blueGrey[700],
-            tileColor: Colors.grey[300],
-            contentPadding: const EdgeInsets.all(8.0),
-            shape: Border.all(color: Colors.black38),
+            tileColor: Colors.grey[200],
+            contentPadding: const EdgeInsets.symmetric(
+              vertical: 6.0,
+              horizontal: 12.0,
+            ),
+            shape: Border.all(color: Colors.black45),
             child: ListView(
               children: [
                 _tile(
@@ -66,7 +69,7 @@ class HomePage extends StatelessWidget {
                   context,
                   Icons.sort_by_alpha,
                   'Flip Frase Board',
-                  'Flip FLUTTER FLIP BOARD',
+                  'FLIP & SPIN boards',
                   'flip_frase_board',
                 ),
                 _tile(
@@ -86,8 +89,8 @@ class HomePage extends StatelessWidget {
                 _tile(
                   context,
                   Icons.casino,
-                  'Uhaaa! Game',
                   'Uhaaa! Flip Game',
+                  'Flip paintings cards to match them all',
                   'uhaaa_game',
                 ),
               ],
