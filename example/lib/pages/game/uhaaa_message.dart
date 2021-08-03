@@ -3,13 +3,11 @@ import 'package:flutter/material.dart';
 class UhaaaMessage extends StatefulWidget {
   const UhaaaMessage({
     Key? key,
-    required this.isFirstView,
     required this.uhaaa,
     required this.uhaaaCount,
     required this.onTapRestart,
   }) : super(key: key);
 
-  final bool isFirstView;
   final bool uhaaa;
   final int uhaaaCount;
   final VoidCallback onTapRestart;
