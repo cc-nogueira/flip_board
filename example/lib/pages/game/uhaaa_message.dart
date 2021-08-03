@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 class UhaaaMessage extends StatefulWidget {
   const UhaaaMessage({
     Key? key,
+    required this.isFirstView,
     required this.uhaaa,
     required this.uhaaaCount,
     required this.onTapRestart,
   }) : super(key: key);
 
+  final bool isFirstView;
   final bool uhaaa;
   final int uhaaaCount;
   final VoidCallback onTapRestart;
@@ -117,7 +119,7 @@ class _UhaaaMessageState extends State<UhaaaMessage>
   }
 
   Widget get _restartButton => Opacity(
-        opacity: _buttonAnimation.value,
+        opacity: widget.uhaaa ? _buttonAnimation.value : 0.0,
         child: TextButton(
           style: TextButton.styleFrom(
             primary: Colors.white,

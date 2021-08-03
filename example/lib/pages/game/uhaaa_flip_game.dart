@@ -20,6 +20,7 @@ class _UhaaaFlipGameState extends State<UhaaaFlipGame> {
   late final List<Image> _cards;
   final _cardsIdx = [0, 1, 2];
 
+  bool _isFirstView = true;
   bool _uhaaa = false;
   int _uhaaaCount = 0;
   int _lastTapIndex = -1;
@@ -80,6 +81,7 @@ class _UhaaaFlipGameState extends State<UhaaaFlipGame> {
             Container(
               height: 140.0,
               child: UhaaaMessage(
+                isFirstView: _isFirstView,
                 uhaaa: _uhaaa,
                 uhaaaCount: _uhaaaCount,
                 onTapRestart: _restart,
@@ -101,6 +103,7 @@ class _UhaaaFlipGameState extends State<UhaaaFlipGame> {
     if (_uhaaa) {
       return;
     }
+    _isFirstView = false;
     if (_lastTapIndex == index) {
       if (_hasSecondTap) {
         return;
