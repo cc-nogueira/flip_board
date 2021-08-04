@@ -16,3 +16,6 @@ FlipWidget code and examples review and documentation.
 ## 0.5.0
 First public review.
 All code reviewed and documented.
+
+## 0.5.1
+README.md links updated for pub.dev

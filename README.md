@@ -75,7 +75,7 @@ FlipWidget({
 
 Example page that shows both types and all flipping directions (full code in examples folder):
 
-<img src="screenshots/Flip_and_Spin_300.gif?raw=true" width="300" height="533"  />
+<img src="https://raw.githubusercontent.com/cc-nogueira/flip_board/master/screenshots/Flip_and_Spin_300.gif?raw=true" width="300" height="533"  />
 
 ```dart
   @override
@@ -158,7 +158,7 @@ The board is configured with the number of rows and columns, flipping orientatio
 
 - FlipMatrixBoardSingleChild
 
-  <img src="screenshots/Flip_Image_300.gif?raw=true" width="299" height="231" />
+  <img src="https://raw.githubusercontent.com/cc-nogueira/flip_board/master/screenshots/Flip_Image_300.gif?raw=true" width="299" height="231" />
 
 ```dart
     Widget get _flipImage =>
@@ -181,7 +181,7 @@ The board is configured with the number of rows and columns, flipping orientatio
 
 - FlipMatrixBoardStream
 
-  <img src="screenshots/Flip_Stream_300.gif?raw=true" width="299" height="173" />
+  <img src="https://raw.githubusercontent.com/cc-nogueira/flip_board/master/screenshots/Flip_Stream_300.gif?raw=true" width="299" height="173" />
 
 ```dart
     Widget get _flipWidget =>
@@ -209,7 +209,7 @@ The default flip direction is AxisDirection.down and the default animation curve
 
 In the example below some colors are inherited by a parent ThemeData from the amber color scheme. While some colors are defined in the constructor invocation:
 
-<img src="screenshots/Flip_Clock_300.gif?raw=true" width="299" height="126"  />
+<img src="https://raw.githubusercontent.com/cc-nogueira/flip_board/master/screenshots/Flip_Clock_300.gif?raw=true" width="299" height="126"  />
 
 ```dart
   Widget _flipClock(ColorScheme colors) =>
@@ -239,7 +239,7 @@ Countdown default flip direction is AxisDirection.up, the opposite of FlipClock,
 
 In the following example most colors are configured with constructor parameters:
 
-<img src="screenshots/Flip_Countdown_300.gif?raw=true" width="300" height="128"  />
+<img src="https://raw.githubusercontent.com/cc-nogueira/flip_board/master/screenshots/Flip_Countdown_300.gif?raw=true" width="300" height="128"  />
 
 ```dart
   Widget _flipCountdown(ColorScheme colors) => 
@@ -275,7 +275,7 @@ Flip type, initial and end colors, delays and more are all customized at constru
 
 The provided example looks like this:
 
-<img src="screenshots/Flip_Frase_Board_300.gif?raw=true" width="300" height="173"  />
+<img src="https://raw.githubusercontent.com/cc-nogueira/flip_board/master/screenshots/Flip_Frase_Board_300.gif?raw=true" width="300" height="173"  />
 
 This page displays a variety of frase boards, one of them would be constructed like this:
 
@@ -311,4 +311,4 @@ There are two valid actions:
 
 *Can you win? Good luck!*
 
-<img src="screenshots/Flip_Game_300.gif?raw=true" width="300" height="610"  />
+<img src="https://raw.githubusercontent.com/cc-nogueira/flip_board/master/screenshots/Flip_Game_300.gif?raw=true" width="300" height="610"  />
