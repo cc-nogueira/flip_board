@@ -1,7 +1,7 @@
 name: flip_board_example
 description: FlipBoard examples
 publish_to: "none"
-version: 0.2.0
+version: 0.3.0
 
 environment:
   sdk: ">=2.12.0 <3.0.0"

@@ -155,7 +155,9 @@ class _UhaaaFlipGameState extends State<UhaaaFlipGame> {
       (_cardsIdx[index] + _rand.nextInt(_cards.length - 1) + 1) % _cards.length;
 }
 
-/// Simple helper class to build a FlipWidget with given parameters.
+/// Simple Stateless class to build a FlipWidget with given parameters.
+///
+/// FlipWidget content is controlled by the owner of the given card stream.
 class FlipCard extends StatelessWidget {
   const FlipCard({
     Key? key,

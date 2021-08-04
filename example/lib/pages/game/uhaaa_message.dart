@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+/// StatefulWidget to display the proper messages for the current game state.
+///
+/// Provides various status informations that show and hide with animations.
+/// Also shows a restart button when the game finishes.
 class UhaaaMessage extends StatefulWidget {
   const UhaaaMessage({
     Key? key,
@@ -134,6 +138,9 @@ class _UhaaaMessageState extends State<UhaaaMessage>
       );
 }
 
+/// StatefulWidget to display the proper instruction message for the current game state.
+///
+/// Message parts show and hide with animations.
 class UhaaaInstruction extends StatefulWidget {
   const UhaaaInstruction({
     Key? key,
