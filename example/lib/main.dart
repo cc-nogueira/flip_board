@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'pages/board/flip_frase_board_page.dart';
-import 'pages/board/flip_matrix_board_single_child_page.dart';
+import 'pages/board/flip_matrix_board_image_page.dart';
 import 'pages/board/flip_matrix_board_stream_page.dart';
 import 'pages/clock/flip_clock_page.dart';
 import 'pages/clock/flip_countdown_clock_page.dart';
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         title: 'Flip Board',
         routes: {
           'flip_widgets': (_) => const FlipWidgetsPage(),
-          'flip_image': (_) => const FlipMatrixBoardSingleChildPage(),
+          'flip_image': (_) => const FlipMatrixBoardImagePage(),
           'flip_stream': (_) => const FlipMatrixBoardStreamPage(),
           'flip_frase_board': (_) => const FlipFraseBoardPage(),
           'flip_clock': (_) => const FlipClockPage(),

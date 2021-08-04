@@ -67,11 +67,7 @@ class _FlipWidgetState extends State<FlipWidgetsPage> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   _wheelTitle(title, colors),
-                  const SizedBox(height: 12.0),
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [_widget(AxisDirection.up)],
-                  ),
+                  _widget(AxisDirection.up),
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -80,10 +76,7 @@ class _FlipWidgetState extends State<FlipWidgetsPage> {
                       _widget(AxisDirection.right),
                     ],
                   ),
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [_widget(AxisDirection.down)],
-                  ),
+                  _widget(AxisDirection.down),
                 ],
               ),
             ),
@@ -91,22 +84,25 @@ class _FlipWidgetState extends State<FlipWidgetsPage> {
         ),
       );
 
-  Widget _wheelTitle(String title, ColorScheme colors) => Row(
-        children: [
-          Container(
-            margin: const EdgeInsets.only(left: 24.0),
-            padding: const EdgeInsets.all(8.0),
-            color: colors.secondary,
-            child: Text(
-              title,
-              style: TextStyle(
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold,
-                color: colors.onSecondary,
+  Widget _wheelTitle(String title, ColorScheme colors) => Container(
+        margin: const EdgeInsets.only(bottom: 12.0),
+        child: Row(
+          children: [
+            Container(
+              margin: const EdgeInsets.only(left: 24.0),
+              padding: const EdgeInsets.all(8.0),
+              color: colors.secondary,
+              child: Text(
+                title,
+                style: TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                  color: colors.onSecondary,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       );
 
   Widget get _flipButton => Container(
@@ -131,21 +127,20 @@ class _FlipWidgetState extends State<FlipWidgetsPage> {
         ),
       );
 
-  Widget _flipWidget(AxisDirection direction) => Container(
-        child: FlipWidget(
-          itemStream: _flipController.stream,
-          itemBuilder: _itemBuilder,
-          initialValue: _nextFlipValue,
-          flipDirection: direction,
-          flipCurve: direction == AxisDirection.down
-              ? FlipWidget.bounceFastFlip
-              : FlipWidget.defaultFlip,
-          flipDuration: const Duration(milliseconds: 1000),
-          perspectiveEffect: 0.008,
-          hingeWidth: 1.0,
-          hingeLength: 56.0,
-          hingeColor: Colors.black,
-        ),
+  Widget _flipWidget(AxisDirection direction) => FlipWidget(
+        flipType: FlipType.middleFlip,
+        itemStream: _flipController.stream,
+        itemBuilder: _itemBuilder,
+        initialValue: _nextFlipValue,
+        flipDirection: direction,
+        flipCurve: direction == AxisDirection.down
+            ? FlipWidget.bounceFastFlip
+            : FlipWidget.defaultFlip,
+        flipDuration: const Duration(milliseconds: 1000),
+        perspectiveEffect: 0.008,
+        hingeWidth: 1.0,
+        hingeLength: 56.0,
+        hingeColor: Colors.black,
       );
 
   Widget _spinWidget(AxisDirection direction) => Container(
@@ -170,7 +165,7 @@ class _FlipWidgetState extends State<FlipWidgetsPage> {
           border: Border.all(color: Theme.of(context).colorScheme.background),
         ),
         child: Text(
-          ((value ?? 0) % 10).toString(),
+          (value ?? 0).toString(),
           style: TextStyle(
             color: Theme.of(context).colorScheme.onPrimary,
             fontSize: 54.0,
@@ -178,6 +173,6 @@ class _FlipWidgetState extends State<FlipWidgetsPage> {
         ),
       );
 
-  void _flip() => _flipController.add(++_nextFlipValue);
-  void _spin() => _spinController.add(++_nextSpinValue);
+  void _flip() => _flipController.add(++_nextFlipValue % 10);
+  void _spin() => _spinController.add(++_nextSpinValue % 10);
 }

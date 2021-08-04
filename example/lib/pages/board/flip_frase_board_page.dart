@@ -32,9 +32,10 @@ class _FlipFraseBoardPageState extends State<FlipFraseBoardPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               FlipFraseBoard(
+                flipType: FlipType.middleFlip,
+                axis: Axis.horizontal,
                 startLetter: 'A',
                 endFrase: 'FLUTTER',
-                axis: Axis.horizontal,
                 fontSize: 42.0,
                 hingeWidth: 0.4,
                 hingeColor: colors.onPrimary,
@@ -48,9 +49,10 @@ class _FlipFraseBoardPageState extends State<FlipFraseBoardPage> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   FlipFraseBoard(
+                    flipType: FlipType.middleFlip,
+                    axis: Axis.vertical,
                     startLetter: 'A',
                     endFrase: 'FLIP',
-                    axis: Axis.vertical,
                     fontSize: 30.0,
                     hingeWidth: 0.6,
                     hingeColor: Colors.black,
@@ -62,9 +64,10 @@ class _FlipFraseBoardPageState extends State<FlipFraseBoardPage> {
                   ),
                   const SizedBox(width: 10.0),
                   FlipFraseBoard(
+                    flipType: FlipType.middleFlip,
+                    axis: Axis.vertical,
                     startLetter: 'A',
                     endFrase: '&',
-                    axis: Axis.vertical,
                     fontSize: 30.0,
                     hingeWidth: 0.6,
                     hingeColor: Colors.black,
@@ -75,10 +78,10 @@ class _FlipFraseBoardPageState extends State<FlipFraseBoardPage> {
                   ),
                   const SizedBox(width: 10.0),
                   FlipFraseBoard(
+                    flipType: FlipType.spinFlip,
+                    axis: Axis.vertical,
                     startLetter: 'A',
                     endFrase: 'SPIN',
-                    axis: Axis.vertical,
-                    flipType: FlipType.spinFlip,
                     fontSize: 30.0,
                     hingeWidth: 0.6,
                     hingeColor: Colors.black,
@@ -92,10 +95,10 @@ class _FlipFraseBoardPageState extends State<FlipFraseBoardPage> {
               ),
               const SizedBox(height: 10.0),
               FlipFraseBoard(
-                startLetter: 'A',
-                endFrase: 'BOARDS',
                 flipType: FlipType.spinFlip,
                 axis: Axis.horizontal,
+                startLetter: 'A',
+                endFrase: 'BOARDS',
                 fontSize: 30.0,
                 borderColor: Colors.black,
                 endColors: _boardsEndColors,
@@ -127,6 +130,21 @@ class _FlipFraseBoardPageState extends State<FlipFraseBoardPage> {
       ),
     );
   }
+
+  Widget flipFraseBoard() => FlipFraseBoard(
+        flipType: FlipType.middleFlip,
+        axis: Axis.vertical,
+        startLetter: 'A',
+        endFrase: 'FLIP',
+        fontSize: 30.0,
+        hingeWidth: 0.6,
+        hingeColor: Colors.black,
+        borderColor: Colors.black,
+        endColors: _flipEndColors,
+        letterSpacing: 2.0,
+        onDone: () => _onDone(1),
+        startNotifier: _startNotifier,
+      );
 
   List<Color> get _flipEndColors => [
         Colors.teal[900]!,

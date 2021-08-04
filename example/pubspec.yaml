@@ -25,8 +25,8 @@ flutter:
   assets: 
     - assets/horizontal/bird.png
     - assets/horizontal/butterfly.png
+    - assets/horizontal/dart-frog.jpg
     - assets/horizontal/flower.png
-    - assets/horizontal/flutter.png
     - assets/horizontal/sea.png
     - assets/vertical/van-Gogh_Cafe-Terrace-at-Night.jpg
     - assets/vertical/van-Gogh_Irises.jpg
