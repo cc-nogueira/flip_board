@@ -17,7 +17,7 @@ The package also includes other widgets that use that compose these basic compon
   - [Middle Flip Widget](#middle-flip-widget)
   - [SpinFlip Widget](#spin-flip-widget)
 - **[Composed Widgets](#composed-widgets)**
-  - [Flip Board](#flip-board)
+  - [Flip Matrix Board](#flip-matrix-board)
   - [Flip Clock](#flip-clock)
   - [Flip Countdown Clock](#flip-countdown-clock)
   - [Flip Frase Board](#flip-frase-board)
@@ -42,7 +42,7 @@ Please check the class documentation that describes all options.
 
 Example page that shows both types and all flipping directions (full code in examples folder):
 
-<img src="screenshots/Flip_and_Spin_200.gif?raw=true" width="300" height="533"  />
+<img src="screenshots/Flip_and_Spin_300.gif?raw=true" width="300" height="533"  />
 
 ```dart
   @override
@@ -146,6 +146,57 @@ FlipWidget({
 Basic FlipWidgets are usually composed in a layout, this package provides a few configurable compositions of FlipWidgets of the same type and orientation, sometimes varying some elements direction within that axis orientation.
 
 All these composed widgets are described below and explored in the examples folder.
+
+#
+
+### Flip Matrix Board
+
+There two classes of FlipMatrixBoard that animate the display in a matrix of FlipWidgets. The first class displays a single child, an image in the given example. The second class animates the display of a stream of items, also given as a stream of images in the example below.
+
+The board is configured with the number of rows and columns, flipping orientation and animation speed and delays parameters.
+
+- FlipMatrixBoardSingleChild
+
+  <img src="screenshots/Flip_Image_300.gif?raw=true" width="299" height="231" />
+
+```dart
+    Widget get _flipImage =>
+      Container(
+        decoration: BoxDecoration(
+          border: Border.all(width: 3.0, color: Colors.red[900]!),
+        ),
+        child: FlipMatrixBoardSingleChild.assetImage(
+          imageName: 'assets/horizontal/dart-frog.jpg',
+          backgroundColor: Colors.black,
+          axis: Axis.vertical,
+          width: 364.0,
+          height: 205.0,
+          columnCount: 8,
+          rowCount: 4,
+        ),
+      );
+```
+
+
+- FlipMatrixBoardStream
+
+  <img src="screenshots/Flip_Stream_300.gif?raw=true" width="299" height="173" />
+
+```dart
+    Widget get _flipWidget =>
+      Container(
+        decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
+        child: FlipMatrixBoardStream<String>(
+          itemStream: _controller.stream,
+          itemBuilder: _itemBuilder,
+          axis: Axis.vertical,
+          width: 375.0,
+          height: 200.0,
+          columnCount: 8,
+          rowCount: 4,
+        ),
+      );
+```
 
 #
 
@@ -257,6 +308,6 @@ There are two valid actions:
 - ***a first tap on a card:*** will flip that card
 - ***a second consecutive tap on a card:*** wil flip the other two cards
 
-Can you win? Good luck!
+*Can you win? Good luck!*
 
 <img src="screenshots/Flip_Game_300.gif?raw=true" width="300" height="610"  />

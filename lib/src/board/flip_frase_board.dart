@@ -6,19 +6,22 @@ import 'package:flutter/material.dart';
 
 import '../../flip_widget.dart';
 
-/// Component present message shown as an mechanical flip board.
+/// Component to present a frase, shown as an mechanical flip board.
 ///
-/// Displays an animation flipping from each letter of a startFrase upto each letter of an endFrase,
-/// each letter stream flips in a different random speed.
+/// Displays an animation flipping from each start letter upto each letter in the endFrase,
+/// letter streams flip in different random speeds, controlled by given parameters.
 ///
-/// The startFrase may be given or a start letter may be set to build a startFrase with all letters equal.
+/// The start letter may be given for each letter with a startFrase
+/// or a start letter may be set to build a startFrase with all letters equal.
 /// StartFrase and endFrase must have the same length.
 ///
-/// Colors parameters can have any number of colors, that will be cycled for each letter.
+/// Colors parameters for startColors and endColors can have any number of colors,
+/// if fewer colors are given they will be cycled to define start/end colors for each letter.
 ///
-/// There are a number of parameters to customize size, colors, spacing and speed.
+/// Parameters customize size, colors, spacing, border, hinge and flip delay randomization.
 ///
-/// There is a optional callback parameter for onDone event.
+/// There is an optional callback parameter for onDone event, and an optional parameter
+/// for a [ValueNotifier] to signal a restart of the whole animation.
 class FlipFraseBoard extends StatelessWidget {
   FlipFraseBoard({
     Key? key,
@@ -69,6 +72,8 @@ class FlipFraseBoard extends StatelessWidget {
     _clearDoneList();
   }
 
+  static final _random = Random(DateTime.now().millisecondsSinceEpoch);
+
   final Characters startChars, endChars;
   final Axis axis;
   final FlipType flipType;
@@ -86,7 +91,6 @@ class FlipFraseBoard extends StatelessWidget {
   final VoidCallback? onDone;
   final ValueNotifier<int> startNotifier;
 
-  final _random = Random();
   final _doneList = <bool>[];
 
   _clearDoneList() {

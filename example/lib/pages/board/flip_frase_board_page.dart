@@ -2,13 +2,18 @@ import 'package:flip_board/flip_board.dart';
 import 'package:flip_board/flip_widget.dart';
 import 'package:flutter/material.dart';
 
-/// Page with two [FlipFraseBoard]s showing frase board animations.
+/// Page with five [FlipFraseBoard]s showing frase board animations.
 ///
-/// First frase flip chars horizontally, from "AAAAAAA" to "FLUTTER".
-/// Seconde line flip chars verticallu from "AAAAAAAAAA" to "FLIP BOARD".
+/// There are frases showing all combinations of FlipType and Axis orientations.
 ///
 /// FlipFraseBoard uses Theme colors and optional parameterized colors.
 /// Chars are configured to flip in different random speeds and end colors.
+///
+/// This page is a StatefullWidget to be able to track all FlipFraseBoards done status
+/// and then display a restart button.
+///
+/// The restart process uses a value notifier, startNotifier, to signal each
+/// FlipFraseBoard object that a restart of the animation is requested.
 class FlipFraseBoardPage extends StatefulWidget {
   const FlipFraseBoardPage({Key? key}) : super(key: key);
 
@@ -26,6 +31,7 @@ class _FlipFraseBoardPageState extends State<FlipFraseBoardPage> {
     return Theme(
       data: ThemeData.from(colorScheme: colors),
       child: Scaffold(
+        backgroundColor: Colors.blueGrey[50],
         appBar: AppBar(title: const Text('Flip Frase Board')),
         body: Center(
           child: Column(
@@ -40,6 +46,7 @@ class _FlipFraseBoardPageState extends State<FlipFraseBoardPage> {
                 hingeWidth: 0.4,
                 hingeColor: colors.onPrimary,
                 borderColor: Colors.white,
+                endColors: _flutterEndColrs,
                 letterSpacing: 3.0,
                 onDone: () => _onDone(0),
                 startNotifier: _startNotifier,
@@ -110,11 +117,7 @@ class _FlipFraseBoardPageState extends State<FlipFraseBoardPage> {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 24.0),
-                child: (_completed[0] &&
-                        _completed[1] &&
-                        _completed[2] &&
-                        _completed[3] &&
-                        _completed[4])
+                child: _hasCompleted
                     ? IconButton(
                         onPressed: _restart,
                         icon: const Icon(
@@ -146,6 +149,8 @@ class _FlipFraseBoardPageState extends State<FlipFraseBoardPage> {
         startNotifier: _startNotifier,
       );
 
+  List<Color> get _flutterEndColrs => [Colors.blue, Colors.blue[900]!];
+
   List<Color> get _flipEndColors => [
         Colors.teal[900]!,
         Colors.blue[900]!,
@@ -171,7 +176,7 @@ class _FlipFraseBoardPageState extends State<FlipFraseBoardPage> {
 
   void _onDone(int index) {
     _completed[index] = true;
-    if (_completed[0] && _completed[1]) {
+    if (_hasCompleted) {
       setState(() {});
     }
   }
@@ -186,4 +191,11 @@ class _FlipFraseBoardPageState extends State<FlipFraseBoardPage> {
       _startNotifier.value = _startNotifier.value + 1;
     });
   }
+
+  bool get _hasCompleted =>
+      _completed[0] &&
+      _completed[1] &&
+      _completed[2] &&
+      _completed[3] &&
+      _completed[4];
 }

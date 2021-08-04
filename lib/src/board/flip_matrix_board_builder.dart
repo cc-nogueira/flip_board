@@ -7,6 +7,10 @@ import '../widget/flip_widget.dart';
 
 final _random = Random();
 
+/// Abstract class with common code building FlipMatrixBoards either
+/// for SingleChild or for Stream classes.
+///
+/// All parameters are required, default values should be defined in composing classes.
 abstract class FlipMatrixBoardBuilder<T> {
   const FlipMatrixBoardBuilder({
     required this.axis,
@@ -102,6 +106,9 @@ abstract class FlipMatrixBoardBuilder<T> {
       : (axis == Axis.vertical ? AxisDirection.down : AxisDirection.right);
 }
 
+/// SingleChild builder implementation.
+///
+/// All parameters are required, default values should be defined in composing classes.
 class SingleChildFlipMatrixBoardBuilder extends FlipMatrixBoardBuilder<Widget> {
   const SingleChildFlipMatrixBoardBuilder({
     required this.child,
@@ -113,7 +120,7 @@ class SingleChildFlipMatrixBoardBuilder extends FlipMatrixBoardBuilder<Widget> {
     required int minAnimationMillis,
     required int maxAnimationMillis,
     required int maxDelayMillis,
-    Color backgroundColor = Colors.white,
+    required Color backgroundColor,
   }) : super(
             axis: axis,
             width: width,
@@ -139,6 +146,9 @@ class SingleChildFlipMatrixBoardBuilder extends FlipMatrixBoardBuilder<Widget> {
   Widget buildChild(BuildContext context, Widget value) => child;
 }
 
+/// Stream implementation.
+///
+/// All parameters are required, default values should be defined in composing classes.
 class StreamFlipMatrixBoardBuilder<T> extends FlipMatrixBoardBuilder<T> {
   const StreamFlipMatrixBoardBuilder({
     this.initialValue,
@@ -152,7 +162,7 @@ class StreamFlipMatrixBoardBuilder<T> extends FlipMatrixBoardBuilder<T> {
     required int minAnimationMillis,
     required int maxAnimationMillis,
     required int maxDelayMillis,
-    Color backgroundColor = Colors.white,
+    required Color backgroundColor,
   }) : super(
             axis: axis,
             width: width,

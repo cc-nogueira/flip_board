@@ -5,6 +5,16 @@ import 'package:flutter/material.dart';
 import '../widget/flip_widget.dart';
 import 'flip_matrix_board_builder.dart';
 
+/// Component to present a matrix board of FlipWidgets that animates the display of a single child.
+///
+/// The board is configured with the number of rows and columns, flipping orientation
+/// and animation speed and delay parameters.
+///
+/// There is a generic contructor for any child widget and a specific contructor
+/// for an asset image name with fixed BoxFit.fill configuration. If this assetImage
+/// constructor is not fit for your purposes use the generic constructor.
+///
+/// Most common code between [FlipMatrixBoardSingleChild] and [FlipMatrixBoardStream] is found in [FlipMatrixBoardBuilder].
 class FlipMatrixBoardSingleChild extends StatelessWidget {
   FlipMatrixBoardSingleChild({
     Key? key,
@@ -68,6 +78,14 @@ class FlipMatrixBoardSingleChild extends StatelessWidget {
   Widget build(BuildContext context) => _builder.build(context);
 }
 
+/// Component to present a matrix board of FlipWidgets that animates the arrival of items in a stream.
+///
+/// The board is configured with the number of rows and columns, flipping orientation
+/// and animation speed and delay parameters.
+///
+/// The initialValue parameter is optional thus the itemBuilder signature builds over an optional item.
+///
+/// Most common code between [FlipMatrixBoardSingleChild] and [FlipMatrixBoardStream] is found in [FlipMatrixBoardBuilder].
 class FlipMatrixBoardStream<T> extends StatefulWidget {
   const FlipMatrixBoardStream({
     Key? key,

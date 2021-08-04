@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 
 /// Example page to display a [FlipMatrixBoardStream] of images.
 ///
-/// Presents a FlipMatrix that will display the images from list asset paths.
+/// Presents a FlipMatrix that will display the images from a list of asset paths.
 ///
-/// This page includes a loop button and a pause button to demonstrate the use
-/// of an internal stream to controll flip feeding.
+/// This page includes a loop button and a pause button and demonstrates the use
+/// of stream feeding controlled in this parent widget.
 class FlipMatrixBoardStreamPage extends StatefulWidget {
   const FlipMatrixBoardStreamPage({Key? key}) : super(key: key);
 
@@ -56,33 +56,38 @@ class _FlipMatrixBoardStreamPageState extends State<FlipMatrixBoardStreamPage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Container(
-                  decoration:
-                      BoxDecoration(border: Border.all(color: Colors.blue)),
-                  child: FlipMatrixBoardStream<String>(
-                    itemStream: _controller.stream,
-                    itemBuilder: _itemBuilder,
-                    axis: Axis.vertical,
-                    width: 375.0,
-                    height: 200.0,
-                    columnCount: 8,
-                    rowCount: 4,
-                  ),
-                ),
-                const SizedBox(height: 20.0),
-                ToggleButtons(
-                  color: Colors.black,
-                  isSelected: _isSelected,
-                  onPressed: _onToggle,
-                  borderRadius: BorderRadius.circular(8.0),
-                  children: [
-                    const Icon(Icons.loop),
-                    Icon(Icons.pause, color: _done ? Colors.grey : null),
-                  ],
-                ),
+                _flipWidget,
+                _animationControl,
               ],
             ),
           ),
+        ),
+      );
+
+  Widget get _flipWidget => Container(
+        decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
+        child: FlipMatrixBoardStream<String>(
+          itemStream: _controller.stream,
+          itemBuilder: _itemBuilder,
+          axis: Axis.vertical,
+          width: 375.0,
+          height: 200.0,
+          columnCount: 8,
+          rowCount: 4,
+        ),
+      );
+
+  Widget get _animationControl => Padding(
+        padding: const EdgeInsets.only(top: 20.0),
+        child: ToggleButtons(
+          color: Colors.black,
+          isSelected: _isSelected,
+          onPressed: _onToggle,
+          borderRadius: BorderRadius.circular(8.0),
+          children: [
+            const Icon(Icons.loop),
+            Icon(Icons.pause, color: _done ? Colors.grey : null),
+          ],
         ),
       );
 
