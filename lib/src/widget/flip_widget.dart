@@ -33,7 +33,7 @@ enum FlipType {
 class FlipWidget<T> extends StatefulWidget {
   const FlipWidget({
     Key? key,
-    this.flipType = FlipType.middleFlip,
+    required this.flipType,
     required this.itemStream,
     required this.itemBuilder,
     required this.flipDirection,

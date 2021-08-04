@@ -60,6 +60,7 @@ abstract class FlipMatrixBoardBuilder<T> {
       Iterable<int>.generate(columnCount)
           .map(
             (col) => FlipWidget<T>(
+              flipType: FlipType.middleFlip,
               initialValue: initialValue,
               itemStream: randomDelayedStream(),
               itemBuilder: (_, value) => value == null

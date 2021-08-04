@@ -22,12 +22,12 @@ import '../../flip_widget.dart';
 class FlipFraseBoard extends StatelessWidget {
   FlipFraseBoard({
     Key? key,
+    required this.flipType,
+    required this.axis,
     String? startFrase,
     String? startLetter,
     required String endFrase,
     required this.fontSize,
-    required this.axis,
-    this.flipType = FlipType.middleFlip,
     this.startColors,
     this.endColors,
     this.digitColors,

@@ -75,6 +75,7 @@ class FlipClockBuilder {
           Padding(
             padding: digitSpacing,
             child: FlipWidget<int>(
+              flipType: FlipType.middleFlip,
               itemStream: digitStream,
               itemBuilder: _digitBuilder,
               initialValue: initialValue,
