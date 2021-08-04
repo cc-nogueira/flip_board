@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:flip_board/flip_widget.dart';
 import 'package:flutter/material.dart';
 
-/// Page with four FlipWidgets showing all flip direction animations.
+/// Page with four FlipWidgets showing all flip direction animations and FlipTypes.
 ///
-/// Very simple page with four [FlipWidget] instances for the same broadcast stream.
+/// Very simple page with two sets of four [FlipWidget] instances on the same broadcast stream.
 /// Each [FlipWidget] is configured to flip with a different AxisDirection.
 class FlipWidgetsPage extends StatefulWidget {
   const FlipWidgetsPage({Key? key}) : super(key: key);

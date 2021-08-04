@@ -5,6 +5,10 @@ import 'package:flutter/material.dart';
 
 typedef ItemBuilder<T> = Widget Function(BuildContext buildContext, T? item);
 
+/// There two types of Flip Animations for [FlipWidget]
+///
+/// - middleFlip is used for FlipWidgets that flip in the middle, like Mechanical Flip Boards do.
+/// - spinFlip is used for FlipWidgets that flip like cards do (roll flip).
 enum FlipType {
   middleFlip,
   spinFlip,
@@ -12,24 +16,28 @@ enum FlipType {
 
 /// FliWidget animates the display of items through flip animations.
 ///
-/// Resembles a single Mechanical Flip Board display element, such as a digit or a letter,
-/// but can actualy render any widget you build.
+/// Depending on the flipType parameter it will animate diferently:
+///  - with middleFlip type it resembles a single Mechanical Flip Board display element.
+///  - with spinFlip type it animates as a regular roll flip.
 ///
-/// Constructor with three required parameters:
-/// FlipWidget<T>(
+/// It is usually used to flip letters, digits and images but can actually be used to flip any widget change.
+///
+/// Constructor has four required parameters:
+///   required FlipType flipType,           // Either FlipType.middleFlip or FlipType.spinFlip
 ///   required Stream<T> itemStream,        // Stream of items to flip as they arrive
-///   required ItemBuilder<T> itemBuilder,  // Builder function to create a Widget of each item
-///   required AxisDirection flipDirection, // Direction of flip
+///   required ItemBuilder<T> itemBuilder,  // Builder function to create a widget of each new item
+///   required AxisDirection flipDirection, // Direction to do the flip animation
 ///
-///   T? initialValue,           // Initial item to build before the first stream item
+/// And a number of optional parameters:
+///   T? initialValue,           // Initial item to build before the first stream item arrives
 ///   Duration flipDuration,     // Duration of the flip animation
-///   double panelSpacing,       // Spacing betwewn the pair of widget panels
-///   double perspectiveEffect,  // Perspective effect for the Transform Matrix4
+///   Curve flipCurve            // Curve for flip animation, defaults to Curves.easeInOut
+///   double hingeWidth          // Width of the middle hinge element, defaults to zero (must pair with lenth)
+///   double hingeLength         // Length of the middle hinge element, default to zero (must pair with width)
+///   Color hingeColor           // Color of the middle hinge element, defaults to null (transparent)
+///   double perspectiveEffect,  // Perspective effect for the Transform Matrix4, defaults to 0.006
 ///   VoidCallback onDone,       // Optional callback for onDone stream event
 ///   int startCount,            // Widget state count that allows the widget state to restart stream listening on widget update.
-/// )
-///
-///
 class FlipWidget<T> extends StatefulWidget {
   const FlipWidget({
     Key? key,
