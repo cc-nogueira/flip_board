@@ -41,7 +41,7 @@ Please check the class documentation that describes all options.
 
 #
 
-### Middle Flip Widget
+### Middle Flip
 
 When we think of Mechanical Flip Boards as we used to see in airports and sport score boards we think on a Vertical MiddleFlip Widget or, most likely, on a composition (row) of them.
 
@@ -57,7 +57,7 @@ FlipWidget({
 
 #
 
-### Spin Flip Widget
+### Spin Flip
 
 A SpinFlip widget can be used in the same maner, but renders a Flip Card animation when new items arrive in the stream of items.
 
