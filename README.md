@@ -1,9 +1,5 @@
 # Flip Board
 
-<!-- 
- <img src="https://github.com/cc-nogueira/flip_board/blob/master/screenshots/Flip_andSpin_300.gif?raw=true" width="300" height="533"  />
--->
-
 [![pub package](https://img.shields.io/pub/v/flip_board.svg)](https://pub.dartlang.org/packages/flip_board)
 [![license](https://img.shields.io/github/license/cc-nogueira/flip_board.svg)](https://github.com/hacktons/convex_bottom_bar/raw/LICENSE)
 
@@ -38,9 +34,6 @@ Both MiddleFlip and SpinFlip widgets have the same optional configuration option
 
 Please check the class documentation that describes all options.
 
-
-#
-
 ### Middle Flip
 
 When we think of Mechanical Flip Boards as we used to see in airports and sport score boards we think on a Vertical MiddleFlip Widget or, most likely, on a composition (row) of them.
@@ -55,8 +48,6 @@ FlipWidget({
 });
 ```
 
-#
-
 ### Spin Flip
 
 A SpinFlip widget can be used in the same maner, but renders a Flip Card animation when new items arrive in the stream of items.
@@ -70,8 +61,6 @@ FlipWidget({
   flipDirection: AxisDirection.right,
 });
 ```
-
-#
 
 Example page that shows both types and all flipping directions (full code in examples folder):
 
@@ -148,8 +137,6 @@ Basic FlipWidgets are usually composed in a layout, this package provides a few 
 
 All these composed widgets are described below and explored in the examples folder.
 
-#
-
 ### Flip Matrix Board
 
 There two classes of FlipMatrixBoard that animate the display in a matrix of FlipWidgets. The first class displays a single child, an image in the given example. The second class animates the display of a stream of items, also given as a stream of images in the example below.
@@ -199,8 +186,6 @@ The board is configured with the number of rows and columns, flipping orientatio
       );
 ```
 
-#
-
 ### Flip Clock
 
 FlipClock will default to Theme colors but can be further customized through constructor parameters.
@@ -230,7 +215,6 @@ In the example below some colors are inherited by a parent ThemeData from the am
     );
 ```
 
-#
 ### Flip Countdown Clock
 
 FlipCountdownClock is similar, it requires a duration parameter and may be configured with an onDone callback function.
@@ -264,8 +248,6 @@ In the following example most colors are configured with constructor parameters:
       ),
     );
 ```
-
-#
 
 ### Flip Frase Board
 
