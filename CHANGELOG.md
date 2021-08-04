@@ -1,0 +1,18 @@
+## 0.1.0
+Board code and examples review and documentation.
+FlipFraseBoard, FlipMatrixSingleChild and FlipMatrixStream.
+
+## 0.2.0
+Clock code and examples review and documentation.
+FlipClock and FlipDownclock.
+
+## 0.3.0
+Game example review and documentation.
+UhaaaFlipGame and associated classes.
+
+## 0.4.0
+FlipWidget code and examples review and documentation.
+
+## 0.5.0
+First public review.
+All code reviewed and documented.
