@@ -15,49 +15,61 @@ import 'flip_clock_builder.dart';
 /// some parameters are optional, configuring flip panel appearance.
 ///
 /// Constructor parameters define clock digits and flip panel appearance.
-/// - backgroundColor defauts to colorScheme.primary.
+/// - flipDirection defaults to AxisDirection.up.
+/// - flipCurve defaults to null, that will deliver FlipWidget.defaultFlip.
 /// - digitColor and separatorColor defaults to colorScheme.onPrimary.
+/// - backgroundColor defauts to colorScheme.primary.
+/// - separatorWidth defaults to width / 3.
 /// - separatorColor defaults to colorScheme.onPrimary.
-/// - separatorBackground defaults to null (no separator background color)
+/// - separatorBackground defaults to null (transparent).
+/// - showBorder can be set or defaults to true if boderColor or borderWidth is set
+/// - borderWidth defaults to 1.0 when a borderColor is set
+/// - borderColor defaults to colorScheme.onPrimary when a width is set.
+/// - borderRadius defaults to Radius.circular(4.0)
+/// - digitSpacing defaults to horizontal: 2.0
+/// - hingeWidth defaults to 0.8
+/// - hindeLength defaults to CrossAxis size
+/// - hingeColor defaults to null (transparent)
 class FlipCountdownClock extends StatelessWidget {
   FlipCountdownClock({
     Key? key,
     required this.duration,
+    required double digitSize,
+    required double width,
+    required double height,
+    AxisDirection flipDirection = AxisDirection.up,
+    Curve? flipCurve,
     Color? digitColor,
     Color? backgroundColor,
+    double? separatorWidth,
     Color? separatorColor,
     Color? separatorBackgroundColor,
-    Color? borderColor,
     bool? showBorder,
     double? borderWidth,
-    required double digitSize,
-    required double height,
-    required double width,
-    double? separatorWidth,
+    Color? borderColor,
     BorderRadius borderRadius = const BorderRadius.all(Radius.circular(4.0)),
-    EdgeInsets digitSpacing = const EdgeInsets.symmetric(horizontal: 2.0),
     double hingeWidth = 0.8,
     double? hingeLength,
     Color? hingeColor,
-    AxisDirection flipDirection = AxisDirection.up,
+    EdgeInsets digitSpacing = const EdgeInsets.symmetric(horizontal: 2.0),
     this.onDone,
   })  : _showHours = duration.inHours > 0,
         _displayBuilder = FlipClockBuilder(
+          digitSize: digitSize,
+          width: width,
+          height: height,
+          flipDirection: flipDirection,
+          flipCurve: flipCurve,
           digitColor: digitColor,
           backgroundColor: backgroundColor,
+          separatorWidth: separatorWidth ?? width / 3.0,
           separatorColor: separatorColor,
           separatorBackgroundColor: separatorBackgroundColor,
-          showBorder: showBorder,
-          borderColor: borderColor,
+          showBorder:
+              showBorder ?? (borderColor != null || borderWidth != null),
           borderWidth: borderWidth,
-          digitSize: digitSize,
-          height: height,
-          width: width,
-          separatorWidth: separatorWidth ?? width / 3.0,
+          borderColor: borderColor,
           borderRadius: borderRadius,
-          digitSpacing: digitSpacing,
-          flipDirection: flipDirection,
-          hingeColor: hingeColor,
           hingeWidth: hingeWidth,
           hingeLength: hingeWidth == 0.0
               ? 0.0
@@ -66,6 +78,8 @@ class FlipCountdownClock extends StatelessWidget {
                           flipDirection == AxisDirection.up
                       ? width
                       : height),
+          hingeColor: hingeColor,
+          digitSpacing: digitSpacing,
         );
 
   final Duration duration;

@@ -10,6 +10,8 @@ final _random = Random();
 /// Abstract class with common code building FlipMatrixBoards either
 /// for SingleChild or for Stream classes.
 ///
+/// Used by [FlipMatrixBoardSingleChild] and [FlipMatrixBoardStream].
+///
 /// All parameters are required, default values should be defined in composing classes.
 abstract class FlipMatrixBoardBuilder<T> {
   const FlipMatrixBoardBuilder({

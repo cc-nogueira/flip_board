@@ -5,46 +5,49 @@ import '../widget/flip_widget.dart';
 /// Helper class with builder methods to compose a flip clock display.
 ///
 /// Used by [FlipClock] and [FlipCountdownClock].
+///
+/// All not null parameters are required,
+/// default values should be defined in composing classes.
 class FlipClockBuilder {
   const FlipClockBuilder({
+    required this.digitSize,
+    required this.width,
+    required this.height,
+    required this.flipDirection,
+    this.flipCurve,
     this.digitColor,
     this.backgroundColor,
+    required this.separatorWidth,
     this.separatorColor,
     this.separatorBackgroundColor,
-    this.borderColor,
+    required this.showBorder,
     this.borderWidth,
-    this.showBorder,
-    required this.digitSize,
-    required this.height,
-    required this.width,
-    required this.separatorWidth,
-    required this.flipDirection,
+    this.borderColor,
     required this.borderRadius,
-    required this.digitSpacing,
     required this.hingeWidth,
     required this.hingeLength,
     this.hingeColor,
-    this.flipCurve,
+    required this.digitSpacing,
   });
 
+  final double digitSize;
+  final double width;
+  final double height;
+  final AxisDirection flipDirection;
+  final Curve? flipCurve;
   final Color? digitColor;
   final Color? backgroundColor;
+  final double separatorWidth;
   final Color? separatorColor;
   final Color? separatorBackgroundColor;
-  final Color? borderColor;
+  final bool showBorder;
   final double? borderWidth;
-  final bool? showBorder;
-  final double digitSize;
-  final double height;
-  final double width;
-  final double separatorWidth;
+  final Color? borderColor;
   final BorderRadius borderRadius;
-  final EdgeInsets digitSpacing;
   final double hingeWidth;
   final double hingeLength;
   final Color? hingeColor;
-  final AxisDirection flipDirection;
-  final Curve? flipCurve;
+  final EdgeInsets digitSpacing;
 
   /// Builds a Flip display for a time part (hour, minute, second).
   ///
@@ -93,7 +96,7 @@ class FlipClockBuilder {
         decoration: BoxDecoration(
           color: backgroundColor ?? Theme.of(context).colorScheme.primary,
           borderRadius: borderRadius,
-          border: (showBorder ?? (borderColor != null || borderWidth != null))
+          border: showBorder
               ? Border.all(
                   color: borderColor ?? Theme.of(context).colorScheme.onPrimary,
                   width: borderWidth ?? 1.0,
