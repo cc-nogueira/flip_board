@@ -38,6 +38,39 @@ Both MiddleFlip and SpinFlip widgets have the same optional configuration option
 
 Please check the class documentation that describes all options.
 
+
+#
+
+### Middle Flip Widget
+
+When we think of Mechanical Flip Boards as we used to see in airports and sport score boards we think on a Vertical MiddleFlip Widget or, most likely, on a composition (row) of them.
+
+Its construction could look like: 
+```dart
+FlipWidget({
+  flipType: FlipType.middleFlip,
+  itemStream: _stream,
+  itemBuilder: _itemBuilder,
+  flipDirection: AxisDirection.down,
+});
+```
+
+#
+
+### Spin Flip Widget
+
+A SpinFlip widget can be used in the same maner, but renders a Flip Card animation when new items arrive in the stream of items.
+
+It has a similiar constructor, something like:
+```dart
+FlipWidget({
+  flipType: FlipType.spinFlip,
+  itemStream: _stream,
+  itemBuilder: _itemBuilder,
+  flipDirection: AxisDirection.right,
+});
+```
+
 #
 
 Example page that shows both types and all flipping directions (full code in examples folder):
@@ -105,38 +138,6 @@ Example page that shows both types and all flipping directions (full code in exa
     );
 
   void _flip() => _flipController.add(++_nextFlipValue % 10);
-```
-
-#
-
-### Middle Flip Widget
-
-When we think of Mechanical Flip Boards as we used to see in airports and sport score boards we think on a Vertical MiddleFlip Widget or, most likely, on a composition (row) of them.
-
-Its construction could look like: 
-```dart
-FlipWidget({
-  flipType: FlipType.middleFlip,
-  itemStream: _stream,
-  itemBuilder: _itemBuilder,
-  flipDirection: AxisDirection.down,
-});
-```
-
-#
-
-### Spin Flip Widget
-
-A SpinFlip widget can be used in the same maner, but renders a Flip Card animation when new items arrive in the stream of items.
-
-It has a similiar constructor, something like:
-```dart
-FlipWidget({
-  flipType: FlipType.spinFlip,
-  itemStream: _stream,
-  itemBuilder: _itemBuilder,
-  flipDirection: AxisDirection.right,
-});
 ```
 
 ---
