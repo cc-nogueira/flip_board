@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'uhaaa_flip_game.dart';
 
+/// Uhaaa! Flip Game Page to show a page for a example game with FlipWidgets.
+///
+/// More documentation in [UhaaaFlipGame] class.
 class UhaaaFlipGamePage extends StatelessWidget {
   UhaaaFlipGamePage({Key? key}) : super(key: key);
 

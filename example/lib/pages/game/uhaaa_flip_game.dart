@@ -6,6 +6,19 @@ import 'package:flutter/material.dart';
 
 import 'uhaaa_message.dart';
 
+/// Uhaaa! Flip Game demonstrate the use of three FlipWidgets intances
+/// to provide a game of matching cards.
+///
+/// Each FlipWidget is driven by on Stream of cards. These streams are fed by
+/// user actions in controlled by this class, as defined by the following game rules:
+///  - The goal of the game is to flip cards until all three cards match with the same painting.
+///  - There are two valid actions:
+///    - A first tap on a card: will flip that card
+///    - A second consecutive tap on a card: wil flip the other two cards
+///
+/// It is a simple game to demonstrate how one can use a FlipWidget through a local StreamConotroller.
+///
+/// Give it try, and good luck!
 class UhaaaFlipGame extends StatefulWidget {
   const UhaaaFlipGame({Key? key}) : super(key: key);
 
@@ -142,6 +155,7 @@ class _UhaaaFlipGameState extends State<UhaaaFlipGame> {
       (_cardsIdx[index] + _rand.nextInt(_cards.length - 1) + 1) % _cards.length;
 }
 
+/// Simple helper class to build a FlipWidget with given parameters.
 class FlipCard extends StatelessWidget {
   const FlipCard({
     Key? key,
