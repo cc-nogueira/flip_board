@@ -299,7 +299,7 @@ This page displays a variety of frase boards, one of them would be constructed l
 
 ## Game
 
-We created a simple game to use a FlipWidget in a more complex context. Check the code in the exampled folder to see the complete example.
+We created a simple game to use a FlipWidget in a more complex context. Check the code in the example folder to see the complete implementation.
 
 ### Uhaaa! Flip Game
 
