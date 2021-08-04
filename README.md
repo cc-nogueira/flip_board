@@ -129,8 +129,6 @@ Example page that shows both types and all flipping directions (full code in exa
   void _flip() => _flipController.add(++_nextFlipValue % 10);
 ```
 
----
-
 ## Composed Widgets
 
 Basic FlipWidgets are usually composed in a layout, this package provides a few configurable compositions of FlipWidgets of the same type and orientation, sometimes varying some elements direction within that axis orientation.
@@ -276,8 +274,6 @@ This page displays a variety of frase boards, one of them would be constructed l
       letterSpacing: 2.0,
     );
 ```
-
----
 
 ## Game
 
