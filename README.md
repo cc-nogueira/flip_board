@@ -5,14 +5,14 @@
 
 Widgets to build displays that resemble Mechanical Flip Boards.
 
-The basic components are stateful VerticalFlipWidget and HorizontalFlipWidget that renders flip transitions for a stream of items with an itemBuilder.
+The basic component is a stateful FlipWidget that renders flip transitions for a stream of items and an itemBuilder.
 
-The package also includes other widgets that use that compose these basic components in useful ways:
+The package also includes other widgets that compose this basic component in useful Flip Boards:
 
-- **[Basic Widgets](#basic-widgets)**
-  - [Middle Flip Widget](#middle-flip-widget)
-  - [SpinFlip Widget](#spin-flip-widget)
-- **[Composed Widgets](#composed-widgets)**
+- **[Flip Widget](#flip-widget)**
+  - [Middle Flip](#middle-flip)
+  - [Spin Flip](#spin-flip)
+- **[Flip Boards](#flip-boards)**
   - [Flip Matrix Board](#flip-matrix-board)
   - [Flip Clock](#flip-clock)
   - [Flip Countdown Clock](#flip-countdown-clock)
@@ -20,19 +20,19 @@ The package also includes other widgets that use that compose these basic compon
 - **[Game](#game)**
   - [Uhaaa! Flip Game](#uhaaa-flip-game)
 
-## **Basic Widgets**
+## **Flip Widget**
 
 The most distinctive characteristic of a FlipWidget is its flip type to define the type of movement that will animate items rendering, either **FlipType.middleFlip** or **FlipType.spinFlip**.
 
-These widgets render flip animations in a configured Axis and AxisDirection, animating the transition to each new item received in the given item stream. It is commonly used to display digits and letters but can actualy render any widget you build through the given itemBuilder.
+This widget renders flip animations in a configured Axis and AxisDirection, animating the transition to each new item received in the given item stream. It is commonly used to display digits and letters but can actually render any widget you build through the given itemBuilder.
 
-Both MiddleFlip and SpinFlip widgets have the same optional configuration options and four required parameters:
+It is constructed with four required parameters (besides many optional parameters):
 - ***flipType***: either FlipType.middleFlip or FlipType.spinFlip
 - ***itemStream***: stream of items to be flipped as they are received
 - ***itemBuilder***: builder to create a widget out of each item
 - ***flipDirection***: AxisDirection to animate new items flip
 
-Please check the class documentation that describes all options.
+Please check the class documentation to see all options.
 
 ### *Middle Flip*
 
@@ -50,7 +50,7 @@ FlipWidget({
 
 ### *Spin Flip*
 
-A SpinFlip widget can be used in the same maner, but renders a Flip Card animation when new items arrive in the stream of items.
+With FlipType.spinFlip this widget will render a Flip Card animation when new items arrive in the stream.
 
 It has a similiar constructor, something like:
 ```dart
@@ -129,7 +129,7 @@ Example page that shows both types and all flipping directions (full code in exa
   void _flip() => _flipController.add(++_nextFlipValue % 10);
 ```
 
-## **Composed Widgets**
+## **Flip Boards**
 
 Basic FlipWidgets are usually composed in a layout, this package provides a few configurable compositions of FlipWidgets of the same type and orientation, sometimes varying some elements direction within that axis orientation.
 

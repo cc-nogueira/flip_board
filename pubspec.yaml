@@ -2,7 +2,7 @@ name: flip_board
 description: FlipBoards are compositions of FlipWidgets, a widget that animates content change with a flipping animation. Includes FlipFraseBoard, FlipMatrix, FlipClock and others.
 homepage: https://github.com/cc-nogueira/flip_board
 
-version: 0.6.0
+version: 0.6.1
 
 environment:
   sdk: ">=2.12.0 <3.0.0"

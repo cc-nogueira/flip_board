@@ -28,3 +28,6 @@ Fix (rendering) in FlipMatrixBoard that had default null background and now has 
 
 ## 0.6.0
 Examples described in example.md with two new example pages
+
+## 0.6.1
+README.md review
