@@ -22,3 +22,6 @@ README.md links updated for pub.dev
 
 ## 0.5.2
 Public API documentation
+
+## 0.5.3
+Fix (rendering) in FlipMatrixBoard that had default null background and now has colorScheme.surface default 
