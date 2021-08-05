@@ -20,7 +20,7 @@ The package also includes other widgets that use that compose these basic compon
 - **[Game](#game)**
   - [Uhaaa! Flip Game](#uhaaa-flip-game)
 
-## Basic Widgets
+## **Basic Widgets**
 
 The most distinctive characteristic of a FlipWidget is its flip type to define the type of movement that will animate items rendering, either **FlipType.middleFlip** or **FlipType.spinFlip**.
 
@@ -34,7 +34,7 @@ Both MiddleFlip and SpinFlip widgets have the same optional configuration option
 
 Please check the class documentation that describes all options.
 
-### Middle Flip
+### *Middle Flip*
 
 When we think of Mechanical Flip Boards as we used to see in airports and sport score boards we think on a Vertical MiddleFlip Widget or, most likely, on a composition (row) of them.
 
@@ -48,7 +48,7 @@ FlipWidget({
 });
 ```
 
-### Spin Flip
+### *Spin Flip*
 
 A SpinFlip widget can be used in the same maner, but renders a Flip Card animation when new items arrive in the stream of items.
 
@@ -129,19 +129,19 @@ Example page that shows both types and all flipping directions (full code in exa
   void _flip() => _flipController.add(++_nextFlipValue % 10);
 ```
 
-## Composed Widgets
+## **Composed Widgets**
 
 Basic FlipWidgets are usually composed in a layout, this package provides a few configurable compositions of FlipWidgets of the same type and orientation, sometimes varying some elements direction within that axis orientation.
 
 All these composed widgets are described below and explored in the examples folder.
 
-### Flip Matrix Board
+## *Flip Matrix Board*
 
 There two classes of FlipMatrixBoard that animate the display in a matrix of FlipWidgets. The first class displays a single child, an image in the given example. The second class animates the display of a stream of items, also given as a stream of images in the example below.
 
 The board is configured with the number of rows and columns, flipping orientation and animation speed and delays parameters.
 
-- FlipMatrixBoardSingleChild
+- **FlipMatrixBoardSingleChild**
 
   <img src="https://raw.githubusercontent.com/cc-nogueira/flip_board/master/screenshots/Flip_Image_300.gif?raw=true" width="299" height="231" />
 
@@ -164,7 +164,7 @@ The board is configured with the number of rows and columns, flipping orientatio
 ```
 
 
-- FlipMatrixBoardStream
+- **FlipMatrixBoardStream**
 
   <img src="https://raw.githubusercontent.com/cc-nogueira/flip_board/master/screenshots/Flip_Stream_300.gif?raw=true" width="299" height="173" />
 
@@ -184,7 +184,7 @@ The board is configured with the number of rows and columns, flipping orientatio
       );
 ```
 
-### Flip Clock
+## *Flip Clock*
 
 FlipClock will default to Theme colors but can be further customized through constructor parameters.
 
@@ -213,7 +213,7 @@ In the example below some colors are inherited by a parent ThemeData from the am
     );
 ```
 
-### Flip Countdown Clock
+## *Flip Countdown Clock*
 
 FlipCountdownClock is similar, it requires a duration parameter and may be configured with an onDone callback function.
 
@@ -247,7 +247,7 @@ In the following example most colors are configured with constructor parameters:
     );
 ```
 
-### Flip Frase Board
+## *Flip Frase Board*
 
 This composed widget displays a Frase Board that will animate each letter up to the the given frase letters.
 
@@ -275,11 +275,11 @@ This page displays a variety of frase boards, one of them would be constructed l
     );
 ```
 
-## Game
+## **Game**
 
 We created a simple game to use a FlipWidget in a more complex context. Check the code in the example folder to see the complete implementation.
 
-### Uhaaa! Flip Game
+## *Uhaaa! Flip Game*
 
 Flip cards untill you make all three cards match the same painting.
 
@@ -287,6 +287,6 @@ There are two valid actions:
 - ***a first tap on a card:*** will flip that card
 - ***a second consecutive tap on a card:*** wil flip the other two cards
 
-*Can you win? Good luck!*
+### *Can you win? Good luck!*
 
 <img src="https://raw.githubusercontent.com/cc-nogueira/flip_board/master/screenshots/Flip_Game_300.gif?raw=true" width="300" height="610"  />
