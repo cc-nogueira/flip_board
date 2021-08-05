@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 typedef ItemBuilder<T> = Widget Function(BuildContext buildContext, T? item);
 
-/// There two types of Flip Animations for [FlipWidget]
+/// There two types of Flip Animations for [FlipWidget].
 ///
 /// - middleFlip is used for FlipWidgets that flip in the middle, like Mechanical Flip Boards do.
 /// - spinFlip is used for FlipWidgets that flip like cards do (roll flip).
@@ -21,24 +21,25 @@ enum FlipType {
 ///  - with spinFlip type it animates as a regular roll flip.
 ///
 /// It is usually used to flip letters, digits and images but can actually be used to flip any widget change.
-///
-/// Constructor has four required parameters:
-///   required FlipType flipType,           // Either FlipType.middleFlip or FlipType.spinFlip
-///   required Stream<T> itemStream,        // Stream of items to flip as they arrive
-///   required ItemBuilder<T> itemBuilder,  // Builder function to create a widget of each new item
-///   required AxisDirection flipDirection, // Direction to do the flip animation
-///
-/// And a number of optional parameters:
-///   T? initialValue,           // Initial item to build before the first stream item arrives
-///   Duration flipDuration,     // Duration of the flip animation
-///   Curve flipCurve            // Curve for flip animation, defaults to Curves.easeInOut
-///   double hingeWidth          // Width of the middle hinge element, defaults to zero (must pair with lenth)
-///   double hingeLength         // Length of the middle hinge element, default to zero (must pair with width)
-///   Color hingeColor           // Color of the middle hinge element, defaults to null (transparent)
-///   double perspectiveEffect,  // Perspective effect for the Transform Matrix4, defaults to 0.006
-///   VoidCallback onDone,       // Optional callback for onDone stream event
-///   int startCount,            // Widget state count that allows the widget state to restart stream listening on widget update.
 class FlipWidget<T> extends StatefulWidget {
+  /// FlipWidget constructor.
+  ///
+  /// Four required parameters:
+  ///   required FlipType flipType,           // Either FlipType.middleFlip or FlipType.spinFlip
+  ///   required Stream<T> itemStream,        // Stream of items that will be built and flipped into view
+  ///   required ItemBuilder<T> itemBuilder,  // Builder to construct widgets out of stream items
+  ///   required AxisDirection flipDirection, // Direction of the flip animation
+  ///
+  /// And a number of optional parameters:
+  ///   T? initialValue,           // Initial value to be displayed before the first animation
+  ///   Duration flipDuration,     // Duration of the flip animation
+  ///   Curve flipCurve            // Curve for flip animation, defaults to Curves.easeInOut
+  ///   double hingeWidth          // Width of the middle hinge element, defaults to zero (must pair with lenth)
+  ///   double hingeLength         // Length of the middle hinge element, default to zero (must pair with width)
+  ///   Color hingeColor           // Color of the middle hinge element, defaults to null (transparent)
+  ///   double perspectiveEffect,  // Perspective effect for the Transform Matrix4, defaults to 0.006
+  ///   VoidCallback onDone,       // Optional callback for onDone stream event
+  ///   int startCount,            // Widget state count that allows the widget state to restart stream listening on widget update.
   const FlipWidget({
     Key? key,
     required this.flipType,
@@ -59,24 +60,70 @@ class FlipWidget<T> extends StatefulWidget {
         assert(hingeColor == null || hingeWidth != 0.0),
         super(key: key);
 
+  /// Custom animation Curve for a fast bounce effect (bang! effect).
   static const bounceFastFlip = _BounceFastFlipCurve();
+
+  /// Custom animation animation for a slow bounce effect (slow bang! effect).
   static const bounceSlowFlip = _BounceSlowFlipCurve();
+
+  /// Default animation Curve.
   static const defaultFlip = Curves.easeInOut;
 
+  /// Defines the type of animation.
+  ///
+  /// - middleFlip is used for FlipWidgets that flip in the middle, like Mechanical Flip Boards do.
+  /// - spinFlip is used for FlipWidgets that flip like cards do (roll flip).
   final FlipType flipType;
+
+  /// Stream of items that will be built and flipped into view.
   final Stream<T> itemStream;
+
+  /// Builder to construct widgets out of stream items.
   final ItemBuilder<T> itemBuilder;
+
+  /// Direction of the flip animation.
   final AxisDirection flipDirection;
+
+  /// Optional initial value to be displayed before the first animation.
   final T? initialValue;
+
+  /// Duration of the flip animation.
   final Duration flipDuration;
+
+  /// Curve for the flip animation.
+  ///
+  /// Defaults to Curves.easeInOut
   final Curve flipCurve;
+
+  /// Width of the middle hinge element.
+  ///
+  /// Defaults to zero
   final double hingeWidth;
+
+  /// Length of the middle hinge element.
+  ///
+  /// Defaults to zero
   final double hingeLength;
+
+  /// Color of the middle hinge element.
+  ///
+  /// Defaults to null, rendering a transparent hinge (trasnparent separator)
   final Color? hingeColor;
+
+  /// Perspective effect for the Transform Matrix4.
+  ///
+  /// Defaults to 0.006
   final double perspectiveEffect;
+
+  /// Optional callback for onDone stream event.
   final VoidCallback? onDone;
+
+  /// Widget state count flag.
+  ///
+  /// Allows this widget state to restart stream listening on widget update.
   final int startCount;
 
+  /// Axis of my flipDirection.
   Axis get axis => axisDirectionToAxis(flipDirection);
 
   @override
@@ -96,7 +143,6 @@ abstract class _FlipWidgetState<T> extends State<FlipWidget<T>>
   late final Animation _perspectiveAnimation;
   StreamSubscription<T>? _subscription;
 
-  // late bool _isReversePhase;
   late bool _firstRun;
 
   T? _nextValue;
@@ -250,7 +296,7 @@ abstract class _FlipWidgetState<T> extends State<FlipWidget<T>>
   Transform? transform2SecondPanel(AxisDirection direction);
 }
 
-/// FlipWidget state class
+/// FlipWidget state class.
 ///
 /// Performs flip animations as widget.itemStream delivers items.
 /// Parameters are documented in [FlipWidget] class constructor.
@@ -415,7 +461,7 @@ class _SpinFlipWidgetState<T> extends _FlipWidgetState<T> {
   }
 }
 
-/// Helper class to clip each flip panel rectangle
+/// Helper class to clip each flip panel rectangle.
 class _WidgetClipper {
   const _WidgetClipper();
 

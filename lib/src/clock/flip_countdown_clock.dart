@@ -13,24 +13,25 @@ import 'flip_clock_builder.dart';
 ///
 /// Most constructor parameters are required to define digits appearance,
 /// some parameters are optional, configuring flip panel appearance.
-///
-/// Constructor parameters define clock digits and flip panel appearance.
-/// - flipDirection defaults to AxisDirection.up.
-/// - flipCurve defaults to null, that will deliver FlipWidget.defaultFlip.
-/// - digitColor and separatorColor defaults to colorScheme.onPrimary.
-/// - backgroundColor defauts to colorScheme.primary.
-/// - separatorWidth defaults to width / 3.
-/// - separatorColor defaults to colorScheme.onPrimary.
-/// - separatorBackground defaults to null (transparent).
-/// - showBorder can be set or defaults to true if boderColor or borderWidth is set
-/// - borderWidth defaults to 1.0 when a borderColor is set
-/// - borderColor defaults to colorScheme.onPrimary when a width is set.
-/// - borderRadius defaults to Radius.circular(4.0)
-/// - digitSpacing defaults to horizontal: 2.0
-/// - hingeWidth defaults to 0.8
-/// - hindeLength defaults to CrossAxis size
-/// - hingeColor defaults to null (transparent)
 class FlipCountdownClock extends StatelessWidget {
+  /// FlipCountdownClock constructor.
+  ///
+  /// Parameters define clock digits and flip panel appearance.
+  /// - flipDirection defaults to AxisDirection.up.
+  /// - flipCurve defaults to null, that will deliver FlipWidget.defaultFlip.
+  /// - digitColor and separatorColor defaults to colorScheme.onPrimary.
+  /// - backgroundColor defauts to colorScheme.primary.
+  /// - separatorWidth defaults to width / 3.
+  /// - separatorColor defaults to colorScheme.onPrimary.
+  /// - separatorBackground defaults to null (transparent).
+  /// - showBorder can be set or defaults to true if boderColor or borderWidth is set
+  /// - borderWidth defaults to 1.0 when a borderColor is set
+  /// - borderColor defaults to colorScheme.onPrimary when a width is set.
+  /// - borderRadius defaults to Radius.circular(4.0)
+  /// - digitSpacing defaults to horizontal: 2.0
+  /// - hingeWidth defaults to 0.8
+  /// - hindeLength defaults to CrossAxis size
+  /// - hingeColor defaults to null (transparent)
   FlipCountdownClock({
     Key? key,
     required this.duration,
@@ -82,10 +83,17 @@ class FlipCountdownClock extends StatelessWidget {
           digitSpacing: digitSpacing,
         );
 
+  /// Duration of the countdown.
   final Duration duration;
+
+  /// Optional callback when the countdown is done.
   final VoidCallback? onDone;
 
+  /// Builder with common code for all FlipClock types.
+  ///
+  /// This builder is created with most of my constructor parameters
   final FlipClockBuilder _displayBuilder;
+
   final bool _showHours;
 
   @override

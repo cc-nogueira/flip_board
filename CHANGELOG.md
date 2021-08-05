@@ -19,3 +19,6 @@ All code reviewed and documented.
 
 ## 0.5.1
 README.md links updated for pub.dev
+
+## 0.5.2
+Public API documentation

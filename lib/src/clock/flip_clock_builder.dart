@@ -5,10 +5,10 @@ import '../widget/flip_widget.dart';
 /// Helper class with builder methods to compose a flip clock display.
 ///
 /// Used by [FlipClock] and [FlipCountdownClock].
-///
-/// All not null parameters are required,
-/// default values should be defined in composing classes.
 class FlipClockBuilder {
+  /// Constructor where all not null parameters are required.
+  ///
+  /// Default values should be defined in composing classes.
   const FlipClockBuilder({
     required this.digitSize,
     required this.width,
@@ -30,23 +30,76 @@ class FlipClockBuilder {
     required this.digitSpacing,
   });
 
+  /// FontSize for clock digits.
   final double digitSize;
+
+  /// Width of each digit panel.
   final double width;
+
+  /// Height of each digit panel.
   final double height;
+
+  /// Animation flip direction.
   final AxisDirection flipDirection;
+
+  /// Animation curve.
+  ///
+  /// If null FlipWidget.defaultAnimation will be used
   final Curve? flipCurve;
+
+  /// Digit color.
+  ///
+  /// Defaults to colorScheme.onPrimary
   final Color? digitColor;
+
+  /// Digit panel color (background color).
+  ///
+  /// Defauts to colorScheme.primary
   final Color? backgroundColor;
+
+  /// Separator width to display a ":" between digit groups.
+  ///
+  /// Defaults to digit width / 3
   final double separatorWidth;
+
+  /// Separator color to display a ":" between digit groups.
+  ///
+  /// Defaults to colorScheme.onPrimary
   final Color? separatorColor;
+
+  /// Separator background color where we display a ":" between digit groups.
+  ///
+  /// Defaults to null (transparent)
   final Color? separatorBackgroundColor;
+
+  /// Flag to define if there will be a border for each digit panel.
   final bool showBorder;
+
+  /// Border width for each digit panel.
+  ///
+  /// Defaults to 1.0
   final double? borderWidth;
+
+  /// Border color for each digit panel.
+  ///
+  /// Defaults to colorScheme.onPrimary when showBorder is true
   final Color? borderColor;
+
+  /// Border radius for each digit panel.
   final BorderRadius borderRadius;
+
+  /// Hinge width for each digit panel.
   final double hingeWidth;
+
+  /// Hinge length for each digit panel.
   final double hingeLength;
+
+  /// Hinge color for each digit panel.
+  ///
+  /// Defaults to null (transparent)
   final Color? hingeColor;
+
+  /// Spacing betwen digit panels.
   final EdgeInsets digitSpacing;
 
   /// Builds a Flip display for a time part (hour, minute, second).

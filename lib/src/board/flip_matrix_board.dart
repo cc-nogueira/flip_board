@@ -7,15 +7,14 @@ import 'flip_matrix_board_builder.dart';
 
 /// Component to present a matrix board of FlipWidgets that animates the display of a single child.
 ///
-/// The board is configured with the number of rows and columns, flipping orientation
-/// and animation speed and delay parameters.
-///
-/// There is a generic contructor for any child widget and a specific contructor
-/// for an asset image name with fixed BoxFit.fill configuration. If this assetImage
-/// constructor is not fit for your purposes use the generic constructor.
-///
 /// Most common code between [FlipMatrixBoardSingleChild] and [FlipMatrixBoardStream] is found in [FlipMatrixBoardBuilder].
 class FlipMatrixBoardSingleChild extends StatelessWidget {
+  /// FlipMatrixBoardSingleChild constructor.
+  ///
+  /// Configure this FlipBoard with the number of rows and columns, flipping orientation
+  /// and animation speed and delay parameters.
+  ///
+  /// Recieves a single child widget that will be displayed through all cell animations
   FlipMatrixBoardSingleChild({
     Key? key,
     required Widget child,
@@ -27,7 +26,7 @@ class FlipMatrixBoardSingleChild extends StatelessWidget {
     int minAnimationMillis = 1000,
     int maxAnimationMillis = 3000,
     int maxDelayMillis = 4000,
-    Color backgroundColor = Colors.white,
+    Color? backgroundColor,
   })  : _builder = SingleChildFlipMatrixBoardBuilder(
           child: child,
           axis: axis,
@@ -42,6 +41,12 @@ class FlipMatrixBoardSingleChild extends StatelessWidget {
         ),
         super(key: key);
 
+  /// FlipMatrixBoardSingleChild specialized constructor to display an asset image.
+  ///
+  /// Configure this FlipBoard with the number of rows and columns, flipping orientation
+  /// and animation speed and delay parameters.
+  ///
+  /// Recieves a single image name that will be rendered with BoxFit.fill option.
   FlipMatrixBoardSingleChild.assetImage({
     Key? key,
     required String imageName,
@@ -50,7 +55,7 @@ class FlipMatrixBoardSingleChild extends StatelessWidget {
     required double height,
     required int columnCount,
     required int rowCount,
-    Color backgroundColor = Colors.white,
+    Color? backgroundColor,
     int minAnimationMillis = 500,
     int maxAnimationMillis = 1500,
     int maxDelayMillis = 2500,
@@ -72,6 +77,10 @@ class FlipMatrixBoardSingleChild extends StatelessWidget {
           backgroundColor: backgroundColor,
         );
 
+  /// Builder with common code for all FlipMatrixBoard types and specific
+  /// code for single child boards.
+  ///
+  /// This builder is created with most of my constructor parameters
   final SingleChildFlipMatrixBoardBuilder _builder;
 
   @override
@@ -80,13 +89,14 @@ class FlipMatrixBoardSingleChild extends StatelessWidget {
 
 /// Component to present a matrix board of FlipWidgets that animates the arrival of items in a stream.
 ///
-/// The board is configured with the number of rows and columns, flipping orientation
-/// and animation speed and delay parameters.
-///
-/// The initialValue parameter is optional thus the itemBuilder signature builds over an optional item.
-///
 /// Most common code between [FlipMatrixBoardSingleChild] and [FlipMatrixBoardStream] is found in [FlipMatrixBoardBuilder].
 class FlipMatrixBoardStream<T> extends StatefulWidget {
+  /// FlipMatrixBoardStream constructor.
+  ///
+  /// Configure this FlipBoard with the number of rows and columns, flipping orientation
+  /// and animation speed and delay parameters.
+  ///
+  /// The initialValue parameter is optional thus the itemBuilder signature builds over an optional item.
   const FlipMatrixBoardStream({
     Key? key,
     this.initialValue,
@@ -100,22 +110,48 @@ class FlipMatrixBoardStream<T> extends StatefulWidget {
     this.minAnimationMillis = 1000,
     this.maxAnimationMillis = 3000,
     this.maxDelayMillis = 2500,
-    this.backgroundColor = Colors.white,
+    this.backgroundColor,
   }) : super(key: key);
 
+  /// Optional initial value to be displayed before the first animation.
   final T? initialValue;
+
+  /// Stream of items that will be built and flipped into view.
   final Stream<T> itemStream;
+
+  /// Builder to construct widgets out of stream items.
   final ItemBuilder<T> itemBuilder;
 
+  /// Flip animation axis.
+  ///
+  /// Flip direction will be random on this axis.
   final Axis axis;
+
+  /// Whole widget width.
   final double width;
+
+  /// Whole widget height.
   final double height;
+
+  /// Number of columns of the display matrix.
   final int columnCount;
+
+  /// Number of rows of the display matrix.
   final int rowCount;
+
+  /// Minimum animation duration for the generated random value.
   final int minAnimationMillis;
+
+  /// Max animation duration for the generated random value.
   final int maxAnimationMillis;
+
+  /// Max flip delay for the generate random delay.
   final int maxDelayMillis;
-  final Color backgroundColor;
+
+  /// Background before the first animation when there is no initialValue.
+  ///
+  /// Defaults to null (transparent)
+  final Color? backgroundColor;
 
   @override
   _FlipMatrixBoardStreamState<T> createState() =>

@@ -11,24 +11,25 @@ import 'flip_clock_builder.dart';
 /// this digits are refreshed by a stream of [DateTime].now() instances.
 /// Since FlipWidget animates only changes, just digits that actually
 /// change between seconds are flipped.
-///
-/// Constructor parameters define clock digits and flip panel appearance.
-/// - flipDirection defaults to AxisDirection.down.
-/// - flipCurve defaults to FlipWidget.bounceFastFlip when direction is down, to FlipWidget.defaultFlip otherwise
-/// - digitColor and separatorColor defaults to colorScheme.onPrimary.
-/// - backgroundColor defauts to colorScheme.primary.
-/// - separatorWidth defaults to width / 3.
-/// - separatorColor defaults to colorScheme.onPrimary.
-/// - separatorBackground defaults to null (transparent).
-/// - showBorder can be set or defaults to true if boderColor or borderWidth is set
-/// - borderWidth defaults to 1.0 when a borderColor is set
-/// - borderColor defaults to colorScheme.onPrimary when a width is set.
-/// - borderRadius defaults to Radius.circular(4.0)
-/// - digitSpacing defaults to horizontal: 2.0
-/// - hingeWidth defaults to 0.8
-/// - hindeLength defaults to CrossAxis size
-/// - hingeColor defaults to null (transparent)
 class FlipClock extends StatelessWidget {
+  /// FlipClock constructor.
+  ///
+  /// Parameters define clock digits and flip panel appearance.
+  /// - flipDirection defaults to AxisDirection.down.
+  /// - flipCurve defaults to FlipWidget.bounceFastFlip when direction is down, to FlipWidget.defaultFlip otherwise
+  /// - digitColor and separatorColor defaults to colorScheme.onPrimary.
+  /// - backgroundColor defauts to colorScheme.primary.
+  /// - separatorWidth defaults to width / 3.
+  /// - separatorColor defaults to colorScheme.onPrimary.
+  /// - separatorBackground defaults to null (transparent).
+  /// - showBorder can be set or defaults to true if boderColor or borderWidth is set
+  /// - borderWidth defaults to 1.0 when a borderColor is set
+  /// - borderColor defaults to colorScheme.onPrimary when a width is set.
+  /// - borderRadius defaults to Radius.circular(4.0)
+  /// - hingeWidth defaults to 0.8
+  /// - hindeLength defaults to CrossAxis size
+  /// - hingeColor defaults to null (transparent)
+  /// - digitSpacing defaults to horizontal: 2.0
   FlipClock({
     Key? key,
     required double digitSize,
@@ -86,6 +87,9 @@ class FlipClock extends StatelessWidget {
         ),
         super(key: key);
 
+  /// Builder with common code for all FlipClock types.
+  ///
+  /// This builder is created with most of my constructor parameters
   final FlipClockBuilder _displayBuilder;
 
   @override

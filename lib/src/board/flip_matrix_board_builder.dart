@@ -11,9 +11,10 @@ final _random = Random();
 /// for SingleChild or for Stream classes.
 ///
 /// Used by [FlipMatrixBoardSingleChild] and [FlipMatrixBoardStream].
-///
-/// All parameters are required, default values should be defined in composing classes.
 abstract class FlipMatrixBoardBuilder<T> {
+  /// Constructor where all parameters are required.
+  ///
+  /// Default values should be defined in composing classes.
   const FlipMatrixBoardBuilder({
     required this.axis,
     required this.width,
@@ -23,29 +24,48 @@ abstract class FlipMatrixBoardBuilder<T> {
     required this.minAnimationMillis,
     required this.maxAnimationMillis,
     required this.maxDelayMillis,
-    this.backgroundColor = Colors.white,
+    this.backgroundColor,
   })  : assert(columnCount > 1),
         assert(rowCount > 0),
         assert(minAnimationMillis <= maxAnimationMillis),
-        widthSizeFactor = 1.0 / columnCount,
-        widthAlignFactor = 2.0 / (columnCount - 1),
-        heightSizeFactor = 1.0 / rowCount,
-        heightAlignFactor = rowCount == 1 ? 1.0 : 2.0 / (rowCount - 1);
+        _widthSizeFactor = 1.0 / columnCount,
+        _widthAlignFactor = 2.0 / (columnCount - 1),
+        _heightSizeFactor = 1.0 / rowCount,
+        _heightAlignFactor = rowCount == 1 ? 1.0 : 2.0 / (rowCount - 1);
 
+  /// Flip animation axis.
+  ///
+  /// Flip direction will be random on this axis.
   final Axis axis;
-  final double width;
-  final double height;
-  final int columnCount;
-  final int rowCount;
-  final int minAnimationMillis;
-  final int maxAnimationMillis;
-  final int maxDelayMillis;
-  final Color backgroundColor;
 
-  final double widthSizeFactor;
-  final double widthAlignFactor;
-  final double heightSizeFactor;
-  final double heightAlignFactor;
+  /// Whole widget width.
+  final double width;
+
+  /// Whole widget height.
+  final double height;
+
+  /// Number of columns of the display matrix.
+  final int columnCount;
+
+  // Number of rows of the display matrix.
+  final int rowCount;
+
+  /// Minimum animation duration for the generated random value.
+  final int minAnimationMillis;
+
+  /// Max animation duration for the generated random value.
+  final int maxAnimationMillis;
+
+  /// Max flip delay for the generate random delay.
+  final int maxDelayMillis;
+
+  /// Background before the first animation when there is no initialValue.
+  final Color? backgroundColor;
+
+  final double _widthSizeFactor;
+  final double _widthAlignFactor;
+  final double _heightSizeFactor;
+  final double _heightAlignFactor;
 
   Widget build(BuildContext context) => Column(
         mainAxisSize: MainAxisSize.min,
@@ -72,17 +92,17 @@ abstract class FlipMatrixBoardBuilder<T> {
               itemBuilder: (_, value) => value == null
                   ? Container(
                       color: backgroundColor,
-                      width: widthSizeFactor * width,
-                      height: heightSizeFactor * height,
+                      width: _widthSizeFactor * width,
+                      height: _heightSizeFactor * height,
                     )
                   : ClipRect(
                       child: Align(
                         alignment: Alignment(
-                          -1.0 + col * widthAlignFactor,
-                          -1.0 + row * heightAlignFactor,
+                          -1.0 + col * _widthAlignFactor,
+                          -1.0 + row * _heightAlignFactor,
                         ),
-                        widthFactor: widthSizeFactor,
-                        heightFactor: heightSizeFactor,
+                        widthFactor: _widthSizeFactor,
+                        heightFactor: _heightSizeFactor,
                         child: buildChild(context, value),
                       ),
                     ),
@@ -109,9 +129,10 @@ abstract class FlipMatrixBoardBuilder<T> {
 }
 
 /// SingleChild builder implementation.
-///
-/// All parameters are required, default values should be defined in composing classes.
 class SingleChildFlipMatrixBoardBuilder extends FlipMatrixBoardBuilder<Widget> {
+  /// Constructor where all parameters are required.
+  ///
+  /// Default values should be defined in composing classes.
   const SingleChildFlipMatrixBoardBuilder({
     required this.child,
     required Axis axis,
@@ -122,7 +143,7 @@ class SingleChildFlipMatrixBoardBuilder extends FlipMatrixBoardBuilder<Widget> {
     required int minAnimationMillis,
     required int maxAnimationMillis,
     required int maxDelayMillis,
-    required Color backgroundColor,
+    Color? backgroundColor,
   }) : super(
             axis: axis,
             width: width,
@@ -134,6 +155,7 @@ class SingleChildFlipMatrixBoardBuilder extends FlipMatrixBoardBuilder<Widget> {
             maxDelayMillis: maxDelayMillis,
             backgroundColor: backgroundColor);
 
+  /// Child widget that will be displayed through all cell animations.
   final Widget child;
 
   @override
@@ -149,9 +171,10 @@ class SingleChildFlipMatrixBoardBuilder extends FlipMatrixBoardBuilder<Widget> {
 }
 
 /// Stream implementation.
-///
-/// All parameters are required, default values should be defined in composing classes.
 class StreamFlipMatrixBoardBuilder<T> extends FlipMatrixBoardBuilder<T> {
+  /// Constructor where all not null parameters are required.
+  ///
+  /// Default values should be defined in composing classes.
   const StreamFlipMatrixBoardBuilder({
     this.initialValue,
     required this.itemStream,
@@ -164,7 +187,7 @@ class StreamFlipMatrixBoardBuilder<T> extends FlipMatrixBoardBuilder<T> {
     required int minAnimationMillis,
     required int maxAnimationMillis,
     required int maxDelayMillis,
-    required Color backgroundColor,
+    Color? backgroundColor,
   }) : super(
             axis: axis,
             width: width,
@@ -176,10 +199,14 @@ class StreamFlipMatrixBoardBuilder<T> extends FlipMatrixBoardBuilder<T> {
             maxDelayMillis: maxDelayMillis,
             backgroundColor: backgroundColor);
 
+  /// Optional initial value to be displayed before the first animation.
   @override
   final T? initialValue;
 
+  /// Stream of items that will be built and flipped into view.
   final Stream<T> itemStream;
+
+  /// Builder to construct widgets out of stream items.
   final ItemBuilder<T> itemBuilder;
 
   @override
