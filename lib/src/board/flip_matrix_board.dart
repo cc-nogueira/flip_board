@@ -150,7 +150,7 @@ class FlipMatrixBoardStream<T> extends StatefulWidget {
 
   /// Background before the first animation when there is no initialValue.
   ///
-  /// Defaults to null (transparent)
+  /// Defaults colorScheme.surface
   final Color? backgroundColor;
 
   @override

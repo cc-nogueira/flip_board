@@ -60,6 +60,8 @@ abstract class FlipMatrixBoardBuilder<T> {
   final int maxDelayMillis;
 
   /// Background before the first animation when there is no initialValue.
+  ///
+  /// Defaults to colorScheme.surface
   final Color? backgroundColor;
 
   final double _widthSizeFactor;
@@ -91,7 +93,8 @@ abstract class FlipMatrixBoardBuilder<T> {
               itemStream: randomDelayedStream(),
               itemBuilder: (_, value) => value == null
                   ? Container(
-                      color: backgroundColor,
+                      color: backgroundColor ??
+                          Theme.of(context).colorScheme.surface,
                       width: _widthSizeFactor * width,
                       height: _heightSizeFactor * height,
                     )
