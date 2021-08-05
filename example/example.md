@@ -39,11 +39,11 @@ class DayPage extends StatelessWidget {
           border: Border.all(),
           borderRadius: BorderRadius.circular(4.0),
         ),
-        width: 100,
-        height: 100,
+        width: 100.0,
+        height: 100.0,
         child: Text(
           text,
-          style: const TextStyle(fontSize: 64, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 64.0, fontWeight: FontWeight.bold),
         ),
       );
 }
@@ -121,12 +121,10 @@ class _ColorTapCountState extends State<_ColorTapCount> {
         (color) => Material(
           shape: const CircleBorder(),
           color: color,
-          child: Container(
-            child: InkWell(
-              onTap: () => _onTap(color),
-              customBorder: const CircleBorder(),
-              child: Container(width: 80.0, height: 80.0),
-            ),
+          child: InkWell(
+            onTap: () => _onTap(color),
+            customBorder: const CircleBorder(),
+            child: Container(width: 80.0, height: 80.0),
           ),
         ),
       )
@@ -141,12 +139,12 @@ class _ColorTapCountState extends State<_ColorTapCount> {
   Widget get _tapCountWidget => FlipWidget(
         flipType: FlipType.spinFlip,
         itemStream: _flipController.stream,
-        itemBuilder: _tapCountBuilder,
+        itemBuilder: _itemBuilder,
         flipDirection: AxisDirection.down,
         flipDuration: const Duration(milliseconds: 1200),
       );
 
-  Widget _tapCountBuilder(BuildContext _, ColorCount? colorCount) {
+  Widget _itemBuilder(BuildContext _, ColorCount? colorCount) {
     return _container(
       color: colorCount?.color ?? Colors.grey[900]!,
       text: colorCount?.count.toString() ?? '',

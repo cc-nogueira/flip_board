@@ -28,11 +28,11 @@ class DayPage extends StatelessWidget {
           border: Border.all(),
           borderRadius: BorderRadius.circular(4.0),
         ),
-        width: 100,
-        height: 100,
+        width: 100.0,
+        height: 100.0,
         child: Text(
           text,
-          style: const TextStyle(fontSize: 64, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 64.0, fontWeight: FontWeight.bold),
         ),
       );
 }
