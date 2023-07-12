@@ -27,6 +27,7 @@ The most distinctive characteristic of a FlipWidget is its flip type to define t
 This widget renders flip animations in a configured Axis and AxisDirection, animating the transition to each new item received in the given item stream. It is commonly used to display digits and letters but can actually render any widget you build through the given itemBuilder.
 
 It is constructed with four required parameters (besides many optional parameters):
+
 - ***flipType***: either FlipType.middleFlip or FlipType.spinFlip
 - ***itemStream***: stream of items to be flipped as they are received
 - ***itemBuilder***: builder to create a widget out of each item
@@ -39,6 +40,7 @@ Please check the class documentation to see all options.
 When we think of Mechanical Flip Boards as we used to see in airports and sport score boards we think on a Vertical MiddleFlip Widget or, most likely, on a composition (row) of them.
 
 Its construction could look like: 
+
 ```dart
 FlipWidget({
   flipType: FlipType.middleFlip,
@@ -53,6 +55,7 @@ FlipWidget({
 With FlipType.spinFlip this widget will render a Flip Card animation when new items arrive in the stream.
 
 It has a similiar constructor, something like:
+
 ```dart
 FlipWidget({
   flipType: FlipType.spinFlip,
@@ -284,6 +287,7 @@ We created a simple game to use a FlipWidget in a more complex context. Check th
 Flip cards untill you make all three cards match the same painting.
 
 There are two valid actions:
+
 - ***a first tap on a card:*** will flip that card
 - ***a second consecutive tap on a card:*** wil flip the other two cards
 
