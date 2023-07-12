@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 /// An example page to show a [FlipClock]
 ///
-/// Colors are set at through ThemeData and customized at constructor level.
+/// Colors are use ThemeData and are customized at constructor level.
 class FlipClockPage extends StatelessWidget {
   const FlipClockPage({Key? key}) : super(key: key);
 
