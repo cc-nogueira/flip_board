@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../flip_widget.dart';
@@ -49,25 +48,19 @@ class FlipFraseBoard extends StatelessWidget {
     this.onDone,
     ValueNotifier<int>? startNotifier,
   })  : assert(startFrase == null || startLetter == null),
-        assert(startFrase != null && startFrase.isNotEmpty ||
-            startLetter != null && startLetter.length == 1),
+        assert(startFrase != null && startFrase.isNotEmpty || startLetter != null && startLetter.length == 1),
         assert(endFrase.isNotEmpty),
         assert(startFrase == null || startFrase.length == endFrase.length),
         assert(endColors == null || endColors.isNotEmpty),
-        assert(hingeLength == null ||
-            hingeLength == 0.0 && hingeWidth == 0.0 ||
-            hingeLength != 0.0 && hingeWidth != 0.0),
+        assert(
+            hingeLength == null || hingeLength == 0.0 && hingeWidth == 0.0 || hingeLength != 0.0 && hingeWidth != 0.0),
         assert(hingeColor == null || hingeWidth != 0.0),
         assert(minFlipDelay <= maxFlipDelay),
-        _startChars = startFrase?.characters ??
-            (startLetter! * endFrase.length).characters,
+        _startChars = startFrase?.characters ?? (startLetter! * endFrase.length).characters,
         _endChars = endFrase.characters,
         flipLetterWidth = flipLetterWidth ?? fontSize + 4,
         flipLetterHeight = flipLetterHeight ?? fontSize + 6,
-        hingeLength = hingeLength ??
-            (hingeWidth == 0.0
-                ? 0.0
-                : (axis == Axis.vertical ? fontSize + 4 : fontSize + 6)),
+        hingeLength = hingeLength ?? (hingeWidth == 0.0 ? 0.0 : (axis == Axis.vertical ? fontSize + 4 : fontSize + 6)),
         startNotifier = startNotifier ?? ValueNotifier(0),
         super(key: key) {
     _clearDoneList();
@@ -200,8 +193,7 @@ class FlipFraseBoard extends StatelessWidget {
         builder: (BuildContext context, int startCount, Widget? __) {
           final children = <Widget>[];
           for (var i = 0; i < _startChars.length; ++i) {
-            children.add(_buildLetterFlip(context,
-                index: i, delay: _randomDelay, startCount: startCount));
+            children.add(_buildLetterFlip(context, index: i, delay: _randomDelay, startCount: startCount));
           }
           return Row(
             mainAxisSize: MainAxisSize.min,
@@ -211,11 +203,9 @@ class FlipFraseBoard extends StatelessWidget {
         valueListenable: startNotifier,
       );
 
-  int get _randomDelay =>
-      minFlipDelay + _random.nextInt(maxFlipDelay - minFlipDelay);
+  int get _randomDelay => minFlipDelay + _random.nextInt(maxFlipDelay - minFlipDelay);
 
-  Color? _color(List<Color>? colors, int index) =>
-      colors == null ? null : colors[index % colors.length];
+  Color? _color(List<Color>? colors, int index) => colors == null ? null : colors[index % colors.length];
 
   Widget _buildLetterFlip(
     BuildContext context, {
@@ -227,7 +217,7 @@ class FlipFraseBoard extends StatelessWidget {
     final endLetter = _endChars.elementAt(index);
     final colorScheme = Theme.of(context).colorScheme;
     final startColor = _color(startColors, index) ?? colorScheme.primary;
-    final endColor = _color(endColors, index) ?? colorScheme.primaryVariant;
+    final endColor = _color(endColors, index) ?? colorScheme.primaryContainer;
     final letterColor = _color(letterColors, index) ?? colorScheme.onPrimary;
 
     return Container(

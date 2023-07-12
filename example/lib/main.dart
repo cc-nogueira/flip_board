@@ -8,9 +8,9 @@ import 'pages/clock/flip_countdown_clock_page.dart';
 import 'pages/game/uhaaa_flip_game_page.dart';
 import 'pages/widget/flip_widgets_page.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(App());
 
-class MyApp extends StatelessWidget {
+class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) => MaterialApp(
         debugShowCheckedModeBanner: false,

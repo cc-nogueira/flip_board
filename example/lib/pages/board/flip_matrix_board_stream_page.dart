@@ -23,8 +23,7 @@ class FlipMatrixBoardStreamPage extends StatefulWidget {
   ];
 
   @override
-  _FlipMatrixBoardStreamPageState createState() =>
-      _FlipMatrixBoardStreamPageState();
+  State<FlipMatrixBoardStreamPage> createState() => _FlipMatrixBoardStreamPageState();
 }
 
 class _FlipMatrixBoardStreamPageState extends State<FlipMatrixBoardStreamPage> {
@@ -131,9 +130,7 @@ class _FlipMatrixBoardStreamPageState extends State<FlipMatrixBoardStreamPage> {
         _periodicItemStream(1),
       ]).where((name) => name.isNotEmpty).take(widget.imageNames.length);
     }
-    return _periodicItemStream(0)
-        .where((name) => name.isNotEmpty)
-        .take(widget.imageNames.length);
+    return _periodicItemStream(0).where((name) => name.isNotEmpty).take(widget.imageNames.length);
   }
 
   Stream<String> _periodicItemStream(int startIdx) {

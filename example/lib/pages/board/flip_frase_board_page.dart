@@ -18,7 +18,7 @@ class FlipFraseBoardPage extends StatefulWidget {
   const FlipFraseBoardPage({Key? key}) : super(key: key);
 
   @override
-  _FlipFraseBoardPageState createState() => _FlipFraseBoardPageState();
+  State<FlipFraseBoardPage> createState() => _FlipFraseBoardPageState();
 }
 
 class _FlipFraseBoardPageState extends State<FlipFraseBoardPage> {
@@ -192,10 +192,5 @@ class _FlipFraseBoardPageState extends State<FlipFraseBoardPage> {
     });
   }
 
-  bool get _hasCompleted =>
-      _completed[0] &&
-      _completed[1] &&
-      _completed[2] &&
-      _completed[3] &&
-      _completed[4];
+  bool get _hasCompleted => _completed[0] && _completed[1] && _completed[2] && _completed[3] && _completed[4];
 }

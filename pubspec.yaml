@@ -2,18 +2,18 @@ name: flip_board
 description: FlipBoards are compositions of FlipWidgets, a widget that animates content change with a flipping animation. Includes FlipFraseBoard, FlipMatrix, FlipClock and others.
 homepage: https://github.com/cc-nogueira/flip_board
 
-version: 0.6.1
+version: 1.0.0
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ">=2.12.0 <4.0.0"
 
 dependencies:
-  async: ^2.6.1
+  async: ^2.11.0
   flutter:
     sdk: flutter
 
 dev_dependencies:
-  flutter_lints: ^1.0.4
+  flutter_lints: ^2.0.2
   flutter_test:
     sdk: flutter
 

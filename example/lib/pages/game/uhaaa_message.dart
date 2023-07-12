@@ -17,11 +17,10 @@ class UhaaaMessage extends StatefulWidget {
   final VoidCallback onTapRestart;
 
   @override
-  _UhaaaMessageState createState() => _UhaaaMessageState();
+  State<UhaaaMessage> createState() => _UhaaaMessageState();
 }
 
-class _UhaaaMessageState extends State<UhaaaMessage>
-    with SingleTickerProviderStateMixin {
+class _UhaaaMessageState extends State<UhaaaMessage> with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   late final Animation _countAnimation;
   late final Animation _uhaaaAnimation;
@@ -75,8 +74,7 @@ class _UhaaaMessageState extends State<UhaaaMessage>
   }
 
   @override
-  Widget build(BuildContext context) =>
-      AnimatedBuilder(animation: _controller, builder: _builder);
+  Widget build(BuildContext context) => AnimatedBuilder(animation: _controller, builder: _builder);
 
   Widget _builder(BuildContext context, Widget? _) => Column(
         children: [
@@ -106,8 +104,7 @@ class _UhaaaMessageState extends State<UhaaaMessage>
       );
 
   Widget get _uhaaaCount {
-    final message =
-        widget.uhaaaCount == 0 ? 'Ready!' : widget.uhaaaCount.toString();
+    final message = widget.uhaaaCount == 0 ? 'Ready!' : widget.uhaaaCount.toString();
     final color = widget.uhaaaCount == 0 ? Colors.blue[800]! : Colors.black;
     return Opacity(
       opacity: _countAnimation.value,
@@ -124,9 +121,9 @@ class _UhaaaMessageState extends State<UhaaaMessage>
         opacity: widget.uhaaa ? _buttonAnimation.value : 0.0,
         child: TextButton(
           style: TextButton.styleFrom(
-            primary: Colors.white,
+            foregroundColor: Colors.white,
             backgroundColor: Colors.red,
-            onSurface: Colors.green,
+            disabledForegroundColor: Colors.green.withOpacity(0.38),
             padding: const EdgeInsets.symmetric(
               horizontal: 24.0,
               vertical: 8.0,
@@ -152,11 +149,10 @@ class UhaaaInstruction extends StatefulWidget {
   final int uhaaaCount;
 
   @override
-  _UhaaaInstructionState createState() => _UhaaaInstructionState();
+  State<UhaaaInstruction> createState() => _UhaaaInstructionState();
 }
 
-class _UhaaaInstructionState extends State<UhaaaInstruction>
-    with TickerProviderStateMixin {
+class _UhaaaInstructionState extends State<UhaaaInstruction> with TickerProviderStateMixin {
   late final AnimationController _firstController;
   late final AnimationController _secondController;
   late final Animation _firstAnimation;
@@ -211,8 +207,7 @@ class _UhaaaInstructionState extends State<UhaaaInstruction>
         mainAxisSize: MainAxisSize.min,
         children: [
           AnimatedBuilder(animation: _firstController, builder: _firstBuilder),
-          AnimatedBuilder(
-              animation: _secondController, builder: _secondBuilder),
+          AnimatedBuilder(animation: _secondController, builder: _secondBuilder),
         ],
       );
 
@@ -220,10 +215,7 @@ class _UhaaaInstructionState extends State<UhaaaInstruction>
         opacity: _firstAnimation.value,
         child: Text(
           'Flip Cards To',
-          style: TextStyle(
-              fontSize: 26.0,
-              fontWeight: FontWeight.bold,
-              color: Colors.grey[800]),
+          style: TextStyle(fontSize: 26.0, fontWeight: FontWeight.bold, color: Colors.grey[800]),
         ),
       );
 
@@ -231,10 +223,7 @@ class _UhaaaInstructionState extends State<UhaaaInstruction>
         opacity: _secondAnimation.value,
         child: Text(
           'Match All Three',
-          style: TextStyle(
-              fontSize: 26.0,
-              fontWeight: FontWeight.bold,
-              color: Colors.grey[800]),
+          style: TextStyle(fontSize: 26.0, fontWeight: FontWeight.bold, color: Colors.grey[800]),
         ),
       );
 }

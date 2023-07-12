@@ -154,8 +154,7 @@ class FlipMatrixBoardStream<T> extends StatefulWidget {
   final Color? backgroundColor;
 
   @override
-  _FlipMatrixBoardStreamState<T> createState() =>
-      _FlipMatrixBoardStreamState<T>();
+  State<FlipMatrixBoardStream<T>> createState() => _FlipMatrixBoardStreamState<T>();
 }
 
 class _FlipMatrixBoardStreamState<T> extends State<FlipMatrixBoardStream<T>> {

@@ -1,14 +1,13 @@
 name: flip_board_example
 description: FlipBoard examples
 publish_to: "none"
-version: 0.6.1
+version: 1.0.0
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ">=2.12.0 <4.0.0"
 
 dependencies:
-
-  async: ^2.6.1
+  async: ^2.11.0
   flip_board:
     path: ../
     
@@ -16,7 +15,7 @@ dependencies:
     sdk: flutter
 
 dev_dependencies:
-  flutter_lints: ^1.0.4
+  flutter_lints: ^2.0.2
   flutter_test:
     sdk: flutter
 

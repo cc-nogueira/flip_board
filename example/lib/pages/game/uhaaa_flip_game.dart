@@ -23,7 +23,7 @@ class UhaaaFlipGame extends StatefulWidget {
   const UhaaaFlipGame({Key? key}) : super(key: key);
 
   @override
-  _UhaaaFlipGameState createState() => _UhaaaFlipGameState();
+  State<UhaaaFlipGame> createState() => _UhaaaFlipGameState();
 }
 
 class _UhaaaFlipGameState extends State<UhaaaFlipGame> {
@@ -151,8 +151,7 @@ class _UhaaaFlipGameState extends State<UhaaaFlipGame> {
     _cardControllers[index].add(_cards[_cardsIdx[index]]);
   }
 
-  int _nextRandomIndexFor(int index) =>
-      (_cardsIdx[index] + _rand.nextInt(_cards.length - 1) + 1) % _cards.length;
+  int _nextRandomIndexFor(int index) => (_cardsIdx[index] + _rand.nextInt(_cards.length - 1) + 1) % _cards.length;
 }
 
 /// Simple Stateless class to build a FlipWidget with given parameters.

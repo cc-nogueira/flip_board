@@ -11,7 +11,7 @@ class FlipWidgetsPage extends StatefulWidget {
   const FlipWidgetsPage({Key? key}) : super(key: key);
 
   @override
-  _FlipWidgetState createState() => _FlipWidgetState();
+  State<FlipWidgetsPage> createState() => _FlipWidgetState();
 }
 
 class _FlipWidgetState extends State<FlipWidgetsPage> {
@@ -45,17 +45,15 @@ class _FlipWidgetState extends State<FlipWidgetsPage> {
     );
   }
 
-  Widget _flipWheel(ColorScheme colors) =>
-      _wheel('Flip Widget', colors, _flipWidget, _flipButton);
+  Widget _flipWheel(ColorScheme colors) => _wheel('Flip Widget', colors, _flipWidget, _flipButton);
 
-  Widget _spinWheel(ColorScheme colors) =>
-      _wheel('Spin Widget', colors, _spinWidget, _spinButton);
+  Widget _spinWheel(ColorScheme colors) => _wheel('Spin Widget', colors, _spinWidget, _spinButton);
 
   Widget _wheel(
     String title,
     ColorScheme colors,
-    Widget Function(AxisDirection) _widget,
-    Widget _button,
+    Widget Function(AxisDirection) widgetBuilder,
+    Widget button,
   ) =>
       Theme(
         data: ThemeData(colorScheme: colors),
@@ -67,16 +65,16 @@ class _FlipWidgetState extends State<FlipWidgetsPage> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   _wheelTitle(title, colors),
-                  _widget(AxisDirection.up),
+                  widgetBuilder(AxisDirection.up),
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      _widget(AxisDirection.left),
-                      _button,
-                      _widget(AxisDirection.right),
+                      widgetBuilder(AxisDirection.left),
+                      button,
+                      widgetBuilder(AxisDirection.right),
                     ],
                   ),
-                  _widget(AxisDirection.down),
+                  widgetBuilder(AxisDirection.down),
                 ],
               ),
             ),
@@ -133,9 +131,7 @@ class _FlipWidgetState extends State<FlipWidgetsPage> {
         itemBuilder: _itemBuilder,
         initialValue: _nextFlipValue,
         flipDirection: direction,
-        flipCurve: direction == AxisDirection.down
-            ? FlipWidget.bounceFastFlip
-            : FlipWidget.defaultFlip,
+        flipCurve: direction == AxisDirection.down ? FlipWidget.bounceFastFlip : FlipWidget.defaultFlip,
         flipDuration: const Duration(milliseconds: 1000),
         perspectiveEffect: 0.008,
         hingeWidth: 1.0,
@@ -160,7 +156,7 @@ class _FlipWidgetState extends State<FlipWidgetsPage> {
         height: 64.0,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.primaryVariant,
+          color: Theme.of(context).colorScheme.primaryContainer,
           borderRadius: const BorderRadius.all(Radius.circular(4.0)),
           border: Border.all(color: Theme.of(context).colorScheme.background),
         ),

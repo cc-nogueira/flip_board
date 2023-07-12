@@ -66,8 +66,7 @@ class FlipCountdownClock extends StatelessWidget {
           separatorWidth: separatorWidth ?? width / 3.0,
           separatorColor: separatorColor,
           separatorBackgroundColor: separatorBackgroundColor,
-          showBorder:
-              showBorder ?? (borderColor != null || borderWidth != null),
+          showBorder: showBorder ?? (borderColor != null || borderWidth != null),
           borderWidth: borderWidth,
           borderColor: borderColor,
           borderRadius: borderRadius,
@@ -75,10 +74,7 @@ class FlipCountdownClock extends StatelessWidget {
           hingeLength: hingeWidth == 0.0
               ? 0.0
               : hingeLength ??
-                  (flipDirection == AxisDirection.down ||
-                          flipDirection == AxisDirection.up
-                      ? width
-                      : height),
+                  (flipDirection == AxisDirection.down || flipDirection == AxisDirection.up ? width : height),
           hingeColor: hingeColor,
           digitSpacing: digitSpacing,
         );
@@ -123,17 +119,13 @@ class FlipCountdownClock extends StatelessWidget {
       return waitingZero;
     }).asBroadcastStream();
 
-    final hoursDisplay = <Widget>[];
-    if (_showHours) {
-      hoursDisplay.addAll([
-        _buildHoursDisplay(durationStream, duration),
-        _displayBuilder.buildSeparator(context),
-      ]);
-    }
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        ...hoursDisplay,
+        if (_showHours) ...[
+          _buildHoursDisplay(durationStream, duration),
+          _displayBuilder.buildSeparator(context),
+        ],
         _buildMinutesDisplay(durationStream, duration),
         _displayBuilder.buildSeparator(context),
         _buildSecondsDisplay(durationStream, duration),
@@ -141,20 +133,17 @@ class FlipCountdownClock extends StatelessWidget {
     );
   }
 
-  Widget _buildHoursDisplay(Stream<Duration> stream, Duration initValue) =>
-      _displayBuilder.buildTimePartDisplay(
+  Widget _buildHoursDisplay(Stream<Duration> stream, Duration initValue) => _displayBuilder.buildTimePartDisplay(
         stream.map((time) => time.inHours % 24),
         initValue.inHours % 24,
       );
 
-  Widget _buildMinutesDisplay(Stream<Duration> stream, Duration initValue) =>
-      _displayBuilder.buildTimePartDisplay(
+  Widget _buildMinutesDisplay(Stream<Duration> stream, Duration initValue) => _displayBuilder.buildTimePartDisplay(
         stream.map((time) => time.inMinutes % 60),
         initValue.inMinutes % 60,
       );
 
-  Widget _buildSecondsDisplay(Stream<Duration> stream, Duration initValue) =>
-      _displayBuilder.buildTimePartDisplay(
+  Widget _buildSecondsDisplay(Stream<Duration> stream, Duration initValue) => _displayBuilder.buildTimePartDisplay(
         stream.map((time) => time.inSeconds % 60),
         initValue.inSeconds % 60,
       );
