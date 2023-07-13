@@ -2,8 +2,8 @@
 
 ## 1.0.0
 
-Update pubspec environment compatible with Dart 3   
-Add showSeconds parameter to FlipClock   
+Update pubspec environment compatible with Dart 3  
+Add showSeconds parameter to FlipClock  
 
 ## 0.6.1
 
